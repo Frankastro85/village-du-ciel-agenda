@@ -1,0 +1,49 @@
+name: Agenda Astro — actualisation quotidienne
+on:
+  schedule:
+    - cron: '23 3 * * *'    # Chaque jour, 03:23 heure française
+      timezone: 'Europe/Paris'
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/**'
+      - 'package.json'
+      - '.github/workflows/agenda-astronomique.yml'
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+concurrency:
+  group: agenda-astro
+  cancel-in-progress: false
+jobs:
+  agenda:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Installer le calcul d'éphémérides
+        run: npm install --no-audit --no-fund
+      - name: Calculer les 183 prochains jours
+        run: npm run generate
+      - name: Archiver la version du jour
+        run: |
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add docs/catalogue.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Agenda Astro automatique $(date -u +%F)"
+            git push
+          fi
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+      - name: Publier le catalogue public
+        id: deployment
+        uses: actions/deploy-pages@v4
