@@ -1,0 +1,1185 @@
+{
+  "version": "1.4",
+  "generatedAt": "2026-11-07T21:07:46.261Z",
+  "location": {
+    "name": "Les Herbiers (Vendée, France)",
+    "latitude": 46.87,
+    "longitude": -1.01,
+    "timezone": "Europe/Paris"
+  },
+  "period": {
+    "start": "2026-11-07",
+    "end": "2027-05-09"
+  },
+  "automationActive": true,
+  "engine": "astronomy-engine@2.1.19 + USNO",
+  "notice": "Éphémérides calculées et phases/saisons vérifiées par API USNO. Visibilité et rapprochements indicatifs depuis Les Herbiers. Essaims : périodes habituelles uniquement, pics non recalculés. Occultations d’astéroïdes, comètes et transitoires non couverts automatiquement. Les données rédigées à la main du site sont fusionnées côté navigateur.",
+  "sources": {
+    "phases": "USNO",
+    "saisons": "USNO",
+    "planetaires": "Astronomy Engine",
+    "meteores": "Périodes usuelles à confirmer IMO"
+  },
+  "warnings": [],
+  "events": [
+    {
+      "id": "auto-moon-Venus-202611071042",
+      "date": "2026-11-07",
+      "utc": "2026-11-07T10:42:18.388Z",
+      "precision": "minute",
+      "kind": "lune-venus",
+      "source": {
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
+      },
+      "title": "Rapprochement Lune – Vénus",
+      "type": "conjonction",
+      "priority": "majeur",
+      "visibility": "variable",
+      "period": "Autour de la date : chercher une fenêtre nocturne avec horizon dégagé.",
+      "material": "Œil nu / jumelles, selon la planète",
+      "description": "La Lune passe à environ 1,0° de Vénus dans le ciel (séparation géocentrique minimale). L’instant exact n’est pas nécessairement observable depuis Les Herbiers.",
+      "advice": "Vérifier la hauteur des objets, la météo et leur distance au Soleil ; ne jamais pointer d’instrument vers le Soleil."
+    },
+    {
+      "id": "auto-moon-nouvelle-202611090702",
+      "date": "2026-11-09",
+      "utc": "2026-11-09T07:02:00.000Z",
+      "precision": "minute",
+      "kind": "nouvelle",
+      "title": "Nouvelle Lune",
+      "type": "lune",
+      "priority": "majeur",
+      "visibility": "visible",
+      "period": "Instant exact de la phase, affiché en heure française.",
+      "material": "Œil nu / télescope selon objectif",
+      "description": "Absence de clair de Lune : période favorable aux objets faibles du ciel profond.",
+      "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
+      "source": {
+        "name": "US Naval Observatory — API officielle",
+        "url": "https://aa.usno.navy.mil/data/api"
+      }
+    },
+    {
+      "id": "auto-essaim-2026-11-12-tauridesdunord",
+      "date": "2026-11-12",
+      "utc": null,
+      "precision": "date",
+      "kind": "fenetre-essaim",
+      "title": "Période habituelle des Taurides du Nord",
+      "type": "meteores",
+      "priority": "interessant",
+      "visibility": "variable",
+      "period": "Fenêtre indicative autour de cette date ; maximum annuel à confirmer.",
+      "material": "Œil nu, ciel sombre",
+      "description": "L’essaim des Taurides du Nord connaît habituellement son activité maximale à cette période de l’année. Ceci N’EST PAS une prévision calculée du pic 2026.",
+      "advice": "Vérifier le calendrier IMO de l’année, le croissant/clair de Lune et l’heure de culmination du radiant.",
+      "source": {
+        "name": "International Meteor Organization — calendrier",
+        "url": "https://www.imo.net/calendar/"
+      }
+    },
+    {
+      "id": "auto-pair-Mars-Jupiter-202611160203",
+      "date": "2026-11-16",
+      "utc": "2026-11-16T02:03:05.192Z",
+      "precision": "minute",
+      "kind": "paire-mars-jupiter",
+      "source": {
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
+      },
+      "title": "Rapprochement Mars – Jupiter",
+      "type": "conjonction",
+      "priority": "interessant",
+      "visibility": "variable",
+      "period": "Observer autour de la date, quand les deux astres sont au-dessus de l’horizon.",
+      "material": "Œil nu / jumelles selon magnitude",
+      "description": "Séparation angulaire minimale géocentrique d’environ 1,2° entre Mars et Jupiter.",
+      "advice": "L’instant de rapprochement maximal peut se produire de jour ; vérifier la fenêtre nocturne locale."
+    },
+    {
+      "id": "auto-essaim-2026-11-17-lonides",
+      "date": "2026-11-17",
+      "utc": null,
+      "precision": "date",
+      "kind": "fenetre-essaim",
+      "title": "Période habituelle des Léonides",
+      "type": "meteores",
+      "priority": "interessant",
+      "visibility": "variable",
+      "period": "Fenêtre indicative autour de cette date ; maximum annuel à confirmer.",
+      "material": "Œil nu, ciel sombre",
+      "description": "L’essaim des Léonides connaît habituellement son activité maximale à cette période de l’année. Ceci N’EST PAS une prévision calculée du pic 2026.",
+      "advice": "Vérifier le calendrier IMO de l’année, le croissant/clair de Lune et l’heure de culmination du radiant.",
+      "source": {
+        "name": "International Meteor Organization — calendrier",
+        "url": "https://www.imo.net/calendar/"
+      }
+    },
+    {
+      "id": "auto-moon-premier-202611171148",
+      "date": "2026-11-17",
+      "utc": "2026-11-17T11:48:00.000Z",
+      "precision": "minute",
+      "kind": "premier",
+      "title": "Premier quartier",
+      "type": "lune",
+      "priority": "interessant",
+      "visibility": "visible",
+      "period": "Instant exact de la phase, affiché en heure française.",
+      "material": "Œil nu / télescope selon objectif",
+      "description": "Phase principale du cycle lunaire ; visibilité à adapter à l’heure locale.",
+      "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
+      "source": {
+        "name": "US Naval Observatory — API officielle",
+        "url": "https://aa.usno.navy.mil/data/api"
+      }
+    },
+    {
+      "id": "auto-elongation-Mercury-202611202335",
+      "date": "2026-11-21",
+      "utc": "2026-11-20T23:35:39.724Z",
+      "precision": "minute",
+      "kind": "elongation-mercury",
+      "source": {
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
+      },
+      "title": "Plus grande élongation de Mercure",
+      "type": "planete",
+      "priority": "interessant",
+      "visibility": "variable",
+      "period": "Aube, horizon est dégagé.",
+      "material": "Œil nu / jumelles",
+      "description": "Écart maximal apparent de Mercure au Soleil : environ 19,6°. Visibilité variable selon l’inclinaison de l’écliptique.",
+      "advice": "Attention au Soleil : ne jamais viser sa direction aux jumelles ou au télescope."
+    },
+    {
+      "id": "auto-moon-pleine-202611241453",
+      "date": "2026-11-24",
+      "utc": "2026-11-24T14:53:00.000Z",
+      "precision": "minute",
+      "kind": "pleine",
+      "title": "Pleine Lune",
+      "type": "lune",
+      "priority": "majeur",
+      "visibility": "visible",
+      "period": "Instant exact de la phase, affiché en heure française.",
+      "material": "Œil nu / télescope selon objectif",
+      "description": "Pleine Lune : observation lunaire et photographie, ciel profond moins favorable.",
+      "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
+      "source": {
+        "name": "US Naval Observatory — API officielle",
+        "url": "https://aa.usno.navy.mil/data/api"
+      }
+    },
+    {
+      "id": "auto-opposition-Uranus-202611252227",
+      "date": "2026-11-25",
+      "utc": "2026-11-25T22:27:02.536Z",
+      "precision": "minute",
+      "kind": "opposition-uranus",
+      "source": {
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
+      },
+      "title": "Opposition de Uranus",
+      "type": "planete",
+      "priority": "interessant",
+      "visibility": "visible",
+      "period": "Planète généralement favorable autour de l’opposition, sur plusieurs nuits.",
+      "material": "Télescope / carte de pointage",
+      "description": "La Terre et Uranus sont sensiblement du même côté du Soleil. La période est favorable à l’observation de la planète.",
+      "advice": "Observer près du passage au méridien et vérifier la hauteur depuis Les Herbiers."
+    },
+    {
+      "id": "auto-venus-mag-202611270147",
+      "date": "2026-11-27",
+      "utc": "2026-11-27T01:47:33.356Z",
+      "precision": "minute",
+      "kind": "venus-mag",
+      "source": {
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
+      },
+      "title": "Éclat maximal de Vénus",
+      "type": "planete",
+      "priority": "interessant",
+      "visibility": "variable",
+      "period": "Aube ou crépuscule selon la période.",
+      "material": "Œil nu",
+      "description": "Vénus atteint une luminosité apparente très élevée, facilement remarquable quand elle est suffisamment éloignée du Soleil.",
+      "advice": "Vérifier si Vénus est visible le matin ou le soir."
+    },
+    {
+      "id": "auto-moon-Jupiter-202611300824",
+      "date": "2026-11-30",
+      "utc": "2026-11-30T08:24:58.776Z",
+      "precision": "minute",
+      "kind": "lune-jupiter",
+      "source": {
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
+      },
+      "title": "Rapprochement Lune – Jupiter",
+      "type": "conjonction",
+      "priority": "interessant",
+      "visibility": "variable",
+      "period": "Autour de la date : chercher une fenêtre nocturne avec horizon dégagé.",
+      "material": "Œil nu / jumelles, selon la planète",
+      "description": "La Lune passe à environ 1,1° de Jupiter dans le ciel (séparation géocentrique minimale). L’instant exact n’est pas nécessairement observable depuis Les Herbiers.",
+      "advice": "Vérifier la hauteur des objets, la météo et leur distance au Soleil ; ne jamais pointer d’instrument vers le Soleil."
+    },
+    {
+      "id": "auto-moon-Mars-202611301655",
+      "date": "2026-11-30",
+      "utc": "2026-11-30T16:55:00.550Z",
+      "precision": "minute",
+      "kind": "lune-mars",
+      "source": {
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
+      },
+      "title": "Rapprochement Lune – Mars",
+      "type": "conjonction",
+      "priority": "interessant",
+      "visibility": "variable",
+      "period": "Autour de la date : chercher une fenêtre nocturne avec horizon dégagé.",
+      "material": "Œil nu / jumelles, selon la planète",
+      "description": "La Lune passe à environ 3,0° de Mars dans le ciel (séparation géocentrique minimale). L’instant exact n’est pas nécessairement observable depuis Les Herbiers.",
+      "advice": "Vérifier la hauteur des objets, la météo et leur distance au Soleil ; ne jamais pointer d’instrument vers le Soleil."
+    },
+    {
+      "id": "auto-moon-dernier-202612010608",
+      "date": "2026-12-01",
+      "utc": "2026-12-01T06:08:00.000Z",
+      "precision": "minute",
+      "kind": "dernier",
+      "title": "Dernier quartier",
+      "type": "lune",
+      "priority": "interessant",
+      "visibility": "visible",
+      "period": "Instant exact de la phase, affiché en heure française.",
+      "material": "Œil nu / télescope selon objectif",
+      "description": "Phase principale du cycle lunaire ; visibilité à adapter à l’heure locale.",
+      "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
+      "source": {
+        "name": "US Naval Observatory — API officielle",
+        "url": "https://aa.usno.navy.mil/data/api"
+      }
+    },
+    {
+      "id": "auto-moon-nouvelle-202612090052",
+      "date": "2026-12-09",
+      "utc": "2026-12-09T00:52:00.000Z",
+      "precision": "minute",
+      "kind": "nouvelle",
+      "title": "Nouvelle Lune",
+      "type": "lune",
+      "priority": "majeur",
+      "visibility": "visible",
+      "period": "Instant exact de la phase, affiché en heure française.",
+      "material": "Œil nu / télescope selon objectif",
+      "description": "Absence de clair de Lune : période favorable aux objets faibles du ciel profond.",
+      "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
+      "source": {
+        "name": "US Naval Observatory — API officielle",
+        "url": "https://aa.usno.navy.mil/data/api"
+      }
+    },
+    {
+      "id": "auto-essaim-2026-12-14-gminides",
+      "date": "2026-12-14",
+      "utc": null,
+      "precision": "date",
+      "kind": "fenetre-essaim",
+      "title": "Période habituelle des Géminides",
+      "type": "meteores",
+      "priority": "majeur",
+      "visibility": "variable",
+      "period": "Fenêtre indicative autour de cette date ; maximum annuel à confirmer.",
+      "material": "Œil nu, ciel sombre",
+      "description": "L’essaim des Géminides connaît habituellement son activité maximale à cette période de l’année. Ceci N’EST PAS une prévision calculée du pic 2026.",
+      "advice": "Vérifier le calendrier IMO de l’année, le croissant/clair de Lune et l’heure de culmination du radiant.",
+      "source": {
+        "name": "International Meteor Organization — calendrier",
+        "url": "https://www.imo.net/calendar/"
+      }
+    },
+    {
+      "id": "auto-moon-premier-202612170542",
+      "date": "2026-12-17",
+      "utc": "2026-12-17T05:42:00.000Z",
+      "precision": "minute",
+      "kind": "premier",
+      "title": "Premier quartier",
+      "type": "lune",
+      "priority": "interessant",
+      "visibility": "visible",
+      "period": "Instant exact de la phase, affiché en heure française.",
+      "material": "Œil nu / télescope selon objectif",
+      "description": "Phase principale du cycle lunaire ; visibilité à adapter à l’heure locale.",
+      "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
+      "source": {
+        "name": "US Naval Observatory — API officielle",
+        "url": "https://aa.usno.navy.mil/data/api"
+      }
+    },
+    {
+      "id": "auto-season-solstice-hiver-202612212050",
+      "date": "2026-12-21",
+      "utc": "2026-12-21T20:50:00.000Z",
+      "precision": "minute",
+      "kind": "solstice-hiver",
+      "title": "Solstice d’hiver",
+      "type": "saison",
+      "priority": "interessant",
+      "visibility": "visible",
+      "period": "Instant astronomique, heure française.",
+      "material": "Aucun matériel requis",
+      "description": "Repère saisonnier précis : changement astronomique de saison dans l’hémisphère Nord.",
+      "advice": "Observer l’évolution des heures de lever et de coucher du Soleil.",
+      "source": {
+        "name": "US Naval Observatory — API officielle",
+        "url": "https://aa.usno.navy.mil/data/api"
+      }
+    },
+    {
+      "id": "auto-essaim-2026-12-22-ursides",
+      "date": "2026-12-22",
+      "utc": null,
+      "precision": "date",
+      "kind": "fenetre-essaim",
+      "title": "Période habituelle des Ursides",
+      "type": "meteores",
+      "priority": "interessant",
+      "visibility": "variable",
+      "period": "Fenêtre indicative autour de cette date ; maximum annuel à confirmer.",
+      "material": "Œil nu, ciel sombre",
+      "description": "L’essaim des Ursides connaît habituellement son activité maximale à cette période de l’année. Ceci N’EST PAS une prévision calculée du pic 2026.",
+      "advice": "Vérifier le calendrier IMO de l’année, le croissant/clair de Lune et l’heure de culmination du radiant.",
+      "source": {
+        "name": "International Meteor Organization — calendrier",
+        "url": "https://www.imo.net/calendar/"
+      }
+    },
+    {
+      "id": "auto-moon-pleine-202612240128",
+      "date": "2026-12-24",
+      "utc": "2026-12-24T01:28:00.000Z",
+      "precision": "minute",
+      "kind": "pleine",
+      "title": "Pleine Lune",
+      "type": "lune",
+      "priority": "majeur",
+      "visibility": "visible",
+      "period": "Instant exact de la phase, affiché en heure française.",
+      "material": "Œil nu / télescope selon objectif",
+      "description": "Pleine Lune : observation lunaire et photographie, ciel profond moins favorable.",
+      "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
+      "source": {
+        "name": "US Naval Observatory — API officielle",
+        "url": "https://aa.usno.navy.mil/data/api"
+      }
+    },
+    {
+      "id": "auto-moon-Jupiter-202612271626",
+      "date": "2026-12-27",
+      "utc": "2026-12-27T16:26:02.264Z",
+      "precision": "minute",
+      "kind": "lune-jupiter",
+      "source": {
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
+      },
+      "title": "Rapprochement Lune – Jupiter",
+      "type": "conjonction",
+      "priority": "interessant",
+      "visibility": "variable",
+      "period": "Autour de la date : chercher une fenêtre nocturne avec horizon dégagé.",
+      "material": "Œil nu / jumelles, selon la planète",
+      "description": "La Lune passe à environ 1,4° de Jupiter dans le ciel (séparation géocentrique minimale). L’instant exact n’est pas nécessairement observable depuis Les Herbiers.",
+      "advice": "Vérifier la hauteur des objets, la météo et leur distance au Soleil ; ne jamais pointer d’instrument vers le Soleil."
+    },
+    {
+      "id": "auto-moon-dernier-202612301859",
+      "date": "2026-12-30",
+      "utc": "2026-12-30T18:59:00.000Z",
+      "precision": "minute",
+      "kind": "dernier",
+      "title": "Dernier quartier",
+      "type": "lune",
+      "priority": "interessant",
+      "visibility": "visible",
+      "period": "Instant exact de la phase, affiché en heure française.",
+      "material": "Œil nu / télescope selon objectif",
+      "description": "Phase principale du cycle lunaire ; visibilité à adapter à l’heure locale.",
+      "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
+      "source": {
+        "name": "US Naval Observatory — API officielle",
+        "url": "https://aa.usno.navy.mil/data/api"
+      }
+    },
+    {
+      "id": "auto-essaim-2027-1-3-quadrantides",
+      "date": "2027-01-03",
+      "utc": null,
+      "precision": "date",
+      "kind": "fenetre-essaim",
+      "title": "Période habituelle des Quadrantides",
+      "type": "meteores",
+      "priority": "majeur",
+      "visibility": "variable",
+      "period": "Fenêtre indicative autour de cette date ; maximum annuel à confirmer.",
+      "material": "Œil nu, ciel sombre",
+      "description": "L’essaim des Quadrantides connaît habituellement son activité maximale à cette période de l’année. Ceci N’EST PAS une prévision calculée du pic 2027.",
+      "advice": "Vérifier le calendrier IMO de l’année, le croissant/clair de Lune et l’heure de culmination du radiant.",
+      "source": {
+        "name": "International Meteor Organization — calendrier",
+        "url": "https://www.imo.net/calendar/"
+      }
+    },
+    {
+      "id": "auto-elongation-Venus-202701031756",
+      "date": "2027-01-03",
+      "utc": "2027-01-03T17:56:03.408Z",
+      "precision": "minute",
+      "kind": "elongation-venus",
+      "source": {
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
+      },
+      "title": "Plus grande élongation de Vénus",
+      "type": "planete",
+      "priority": "interessant",
+      "visibility": "variable",
+      "period": "Aube, horizon est dégagé.",
+      "material": "Œil nu / jumelles",
+      "description": "Écart maximal apparent de Vénus au Soleil : environ 47°. Visibilité variable selon l’inclinaison de l’écliptique.",
+      "advice": "Attention au Soleil : ne jamais viser sa direction aux jumelles ou au télescope."
+    },
+    {
+      "id": "auto-moon-nouvelle-202701072024",
+      "date": "2027-01-07",
+      "utc": "2027-01-07T20:24:00.000Z",
+      "precision": "minute",
+      "kind": "nouvelle",
+      "title": "Nouvelle Lune",
+      "type": "lune",
+      "priority": "majeur",
+      "visibility": "visible",
+      "period": "Instant exact de la phase, affiché en heure française.",
+      "material": "Œil nu / télescope selon objectif",
+      "description": "Absence de clair de Lune : période favorable aux objets faibles du ciel profond.",
+      "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
+      "source": {
+        "name": "US Naval Observatory — API officielle",
+        "url": "https://aa.usno.navy.mil/data/api"
+      }
+    },
+    {
+      "id": "auto-moon-Mercury-202701080517",
+      "date": "2027-01-08",
+      "utc": "2027-01-08T05:17:22.473Z",
+      "precision": "minute",
+      "kind": "lune-mercury",
+      "source": {
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
+      },
+      "title": "Rapprochement Lune – Mercure",
+      "type": "conjonction",
+      "priority": "majeur",
+      "visibility": "difficile",
+      "period": "Autour de la date : chercher une fenêtre nocturne avec horizon dégagé.",
+      "material": "Œil nu / jumelles, selon la planète",
+      "description": "La Lune passe à environ 0,5° de Mercure dans le ciel (séparation géocentrique minimale). L’instant exact n’est pas nécessairement observable depuis Les Herbiers.",
+      "advice": "Vérifier la hauteur des objets, la météo et leur distance au Soleil ; ne jamais pointer d’instrument vers le Soleil."
+    },
+    {
+      "id": "auto-moon-premier-202701152034",
+      "date": "2027-01-15",
+      "utc": "2027-01-15T20:34:00.000Z",
+      "precision": "minute",
+      "kind": "premier",
+      "title": "Premier quartier",
+      "type": "lune",
+      "priority": "interessant",
+      "visibility": "visible",
+      "period": "Instant exact de la phase, affiché en heure française.",
+      "material": "Œil nu / télescope selon objectif",
+      "description": "Phase principale du cycle lunaire ; visibilité à adapter à l’heure locale.",
+      "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
+      "source": {
+        "name": "US Naval Observatory — API officielle",
+        "url": "https://aa.usno.navy.mil/data/api"
+      }
+    },
+    {
+      "id": "auto-moon-pleine-202701221217",
+      "date": "2027-01-22",
+      "utc": "2027-01-22T12:17:00.000Z",
+      "precision": "minute",
+      "kind": "pleine",
+      "title": "Pleine Lune",
+      "type": "lune",
+      "priority": "majeur",
+      "visibility": "visible",
+      "period": "Instant exact de la phase, affiché en heure française.",
+      "material": "Œil nu / télescope selon objectif",
+      "description": "Pleine Lune : observation lunaire et photographie, ciel profond moins favorable.",
+      "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
+      "source": {
+        "name": "US Naval Observatory — API officielle",
+        "url": "https://aa.usno.navy.mil/data/api"
+      }
+    },
+    {
+      "id": "auto-moon-Jupiter-202701232321",
+      "date": "2027-01-24",
+      "utc": "2027-01-23T23:21:19.305Z",
+      "precision": "minute",
+      "kind": "lune-jupiter",
+      "source": {
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
+      },
+      "title": "Rapprochement Lune – Jupiter",
+      "type": "conjonction",
+      "priority": "interessant",
+      "visibility": "variable",
+      "period": "Autour de la date : chercher une fenêtre nocturne avec horizon dégagé.",
+      "material": "Œil nu / jumelles, selon la planète",
+      "description": "La Lune passe à environ 1,4° de Jupiter dans le ciel (séparation géocentrique minimale). L’instant exact n’est pas nécessairement observable depuis Les Herbiers.",
+      "advice": "Vérifier la hauteur des objets, la météo et leur distance au Soleil ; ne jamais pointer d’instrument vers le Soleil."
+    },
+    {
+      "id": "auto-moon-dernier-202701291055",
+      "date": "2027-01-29",
+      "utc": "2027-01-29T10:55:00.000Z",
+      "precision": "minute",
+      "kind": "dernier",
+      "title": "Dernier quartier",
+      "type": "lune",
+      "priority": "interessant",
+      "visibility": "visible",
+      "period": "Instant exact de la phase, affiché en heure française.",
+      "material": "Œil nu / télescope selon objectif",
+      "description": "Phase principale du cycle lunaire ; visibilité à adapter à l’heure locale.",
+      "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
+      "source": {
+        "name": "US Naval Observatory — API officielle",
+        "url": "https://aa.usno.navy.mil/data/api"
+      }
+    },
+    {
+      "id": "auto-elongation-Mercury-202702030620",
+      "date": "2027-02-03",
+      "utc": "2027-02-03T06:20:08.602Z",
+      "precision": "minute",
+      "kind": "elongation-mercury",
+      "source": {
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
+      },
+      "title": "Plus grande élongation de Mercure",
+      "type": "planete",
+      "priority": "interessant",
+      "visibility": "variable",
+      "period": "Crépuscule, horizon ouest dégagé.",
+      "material": "Œil nu / jumelles",
+      "description": "Écart maximal apparent de Mercure au Soleil : environ 18,3°. Visibilité variable selon l’inclinaison de l’écliptique.",
+      "advice": "Attention au Soleil : ne jamais viser sa direction aux jumelles ou au télescope."
+    },
+    {
+      "id": "auto-moon-nouvelle-202702061556",
+      "date": "2027-02-06",
+      "utc": "2027-02-06T15:56:00.000Z",
+      "precision": "minute",
+      "kind": "nouvelle",
+      "title": "Nouvelle Lune",
+      "type": "lune",
+      "priority": "majeur",
+      "visibility": "visible",
+      "period": "Instant exact de la phase, affiché en heure française.",
+      "material": "Œil nu / télescope selon objectif",
+      "description": "Absence de clair de Lune : période favorable aux objets faibles du ciel profond.",
+      "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
+      "source": {
+        "name": "US Naval Observatory — API officielle",
+        "url": "https://aa.usno.navy.mil/data/api"
+      }
+    },
+    {
+      "id": "auto-moon-Mercury-202702080355",
+      "date": "2027-02-08",
+      "utc": "2027-02-08T03:55:16.146Z",
+      "precision": "minute",
+      "kind": "lune-mercury",
+      "source": {
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
+      },
+      "title": "Rapprochement Lune – Mercure",
+      "type": "conjonction",
+      "priority": "majeur",
+      "visibility": "difficile",
+      "period": "Autour de la date : chercher une fenêtre nocturne avec horizon dégagé.",
+      "material": "Œil nu / jumelles, selon la planète",
+      "description": "La Lune passe à environ 0,3° de Mercure dans le ciel (séparation géocentrique minimale). L’instant exact n’est pas nécessairement observable depuis Les Herbiers.",
+      "advice": "Vérifier la hauteur des objets, la météo et leur distance au Soleil ; ne jamais pointer d’instrument vers le Soleil."
+    },
+    {
+      "id": "auto-opposition-Jupiter-202702110017",
+      "date": "2027-02-11",
+      "utc": "2027-02-11T00:17:05.482Z",
+      "precision": "minute",
+      "kind": "opposition-jupiter",
+      "source": {
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
+      },
+      "title": "Opposition de Jupiter",
+      "type": "planete",
+      "priority": "majeur",
+      "visibility": "visible",
+      "period": "Planète généralement favorable autour de l’opposition, sur plusieurs nuits.",
+      "material": "Œil nu et télescope",
+      "description": "La Terre et Jupiter sont sensiblement du même côté du Soleil. La période est favorable à l’observation de la planète.",
+      "advice": "Observer près du passage au méridien et vérifier la hauteur depuis Les Herbiers."
+    },
+    {
+      "id": "auto-moon-premier-202702140758",
+      "date": "2027-02-14",
+      "utc": "2027-02-14T07:58:00.000Z",
+      "precision": "minute",
+      "kind": "premier",
+      "title": "Premier quartier",
+      "type": "lune",
+      "priority": "interessant",
+      "visibility": "visible",
+      "period": "Instant exact de la phase, affiché en heure française.",
+      "material": "Œil nu / télescope selon objectif",
+      "description": "Phase principale du cycle lunaire ; visibilité à adapter à l’heure locale.",
+      "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
+      "source": {
+        "name": "US Naval Observatory — API officielle",
+        "url": "https://aa.usno.navy.mil/data/api"
+      }
+    },
+    {
+      "id": "auto-opposition-Mars-202702191544",
+      "date": "2027-02-19",
+      "utc": "2027-02-19T15:44:17.503Z",
+      "precision": "minute",
+      "kind": "opposition-mars",
+      "source": {
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
+      },
+      "title": "Opposition de Mars",
+      "type": "planete",
+      "priority": "majeur",
+      "visibility": "visible",
+      "period": "Planète généralement favorable autour de l’opposition, sur plusieurs nuits.",
+      "material": "Œil nu et télescope",
+      "description": "La Terre et Mars sont sensiblement du même côté du Soleil. La période est favorable à l’observation de la planète.",
+      "advice": "Observer près du passage au méridien et vérifier la hauteur depuis Les Herbiers."
+    },
+    {
+      "id": "auto-moon-Jupiter-202702200457",
+      "date": "2027-02-20",
+      "utc": "2027-02-20T04:57:34.279Z",
+      "precision": "minute",
+      "kind": "lune-jupiter",
+      "source": {
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
+      },
+      "title": "Rapprochement Lune – Jupiter",
+      "type": "conjonction",
+      "priority": "interessant",
+      "visibility": "variable",
+      "period": "Autour de la date : chercher une fenêtre nocturne avec horizon dégagé.",
+      "material": "Œil nu / jumelles, selon la planète",
+      "description": "La Lune passe à environ 1,1° de Jupiter dans le ciel (séparation géocentrique minimale). L’instant exact n’est pas nécessairement observable depuis Les Herbiers.",
+      "advice": "Vérifier la hauteur des objets, la météo et leur distance au Soleil ; ne jamais pointer d’instrument vers le Soleil."
+    },
+    {
+      "id": "auto-eclipse-lunaire-202702202312",
+      "date": "2027-02-21",
+      "utc": "2027-02-20T23:12:44.142Z",
+      "precision": "minute",
+      "kind": "eclipse-lunaire",
+      "source": {
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
+      },
+      "title": "Éclipse lunaire penumbral",
+      "type": "eclipse",
+      "priority": "majeur",
+      "visibility": "variable",
+      "period": "Visibilité du maximum à confirmer pour Les Herbiers.",
+      "material": "Œil nu / jumelles",
+      "description": "Éclipse de Lune de type penumbral. Hauteur approximative de la Lune au maximum : 50°. Une partie de l’éclipse peut être visible même si le maximum ne l’est pas.",
+      "advice": "Consulter les heures locales de début et fin des différentes phases avant de se déplacer."
+    },
+    {
+      "id": "auto-moon-pleine-202702202323",
+      "date": "2027-02-21",
+      "utc": "2027-02-20T23:23:00.000Z",
+      "precision": "minute",
+      "kind": "pleine",
+      "title": "Pleine Lune",
+      "type": "lune",
+      "priority": "majeur",
+      "visibility": "visible",
+      "period": "Instant exact de la phase, affiché en heure française.",
+      "material": "Œil nu / télescope selon objectif",
+      "description": "Pleine Lune : observation lunaire et photographie, ciel profond moins favorable.",
+      "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
+      "source": {
+        "name": "US Naval Observatory — API officielle",
+        "url": "https://aa.usno.navy.mil/data/api"
+      }
+    },
+    {
+      "id": "auto-moon-dernier-202702280516",
+      "date": "2027-02-28",
+      "utc": "2027-02-28T05:16:00.000Z",
+      "precision": "minute",
+      "kind": "dernier",
+      "title": "Dernier quartier",
+      "type": "lune",
+      "priority": "interessant",
+      "visibility": "visible",
+      "period": "Instant exact de la phase, affiché en heure française.",
+      "material": "Œil nu / télescope selon objectif",
+      "description": "Phase principale du cycle lunaire ; visibilité à adapter à l’heure locale.",
+      "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
+      "source": {
+        "name": "US Naval Observatory — API officielle",
+        "url": "https://aa.usno.navy.mil/data/api"
+      }
+    },
+    {
+      "id": "auto-moon-Venus-202703042033",
+      "date": "2027-03-04",
+      "utc": "2027-03-04T20:33:13.202Z",
+      "precision": "minute",
+      "kind": "lune-venus",
+      "source": {
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
+      },
+      "title": "Rapprochement Lune – Vénus",
+      "type": "conjonction",
+      "priority": "interessant",
+      "visibility": "variable",
+      "period": "Autour de la date : chercher une fenêtre nocturne avec horizon dégagé.",
+      "material": "Œil nu / jumelles, selon la planète",
+      "description": "La Lune passe à environ 2,0° de Vénus dans le ciel (séparation géocentrique minimale). L’instant exact n’est pas nécessairement observable depuis Les Herbiers.",
+      "advice": "Vérifier la hauteur des objets, la météo et leur distance au Soleil ; ne jamais pointer d’instrument vers le Soleil."
+    },
+    {
+      "id": "auto-moon-Mercury-202703060631",
+      "date": "2027-03-06",
+      "utc": "2027-03-06T06:31:58.189Z",
+      "precision": "minute",
+      "kind": "lune-mercury",
+      "source": {
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
+      },
+      "title": "Rapprochement Lune – Mercure",
+      "type": "conjonction",
+      "priority": "interessant",
+      "visibility": "variable",
+      "period": "Autour de la date : chercher une fenêtre nocturne avec horizon dégagé.",
+      "material": "Œil nu / jumelles, selon la planète",
+      "description": "La Lune passe à environ 1,1° de Mercure dans le ciel (séparation géocentrique minimale). L’instant exact n’est pas nécessairement observable depuis Les Herbiers.",
+      "advice": "Vérifier la hauteur des objets, la météo et leur distance au Soleil ; ne jamais pointer d’instrument vers le Soleil."
+    },
+    {
+      "id": "auto-moon-nouvelle-202703080929",
+      "date": "2027-03-08",
+      "utc": "2027-03-08T09:29:00.000Z",
+      "precision": "minute",
+      "kind": "nouvelle",
+      "title": "Nouvelle Lune",
+      "type": "lune",
+      "priority": "majeur",
+      "visibility": "visible",
+      "period": "Instant exact de la phase, affiché en heure française.",
+      "material": "Œil nu / télescope selon objectif",
+      "description": "Absence de clair de Lune : période favorable aux objets faibles du ciel profond.",
+      "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
+      "source": {
+        "name": "US Naval Observatory — API officielle",
+        "url": "https://aa.usno.navy.mil/data/api"
+      }
+    },
+    {
+      "id": "auto-moon-premier-202703151625",
+      "date": "2027-03-15",
+      "utc": "2027-03-15T16:25:00.000Z",
+      "precision": "minute",
+      "kind": "premier",
+      "title": "Premier quartier",
+      "type": "lune",
+      "priority": "interessant",
+      "visibility": "visible",
+      "period": "Instant exact de la phase, affiché en heure française.",
+      "material": "Œil nu / télescope selon objectif",
+      "description": "Phase principale du cycle lunaire ; visibilité à adapter à l’heure locale.",
+      "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
+      "source": {
+        "name": "US Naval Observatory — API officielle",
+        "url": "https://aa.usno.navy.mil/data/api"
+      }
+    },
+    {
+      "id": "auto-elongation-Mercury-202703170656",
+      "date": "2027-03-17",
+      "utc": "2027-03-17T06:56:57.341Z",
+      "precision": "minute",
+      "kind": "elongation-mercury",
+      "source": {
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
+      },
+      "title": "Plus grande élongation de Mercure",
+      "type": "planete",
+      "priority": "interessant",
+      "visibility": "variable",
+      "period": "Aube, horizon est dégagé.",
+      "material": "Œil nu / jumelles",
+      "description": "Écart maximal apparent de Mercure au Soleil : environ 27,6°. Visibilité variable selon l’inclinaison de l’écliptique.",
+      "advice": "Attention au Soleil : ne jamais viser sa direction aux jumelles ou au télescope."
+    },
+    {
+      "id": "auto-moon-Jupiter-202703190925",
+      "date": "2027-03-19",
+      "utc": "2027-03-19T09:25:54.380Z",
+      "precision": "minute",
+      "kind": "lune-jupiter",
+      "source": {
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
+      },
+      "title": "Rapprochement Lune – Jupiter",
+      "type": "conjonction",
+      "priority": "majeur",
+      "visibility": "variable",
+      "period": "Autour de la date : chercher une fenêtre nocturne avec horizon dégagé.",
+      "material": "Œil nu / jumelles, selon la planète",
+      "description": "La Lune passe à environ 0,9° de Jupiter dans le ciel (séparation géocentrique minimale). L’instant exact n’est pas nécessairement observable depuis Les Herbiers.",
+      "advice": "Vérifier la hauteur des objets, la météo et leur distance au Soleil ; ne jamais pointer d’instrument vers le Soleil."
+    },
+    {
+      "id": "auto-moon-Mars-202703191543",
+      "date": "2027-03-19",
+      "utc": "2027-03-19T15:43:00.598Z",
+      "precision": "minute",
+      "kind": "lune-mars",
+      "source": {
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
+      },
+      "title": "Rapprochement Lune – Mars",
+      "type": "conjonction",
+      "priority": "interessant",
+      "visibility": "variable",
+      "period": "Autour de la date : chercher une fenêtre nocturne avec horizon dégagé.",
+      "material": "Œil nu / jumelles, selon la planète",
+      "description": "La Lune passe à environ 3,9° de Mars dans le ciel (séparation géocentrique minimale). L’instant exact n’est pas nécessairement observable depuis Les Herbiers.",
+      "advice": "Vérifier la hauteur des objets, la météo et leur distance au Soleil ; ne jamais pointer d’instrument vers le Soleil."
+    },
+    {
+      "id": "auto-season-equinoxe-printemps-202703202025",
+      "date": "2027-03-20",
+      "utc": "2027-03-20T20:25:00.000Z",
+      "precision": "minute",
+      "kind": "equinoxe-printemps",
+      "title": "Équinoxe de printemps",
+      "type": "saison",
+      "priority": "interessant",
+      "visibility": "visible",
+      "period": "Instant astronomique, heure française.",
+      "material": "Aucun matériel requis",
+      "description": "Repère saisonnier précis : changement astronomique de saison dans l’hémisphère Nord.",
+      "advice": "Observer l’évolution des heures de lever et de coucher du Soleil.",
+      "source": {
+        "name": "US Naval Observatory — API officielle",
+        "url": "https://aa.usno.navy.mil/data/api"
+      }
+    },
+    {
+      "id": "auto-moon-pleine-202703221044",
+      "date": "2027-03-22",
+      "utc": "2027-03-22T10:44:00.000Z",
+      "precision": "minute",
+      "kind": "pleine",
+      "title": "Pleine Lune",
+      "type": "lune",
+      "priority": "majeur",
+      "visibility": "visible",
+      "period": "Instant exact de la phase, affiché en heure française.",
+      "material": "Œil nu / télescope selon objectif",
+      "description": "Pleine Lune : observation lunaire et photographie, ciel profond moins favorable.",
+      "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
+      "source": {
+        "name": "US Naval Observatory — API officielle",
+        "url": "https://aa.usno.navy.mil/data/api"
+      }
+    },
+    {
+      "id": "auto-moon-dernier-202703300054",
+      "date": "2027-03-30",
+      "utc": "2027-03-30T00:54:00.000Z",
+      "precision": "minute",
+      "kind": "dernier",
+      "title": "Dernier quartier",
+      "type": "lune",
+      "priority": "interessant",
+      "visibility": "visible",
+      "period": "Instant exact de la phase, affiché en heure française.",
+      "material": "Œil nu / télescope selon objectif",
+      "description": "Phase principale du cycle lunaire ; visibilité à adapter à l’heure locale.",
+      "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
+      "source": {
+        "name": "US Naval Observatory — API officielle",
+        "url": "https://aa.usno.navy.mil/data/api"
+      }
+    },
+    {
+      "id": "auto-moon-Venus-202704040333",
+      "date": "2027-04-04",
+      "utc": "2027-04-04T03:33:19.901Z",
+      "precision": "minute",
+      "kind": "lune-venus",
+      "source": {
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
+      },
+      "title": "Rapprochement Lune – Vénus",
+      "type": "conjonction",
+      "priority": "interessant",
+      "visibility": "variable",
+      "period": "Autour de la date : chercher une fenêtre nocturne avec horizon dégagé.",
+      "material": "Œil nu / jumelles, selon la planète",
+      "description": "La Lune passe à environ 2,9° de Vénus dans le ciel (séparation géocentrique minimale). L’instant exact n’est pas nécessairement observable depuis Les Herbiers.",
+      "advice": "Vérifier la hauteur des objets, la météo et leur distance au Soleil ; ne jamais pointer d’instrument vers le Soleil."
+    },
+    {
+      "id": "auto-moon-nouvelle-202704062351",
+      "date": "2027-04-07",
+      "utc": "2027-04-06T23:51:00.000Z",
+      "precision": "minute",
+      "kind": "nouvelle",
+      "title": "Nouvelle Lune",
+      "type": "lune",
+      "priority": "majeur",
+      "visibility": "visible",
+      "period": "Instant exact de la phase, affiché en heure française.",
+      "material": "Œil nu / télescope selon objectif",
+      "description": "Absence de clair de Lune : période favorable aux objets faibles du ciel profond.",
+      "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
+      "source": {
+        "name": "US Naval Observatory — API officielle",
+        "url": "https://aa.usno.navy.mil/data/api"
+      }
+    },
+    {
+      "id": "auto-moon-premier-202704132256",
+      "date": "2027-04-14",
+      "utc": "2027-04-13T22:56:00.000Z",
+      "precision": "minute",
+      "kind": "premier",
+      "title": "Premier quartier",
+      "type": "lune",
+      "priority": "interessant",
+      "visibility": "visible",
+      "period": "Instant exact de la phase, affiché en heure française.",
+      "material": "Œil nu / télescope selon objectif",
+      "description": "Phase principale du cycle lunaire ; visibilité à adapter à l’heure locale.",
+      "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
+      "source": {
+        "name": "US Naval Observatory — API officielle",
+        "url": "https://aa.usno.navy.mil/data/api"
+      }
+    },
+    {
+      "id": "auto-moon-Jupiter-202704151418",
+      "date": "2027-04-15",
+      "utc": "2027-04-15T14:18:59.943Z",
+      "precision": "minute",
+      "kind": "lune-jupiter",
+      "source": {
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
+      },
+      "title": "Rapprochement Lune – Jupiter",
+      "type": "conjonction",
+      "priority": "majeur",
+      "visibility": "variable",
+      "period": "Autour de la date : chercher une fenêtre nocturne avec horizon dégagé.",
+      "material": "Œil nu / jumelles, selon la planète",
+      "description": "La Lune passe à environ 0,9° de Jupiter dans le ciel (séparation géocentrique minimale). L’instant exact n’est pas nécessairement observable depuis Les Herbiers.",
+      "advice": "Vérifier la hauteur des objets, la météo et leur distance au Soleil ; ne jamais pointer d’instrument vers le Soleil."
+    },
+    {
+      "id": "auto-moon-Mars-202704152244",
+      "date": "2027-04-16",
+      "utc": "2027-04-15T22:44:02.213Z",
+      "precision": "minute",
+      "kind": "lune-mars",
+      "source": {
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
+      },
+      "title": "Rapprochement Lune – Mars",
+      "type": "conjonction",
+      "priority": "interessant",
+      "visibility": "variable",
+      "period": "Autour de la date : chercher une fenêtre nocturne avec horizon dégagé.",
+      "material": "Œil nu / jumelles, selon la planète",
+      "description": "La Lune passe à environ 3,0° de Mars dans le ciel (séparation géocentrique minimale). L’instant exact n’est pas nécessairement observable depuis Les Herbiers.",
+      "advice": "Vérifier la hauteur des objets, la météo et leur distance au Soleil ; ne jamais pointer d’instrument vers le Soleil."
+    },
+    {
+      "id": "auto-pair-Mercury-Saturn-202704191234",
+      "date": "2027-04-19",
+      "utc": "2027-04-19T12:34:01.124Z",
+      "precision": "minute",
+      "kind": "paire-mercury-saturn",
+      "source": {
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
+      },
+      "title": "Rapprochement Mercure – Saturne",
+      "type": "conjonction",
+      "priority": "majeur",
+      "visibility": "difficile",
+      "period": "Observer autour de la date, quand les deux astres sont au-dessus de l’horizon.",
+      "material": "Œil nu / jumelles selon magnitude",
+      "description": "Séparation angulaire minimale géocentrique d’environ 0,6° entre Mercure et Saturne.",
+      "advice": "L’instant de rapprochement maximal peut se produire de jour ; vérifier la fenêtre nocturne locale."
+    },
+    {
+      "id": "auto-moon-pleine-202704202227",
+      "date": "2027-04-21",
+      "utc": "2027-04-20T22:27:00.000Z",
+      "precision": "minute",
+      "kind": "pleine",
+      "title": "Pleine Lune",
+      "type": "lune",
+      "priority": "majeur",
+      "visibility": "visible",
+      "period": "Instant exact de la phase, affiché en heure française.",
+      "material": "Œil nu / télescope selon objectif",
+      "description": "Pleine Lune : observation lunaire et photographie, ciel profond moins favorable.",
+      "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
+      "source": {
+        "name": "US Naval Observatory — API officielle",
+        "url": "https://aa.usno.navy.mil/data/api"
+      }
+    },
+    {
+      "id": "auto-essaim-2027-4-22-lyrides",
+      "date": "2027-04-22",
+      "utc": null,
+      "precision": "date",
+      "kind": "fenetre-essaim",
+      "title": "Période habituelle des Lyrides",
+      "type": "meteores",
+      "priority": "interessant",
+      "visibility": "variable",
+      "period": "Fenêtre indicative autour de cette date ; maximum annuel à confirmer.",
+      "material": "Œil nu, ciel sombre",
+      "description": "L’essaim des Lyrides connaît habituellement son activité maximale à cette période de l’année. Ceci N’EST PAS une prévision calculée du pic 2027.",
+      "advice": "Vérifier le calendrier IMO de l’année, le croissant/clair de Lune et l’heure de culmination du radiant.",
+      "source": {
+        "name": "International Meteor Organization — calendrier",
+        "url": "https://www.imo.net/calendar/"
+      }
+    },
+    {
+      "id": "auto-moon-dernier-202704282018",
+      "date": "2027-04-28",
+      "utc": "2027-04-28T20:18:00.000Z",
+      "precision": "minute",
+      "kind": "dernier",
+      "title": "Dernier quartier",
+      "type": "lune",
+      "priority": "interessant",
+      "visibility": "visible",
+      "period": "Instant exact de la phase, affiché en heure française.",
+      "material": "Œil nu / télescope selon objectif",
+      "description": "Phase principale du cycle lunaire ; visibilité à adapter à l’heure locale.",
+      "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
+      "source": {
+        "name": "US Naval Observatory — API officielle",
+        "url": "https://aa.usno.navy.mil/data/api"
+      }
+    },
+    {
+      "id": "auto-essaim-2027-5-6-taaquarides",
+      "date": "2027-05-06",
+      "utc": null,
+      "precision": "date",
+      "kind": "fenetre-essaim",
+      "title": "Période habituelle des Êta Aquarides",
+      "type": "meteores",
+      "priority": "interessant",
+      "visibility": "variable",
+      "period": "Fenêtre indicative autour de cette date ; maximum annuel à confirmer.",
+      "material": "Œil nu, ciel sombre",
+      "description": "L’essaim des Êta Aquarides connaît habituellement son activité maximale à cette période de l’année. Ceci N’EST PAS une prévision calculée du pic 2027.",
+      "advice": "Vérifier le calendrier IMO de l’année, le croissant/clair de Lune et l’heure de culmination du radiant.",
+      "source": {
+        "name": "International Meteor Organization — calendrier",
+        "url": "https://www.imo.net/calendar/"
+      }
+    },
+    {
+      "id": "auto-moon-nouvelle-202705061058",
+      "date": "2027-05-06",
+      "utc": "2027-05-06T10:58:00.000Z",
+      "precision": "minute",
+      "kind": "nouvelle",
+      "title": "Nouvelle Lune",
+      "type": "lune",
+      "priority": "majeur",
+      "visibility": "visible",
+      "period": "Instant exact de la phase, affiché en heure française.",
+      "material": "Œil nu / télescope selon objectif",
+      "description": "Absence de clair de Lune : période favorable aux objets faibles du ciel profond.",
+      "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
+      "source": {
+        "name": "US Naval Observatory — API officielle",
+        "url": "https://aa.usno.navy.mil/data/api"
+      }
+    },
+    {
+      "id": "auto-pair-Venus-Saturn-202705071840",
+      "date": "2027-05-07",
+      "utc": "2027-05-07T18:40:41.595Z",
+      "precision": "minute",
+      "kind": "paire-venus-saturn",
+      "source": {
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
+      },
+      "title": "Rapprochement Vénus – Saturne",
+      "type": "conjonction",
+      "priority": "majeur",
+      "visibility": "variable",
+      "period": "Observer autour de la date, quand les deux astres sont au-dessus de l’horizon.",
+      "material": "Œil nu / jumelles selon magnitude",
+      "description": "Séparation angulaire minimale géocentrique d’environ 0,6° entre Vénus et Saturne.",
+      "advice": "L’instant de rapprochement maximal peut se produire de jour ; vérifier la fenêtre nocturne locale."
+    }
+  ]
+}
