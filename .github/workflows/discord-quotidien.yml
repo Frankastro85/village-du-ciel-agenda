@@ -1,0 +1,48 @@
+name: Agenda Astro — bulletin Discord quotidien
+on:
+  schedule:
+    - cron: '10 8 * * *'  # 08:10 heure française (hiver et été)
+      timezone: 'Europe/Paris'
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Tester sans envoi, ou envoyer réellement sur Discord'
+        required: true
+        default: 'tester'
+        type: choice
+        options:
+          - tester
+          - envoyer
+permissions:
+  contents: write
+concurrency:
+  group: agenda-astro-discord
+  cancel-in-progress: false
+jobs:
+  discord:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Préparer l'aperçu (sans publication)
+        if: github.event_name == 'workflow_dispatch' && inputs.action == 'tester'
+        run: node scripts/discord-bulletin.mjs --dry-run
+      - name: Envoyer le bulletin sur Discord
+        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.action == 'envoyer')
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: node scripts/discord-bulletin.mjs --send
+      - name: Mémoriser la dernière publication pour éviter les doublons
+        if: success() && (github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.action == 'envoyer'))
+        run: |
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git config user.name 'github-actions[bot]'
+          git add data/discord-last-send.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Bulletin Discord $(date -u +%F)"
+            git push
+          fi
