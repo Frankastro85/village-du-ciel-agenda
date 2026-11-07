@@ -1,0 +1,1215 @@
+{
+  "version": "1.1",
+  "generatedAt": "2026-11-07",
+  "location": {
+    "name": "Les Herbiers (Vendée, France)",
+    "latitude": 46.87,
+    "longitude": -1.01,
+    "timezone": "Europe/Paris"
+  },
+  "period": {
+    "start": "2026-11-07",
+    "end": "2027-05-28"
+  },
+  "automationActive": false,
+  "notice": "Catalogue initial manuel. Les 4 phases lunaires principales sont issues de l’US Naval Observatory et calculées en UTC, puis affichées en heure Europe/Paris. Les aspects lunaires quotidiens sont indicatifs. Ni la veille automatique, ni les alertes e-mail ne sont actives.",
+  "events": [
+    {
+      "id": "2026-11-07-conjonction-30",
+      "date": "2026-11-07",
+      "title": "Fin croissant lunaire près de Vénus",
+      "type": "conjonction",
+      "priority": "interessant",
+      "visibility": "difficile",
+      "period": "Aube, horizon est dégagé",
+      "material": "Œil nu / jumelles",
+      "description": "La Lune et Vénus sont proches dans le ciel du matin. À repérer avant le lever du Soleil.",
+      "advice": "Ne jamais pointer des jumelles vers le Soleil.",
+      "source": {
+        "name": "Star Walk – calendrier 2026",
+        "url": "https://starwalk.space/fr/news/astronomy-calendar-2026"
+      },
+      "utc": null,
+      "precision": "date",
+      "kind": ""
+    },
+    {
+      "id": "2026-11-07-meteores-29",
+      "date": "2026-11-07",
+      "title": "Fin de l’activité des Orionides",
+      "type": "meteores",
+      "priority": "specialise",
+      "visibility": "variable",
+      "period": "Fin de période d’activité",
+      "material": "Œil nu",
+      "description": "Les Orionides s’achèvent après leur maximum d’octobre. Activité résiduelle faible.",
+      "advice": "Observation éventuelle après minuit sous un ciel sombre.",
+      "source": {
+        "name": "International Meteor Organization",
+        "url": "https://www.imo.net/calendar/"
+      },
+      "utc": null,
+      "precision": "date",
+      "kind": ""
+    },
+    {
+      "id": "2026-11-09-lune-01",
+      "date": "2026-11-09",
+      "title": "Nouvelle Lune",
+      "type": "lune",
+      "priority": "majeur",
+      "visibility": "visible",
+      "period": "Instant astronomique (heure française)",
+      "material": "Œil nu / télescope selon l’objectif",
+      "description": "Ciel sans Lune, favorable à l’observation du ciel profond et à l’astrophotographie.",
+      "advice": "Privilégier les galaxies, nébuleuses et objets faibles.",
+      "source": {
+        "name": "US Naval Observatory",
+        "url": "https://aa.usno.navy.mil/calculated/moon/phases?date=2026-08-12&format=p&nump=50&submit=Get+Data"
+      },
+      "utc": "2026-11-09T07:02:00Z",
+      "precision": "instant",
+      "kind": "nouvelle"
+    },
+    {
+      "id": "2026-11-11-meteores-31",
+      "date": "2026-11-11",
+      "title": "Maximum des Taurides du Nord",
+      "type": "meteores",
+      "priority": "interessant",
+      "visibility": "visible",
+      "period": "Nuits du 11 au 12 novembre",
+      "material": "Œil nu",
+      "description": "Essaim peu dense mais réputé pour ses météores lents et ses bolides. Conditions lunaires favorables.",
+      "advice": "Observer à partir de la soirée loin des éclairages urbains.",
+      "source": {
+        "name": "International Meteor Organization",
+        "url": "https://www.imo.net/calendar/"
+      },
+      "utc": null,
+      "precision": "date",
+      "kind": ""
+    },
+    {
+      "id": "2026-11-16-conjonction-32",
+      "date": "2026-11-16",
+      "title": "Mars et Jupiter : rapprochement serré",
+      "type": "conjonction",
+      "priority": "majeur",
+      "visibility": "visible",
+      "period": "Fin de nuit du 15 au 16 novembre (maximum le 16)",
+      "material": "Œil nu / jumelles",
+      "description": "Les deux planètes passent à environ 1,2° l’une de l’autre ; événement intéressant en photo grand champ.",
+      "advice": "Observer vers l’est avant l’aube, sous réserve de ciel dégagé.",
+      "source": {
+        "name": "Star Walk – conjonctions planétaires",
+        "url": "https://starwalk.space/fr/news/planetary-conjunctions"
+      },
+      "utc": null,
+      "precision": "date",
+      "kind": ""
+    },
+    {
+      "id": "2026-11-16-meteores-33",
+      "date": "2026-11-16",
+      "title": "Maximum des Léonides",
+      "type": "meteores",
+      "priority": "interessant",
+      "visibility": "visible",
+      "period": "Nuit du 16 au 17 novembre (pic prévisionnel)",
+      "material": "Œil nu",
+      "description": "Essaim issu de la comète 55P/Tempel-Tuttle. Activité variable ; la Lune peut gêner les météores faibles.",
+      "advice": "Privilégier la seconde partie de nuit.",
+      "source": {
+        "name": "International Meteor Organization",
+        "url": "https://www.imo.net/calendar/"
+      },
+      "utc": null,
+      "precision": "date",
+      "kind": ""
+    },
+    {
+      "id": "2026-11-17-lune-02",
+      "date": "2026-11-17",
+      "title": "Premier quartier de Lune",
+      "type": "lune",
+      "priority": "interessant",
+      "visibility": "visible",
+      "period": "Instant astronomique (heure française)",
+      "material": "Œil nu / télescope selon l’objectif",
+      "description": "Relief lunaire bien marqué près du terminateur, intéressant au télescope.",
+      "advice": "Observer les cratères au voisinage du terminateur.",
+      "source": {
+        "name": "US Naval Observatory",
+        "url": "https://aa.usno.navy.mil/calculated/moon/phases?date=2026-08-12&format=p&nump=50&submit=Get+Data"
+      },
+      "utc": "2026-11-17T11:48:00Z",
+      "precision": "instant",
+      "kind": "premier"
+    },
+    {
+      "id": "2026-11-20-planete-34",
+      "date": "2026-11-20",
+      "title": "Mercure : élongation maximale du matin",
+      "type": "planete",
+      "priority": "specialise",
+      "visibility": "difficile",
+      "period": "Peu avant le lever du Soleil",
+      "material": "Œil nu / jumelles avec précaution",
+      "description": "Mercure s’écarte du Soleil dans le ciel du matin, mais reste très basse.",
+      "advice": "Exiger un horizon est parfaitement dégagé ; ne jamais rechercher Mercure après le lever du Soleil.",
+      "source": {
+        "name": "NASA GSFC – SKYCAL (archives)",
+        "url": "https://eclipse.gsfc.nasa.gov/SKYCAL/SKYCAL.html?cal=2026"
+      },
+      "utc": null,
+      "precision": "date",
+      "kind": ""
+    },
+    {
+      "id": "2026-11-24-lune-03",
+      "date": "2026-11-24",
+      "title": "Pleine Lune",
+      "type": "lune",
+      "priority": "interessant",
+      "visibility": "visible",
+      "period": "Instant astronomique (heure française)",
+      "material": "Œil nu / télescope selon l’objectif",
+      "description": "Lune entièrement éclairée, très lumineuse : ciel profond défavorisé.",
+      "advice": "Photographie du disque lunaire ; éviter les objets faibles.",
+      "source": {
+        "name": "US Naval Observatory",
+        "url": "https://aa.usno.navy.mil/calculated/moon/phases?date=2026-08-12&format=p&nump=50&submit=Get+Data"
+      },
+      "utc": "2026-11-24T14:53:00Z",
+      "precision": "instant",
+      "kind": "pleine"
+    },
+    {
+      "id": "2026-11-25-planete-35",
+      "date": "2026-11-25",
+      "title": "Uranus à l’opposition",
+      "type": "planete",
+      "priority": "interessant",
+      "visibility": "visible",
+      "period": "Toute la nuit",
+      "material": "Jumelles / télescope",
+      "description": "Uranus est observable dans de bonnes conditions, proche de son éclat maximal annuel.",
+      "advice": "Préparer une carte précise pour distinguer Uranus des étoiles voisines.",
+      "source": {
+        "name": "NASA GSFC – SKYCAL (archives)",
+        "url": "https://eclipse.gsfc.nasa.gov/SKYCAL/SKYCAL.html?cal=2026"
+      },
+      "utc": null,
+      "precision": "date",
+      "kind": ""
+    },
+    {
+      "id": "2026-11-30-conjonction-36",
+      "date": "2026-11-30",
+      "title": "Lune proche de Jupiter et Mars",
+      "type": "conjonction",
+      "priority": "interessant",
+      "visibility": "variable",
+      "period": "Fin de nuit / aube",
+      "material": "Œil nu / jumelles",
+      "description": "Rassemblement apparent de la Lune et des planètes brillantes sur plusieurs degrés.",
+      "advice": "Vérifier les instants de lever et les angles depuis le site d’observation.",
+      "source": {
+        "name": "NASA GSFC – SKYCAL (archives)",
+        "url": "https://eclipse.gsfc.nasa.gov/SKYCAL/SKYCAL.html?cal=2026"
+      },
+      "utc": null,
+      "precision": "date",
+      "kind": ""
+    },
+    {
+      "id": "2026-12-01-lune-04",
+      "date": "2026-12-01",
+      "title": "Dernier quartier de Lune",
+      "type": "lune",
+      "priority": "interessant",
+      "visibility": "visible",
+      "period": "Instant astronomique (heure française)",
+      "material": "Œil nu / télescope selon l’objectif",
+      "description": "Relief lunaire contrasté en seconde partie de nuit.",
+      "advice": "Observer la Lune avant l’aube, ou le ciel profond en début de nuit.",
+      "source": {
+        "name": "US Naval Observatory",
+        "url": "https://aa.usno.navy.mil/calculated/moon/phases?date=2026-08-12&format=p&nump=50&submit=Get+Data"
+      },
+      "utc": "2026-12-01T06:08:00Z",
+      "precision": "instant",
+      "kind": "dernier"
+    },
+    {
+      "id": "2026-12-09-lune-05",
+      "date": "2026-12-09",
+      "title": "Nouvelle Lune",
+      "type": "lune",
+      "priority": "majeur",
+      "visibility": "visible",
+      "period": "Instant astronomique (heure française)",
+      "material": "Œil nu / télescope selon l’objectif",
+      "description": "Ciel sans Lune, favorable à l’observation du ciel profond et à l’astrophotographie.",
+      "advice": "Privilégier les galaxies, nébuleuses et objets faibles.",
+      "source": {
+        "name": "US Naval Observatory",
+        "url": "https://aa.usno.navy.mil/calculated/moon/phases?date=2026-08-12&format=p&nump=50&submit=Get+Data"
+      },
+      "utc": "2026-12-09T00:52:00Z",
+      "precision": "instant",
+      "kind": "nouvelle"
+    },
+    {
+      "id": "2026-12-12-conjonction-37",
+      "date": "2026-12-12",
+      "title": "Jupiter et Régulus proches",
+      "type": "conjonction",
+      "priority": "interessant",
+      "visibility": "visible",
+      "period": "Seconde partie de nuit",
+      "material": "Œil nu / jumelles",
+      "description": "Jupiter se rapproche de l’étoile Régulus dans la constellation du Lion.",
+      "advice": "Intéressant pour une photo au téléobjectif.",
+      "source": {
+        "name": "Star Walk – calendrier 2026",
+        "url": "https://starwalk.space/fr/news/astronomy-calendar-2026"
+      },
+      "utc": null,
+      "precision": "date",
+      "kind": ""
+    },
+    {
+      "id": "2026-12-13-meteores-38",
+      "date": "2026-12-13",
+      "title": "Maximum des Géminides",
+      "type": "meteores",
+      "priority": "majeur",
+      "visibility": "visible",
+      "period": "Nuit du 13 au 14 décembre",
+      "material": "Œil nu / appareil photo",
+      "description": "Un des essaims les plus actifs de l’année ; le faible éclairement lunaire favorise l’observation en 2026.",
+      "advice": "Prévoir un site sombre, vêtements chauds, et une observation prolongée.",
+      "source": {
+        "name": "International Meteor Organization",
+        "url": "https://www.imo.net/calendar/"
+      },
+      "utc": null,
+      "precision": "date",
+      "kind": ""
+    },
+    {
+      "id": "2026-12-17-lune-06",
+      "date": "2026-12-17",
+      "title": "Premier quartier de Lune",
+      "type": "lune",
+      "priority": "interessant",
+      "visibility": "visible",
+      "period": "Instant astronomique (heure française)",
+      "material": "Œil nu / télescope selon l’objectif",
+      "description": "Relief lunaire bien marqué près du terminateur, intéressant au télescope.",
+      "advice": "Observer les cratères au voisinage du terminateur.",
+      "source": {
+        "name": "US Naval Observatory",
+        "url": "https://aa.usno.navy.mil/calculated/moon/phases?date=2026-08-12&format=p&nump=50&submit=Get+Data"
+      },
+      "utc": "2026-12-17T05:42:00Z",
+      "precision": "instant",
+      "kind": "premier"
+    },
+    {
+      "id": "2026-12-21-meteores-40",
+      "date": "2026-12-21",
+      "title": "Maximum des Ursides",
+      "type": "meteores",
+      "priority": "interessant",
+      "visibility": "difficile",
+      "period": "Nuit du 21 au 22 décembre",
+      "material": "Œil nu",
+      "description": "Essaim modéré du ciel boréal, cette année fortement gêné par la Lune presque pleine.",
+      "advice": "Chercher les météores les plus brillants et protéger les yeux de la lumière lunaire.",
+      "source": {
+        "name": "International Meteor Organization",
+        "url": "https://www.imo.net/calendar/"
+      },
+      "utc": null,
+      "precision": "date",
+      "kind": ""
+    },
+    {
+      "id": "2026-12-21-saison-39",
+      "date": "2026-12-21",
+      "title": "Solstice d’hiver",
+      "type": "saison",
+      "priority": "specialise",
+      "visibility": "visible",
+      "period": "Instant astronomique",
+      "material": "Aucun matériel",
+      "description": "Journée la plus courte de l’année dans l’hémisphère Nord (solstice).",
+      "advice": "Repère de calendrier ; pas d’observation nocturne ponctuelle.",
+      "source": {
+        "name": "Société astronomique de France – éphémérides",
+        "url": "https://ccs.saf-astronomie.fr/ephemerides/ephemerides-2026/"
+      },
+      "utc": "2026-12-21T20:50:00Z",
+      "precision": "instant",
+      "kind": ""
+    },
+    {
+      "id": "2026-12-24-lune-07",
+      "date": "2026-12-24",
+      "title": "Pleine Lune",
+      "type": "lune",
+      "priority": "interessant",
+      "visibility": "visible",
+      "period": "Instant astronomique (heure française)",
+      "material": "Œil nu / télescope selon l’objectif",
+      "description": "Lune entièrement éclairée, très lumineuse : ciel profond défavorisé.",
+      "advice": "Photographie du disque lunaire ; éviter les objets faibles.",
+      "source": {
+        "name": "US Naval Observatory",
+        "url": "https://aa.usno.navy.mil/calculated/moon/phases?date=2026-08-12&format=p&nump=50&submit=Get+Data"
+      },
+      "utc": "2026-12-24T01:28:00Z",
+      "precision": "instant",
+      "kind": "pleine"
+    },
+    {
+      "id": "2026-12-30-lune-08",
+      "date": "2026-12-30",
+      "title": "Dernier quartier de Lune",
+      "type": "lune",
+      "priority": "interessant",
+      "visibility": "visible",
+      "period": "Instant astronomique (heure française)",
+      "material": "Œil nu / télescope selon l’objectif",
+      "description": "Relief lunaire contrasté en seconde partie de nuit.",
+      "advice": "Observer la Lune avant l’aube, ou le ciel profond en début de nuit.",
+      "source": {
+        "name": "US Naval Observatory",
+        "url": "https://aa.usno.navy.mil/calculated/moon/phases?date=2026-08-12&format=p&nump=50&submit=Get+Data"
+      },
+      "utc": "2026-12-30T18:59:00Z",
+      "precision": "instant",
+      "kind": "dernier"
+    },
+    {
+      "id": "2027-01-03-planete-41",
+      "date": "2027-01-03",
+      "title": "Vénus : élongation maximale du matin",
+      "type": "planete",
+      "priority": "interessant",
+      "visibility": "visible",
+      "period": "Avant le lever du Soleil",
+      "material": "Œil nu / jumelles",
+      "description": "Vénus atteint une large séparation angulaire à l’ouest du Soleil (~47°), donc bien placée le matin.",
+      "advice": "Observer avant l’aube dans un horizon sud-est à est dégagé.",
+      "source": {
+        "name": "Astrotempo – éphémérides 2027",
+        "url": "https://astrotempo.com/fr/evenements/2027/"
+      },
+      "utc": null,
+      "precision": "date",
+      "kind": ""
+    },
+    {
+      "id": "2027-01-04-meteores-42",
+      "date": "2027-01-04",
+      "title": "Maximum des Quadrantides",
+      "type": "meteores",
+      "priority": "majeur",
+      "visibility": "visible",
+      "period": "Nuit du 3 au 4 janvier ; pic vers 04 h 30 (heure française)",
+      "material": "Œil nu / appareil photo",
+      "description": "Maximum bref : l’IMO prévoit un pic vers 03 h 30 UTC le 4 janvier, favorable à l’Europe. Lune peu gênante.",
+      "advice": "Réserver le créneau de fin de nuit, particulièrement avant l’aube.",
+      "source": {
+        "name": "International Meteor Organization",
+        "url": "https://www.imo.net/calendar/"
+      },
+      "utc": "2027-01-04T03:30:00Z",
+      "precision": "approx",
+      "kind": ""
+    },
+    {
+      "id": "2027-01-07-lune-09",
+      "date": "2027-01-07",
+      "title": "Nouvelle Lune",
+      "type": "lune",
+      "priority": "majeur",
+      "visibility": "visible",
+      "period": "Instant astronomique (heure française)",
+      "material": "Œil nu / télescope selon l’objectif",
+      "description": "Ciel sans Lune, favorable à l’observation du ciel profond et à l’astrophotographie.",
+      "advice": "Privilégier les galaxies, nébuleuses et objets faibles.",
+      "source": {
+        "name": "US Naval Observatory",
+        "url": "https://aa.usno.navy.mil/calculated/moon/phases?date=2026-08-12&format=p&nump=50&submit=Get+Data"
+      },
+      "utc": "2027-01-07T20:24:00Z",
+      "precision": "instant",
+      "kind": "nouvelle"
+    },
+    {
+      "id": "2027-01-15-lune-10",
+      "date": "2027-01-15",
+      "title": "Premier quartier de Lune",
+      "type": "lune",
+      "priority": "interessant",
+      "visibility": "visible",
+      "period": "Instant astronomique (heure française)",
+      "material": "Œil nu / télescope selon l’objectif",
+      "description": "Relief lunaire bien marqué près du terminateur, intéressant au télescope.",
+      "advice": "Observer les cratères au voisinage du terminateur.",
+      "source": {
+        "name": "US Naval Observatory",
+        "url": "https://aa.usno.navy.mil/calculated/moon/phases?date=2026-08-12&format=p&nump=50&submit=Get+Data"
+      },
+      "utc": "2027-01-15T20:34:00Z",
+      "precision": "instant",
+      "kind": "premier"
+    },
+    {
+      "id": "2027-01-18-conjonction-43",
+      "date": "2027-01-18",
+      "title": "Lune et Pléiades : rapprochement",
+      "type": "conjonction",
+      "priority": "interessant",
+      "visibility": "variable",
+      "period": "Selon l’heure de visibilité",
+      "material": "Œil nu / jumelles",
+      "description": "La Lune passe près de l’amas des Pléiades. La proximité géocentrique ne garantit pas une belle configuration à toute heure.",
+      "advice": "Observer la veille et le soir-même pour choisir le meilleur cadrage.",
+      "source": {
+        "name": "Astrotempo – éphémérides 2027",
+        "url": "https://astrotempo.com/fr/evenements/2027/"
+      },
+      "utc": null,
+      "precision": "date",
+      "kind": ""
+    },
+    {
+      "id": "2027-01-22-lune-11",
+      "date": "2027-01-22",
+      "title": "Pleine Lune",
+      "type": "lune",
+      "priority": "interessant",
+      "visibility": "visible",
+      "period": "Instant astronomique (heure française)",
+      "material": "Œil nu / télescope selon l’objectif",
+      "description": "Lune entièrement éclairée, très lumineuse : ciel profond défavorisé.",
+      "advice": "Photographie du disque lunaire ; éviter les objets faibles.",
+      "source": {
+        "name": "US Naval Observatory",
+        "url": "https://aa.usno.navy.mil/calculated/moon/phases?date=2026-08-12&format=p&nump=50&submit=Get+Data"
+      },
+      "utc": "2027-01-22T12:17:00Z",
+      "precision": "instant",
+      "kind": "pleine"
+    },
+    {
+      "id": "2027-01-24-conjonction-44",
+      "date": "2027-01-24",
+      "title": "Lune et Jupiter : rapprochement",
+      "type": "conjonction",
+      "priority": "interessant",
+      "visibility": "visible",
+      "period": "Nuit du 23 au 24 janvier",
+      "material": "Œil nu / jumelles",
+      "description": "Rapprochement de Jupiter et de la Lune, intéressant en grand champ.",
+      "advice": "Vérifier les positions exactes sur une carte locale avant de sortir.",
+      "source": {
+        "name": "Astrotempo – éphémérides 2027",
+        "url": "https://astrotempo.com/fr/evenements/2027/"
+      },
+      "utc": null,
+      "precision": "date",
+      "kind": ""
+    },
+    {
+      "id": "2027-01-29-lune-12",
+      "date": "2027-01-29",
+      "title": "Dernier quartier de Lune",
+      "type": "lune",
+      "priority": "interessant",
+      "visibility": "visible",
+      "period": "Instant astronomique (heure française)",
+      "material": "Œil nu / télescope selon l’objectif",
+      "description": "Relief lunaire contrasté en seconde partie de nuit.",
+      "advice": "Observer la Lune avant l’aube, ou le ciel profond en début de nuit.",
+      "source": {
+        "name": "US Naval Observatory",
+        "url": "https://aa.usno.navy.mil/calculated/moon/phases?date=2026-08-12&format=p&nump=50&submit=Get+Data"
+      },
+      "utc": "2027-01-29T10:55:00Z",
+      "precision": "instant",
+      "kind": "dernier"
+    },
+    {
+      "id": "2027-02-03-planete-45",
+      "date": "2027-02-03",
+      "title": "Mercure : élongation maximale du soir",
+      "type": "planete",
+      "priority": "interessant",
+      "visibility": "variable",
+      "period": "Crépuscule, horizon ouest",
+      "material": "Œil nu / jumelles avec précaution",
+      "description": "Mercure atteint sa plus grande élongation orientale (environ 18°). Sa hauteur réelle au crépuscule dépend de la saison.",
+      "advice": "Chercher après disparition complète du Soleil, sans diriger les jumelles vers lui.",
+      "source": {
+        "name": "Astrotempo – éphémérides 2027",
+        "url": "https://astrotempo.com/fr/evenements/2027/"
+      },
+      "utc": null,
+      "precision": "date",
+      "kind": ""
+    },
+    {
+      "id": "2027-02-06-eclipse-46",
+      "date": "2027-02-06",
+      "title": "Éclipse annulaire de Soleil (hors Vendée)",
+      "type": "eclipse",
+      "priority": "majeur",
+      "visibility": "invisible",
+      "period": "Événement mondial, non visible aux Herbiers",
+      "material": "Observation uniquement depuis la zone d’éclipse",
+      "description": "Éclipse annulaire observable principalement en Amérique du Sud et en Afrique. Pas d’observation locale en Vendée.",
+      "advice": "Ne jamais observer le Soleil sans protection solaire certifiée.",
+      "source": {
+        "name": "NASA – éclipses à venir",
+        "url": "https://science.nasa.gov/eclipses/future-eclipses/"
+      },
+      "utc": null,
+      "precision": "date",
+      "kind": ""
+    },
+    {
+      "id": "2027-02-06-lune-13",
+      "date": "2027-02-06",
+      "title": "Nouvelle Lune",
+      "type": "lune",
+      "priority": "majeur",
+      "visibility": "visible",
+      "period": "Instant astronomique (heure française)",
+      "material": "Œil nu / télescope selon l’objectif",
+      "description": "Ciel sans Lune, favorable à l’observation du ciel profond et à l’astrophotographie.",
+      "advice": "Privilégier les galaxies, nébuleuses et objets faibles.",
+      "source": {
+        "name": "US Naval Observatory",
+        "url": "https://aa.usno.navy.mil/calculated/moon/phases?date=2026-08-12&format=p&nump=50&submit=Get+Data"
+      },
+      "utc": "2027-02-06T15:56:00Z",
+      "precision": "instant",
+      "kind": "nouvelle"
+    },
+    {
+      "id": "2027-02-11-planete-47",
+      "date": "2027-02-11",
+      "title": "Jupiter à l’opposition",
+      "type": "planete",
+      "priority": "majeur",
+      "visibility": "visible",
+      "period": "Toute la nuit",
+      "material": "Télescope / jumelles",
+      "description": "Jupiter est opposée au Soleil : période très favorable à l’observation des bandes nuageuses et de ses satellites.",
+      "advice": "Observer à plusieurs heures pour suivre la rotation et le mouvement des satellites.",
+      "source": {
+        "name": "Astrotempo – éphémérides 2027",
+        "url": "https://astrotempo.com/fr/evenements/2027/"
+      },
+      "utc": null,
+      "precision": "date",
+      "kind": ""
+    },
+    {
+      "id": "2027-02-14-conjonction-48",
+      "date": "2027-02-14",
+      "title": "Lune et Pléiades : rapprochement",
+      "type": "conjonction",
+      "priority": "interessant",
+      "visibility": "variable",
+      "period": "En soirée suivant les positions",
+      "material": "Jumelles / œil nu",
+      "description": "Passage apparent de la Lune près de l’amas des Pléiades.",
+      "advice": "Privilégier un champ assez large pour les deux objets.",
+      "source": {
+        "name": "Astrotempo – éphémérides 2027",
+        "url": "https://astrotempo.com/fr/evenements/2027/"
+      },
+      "utc": null,
+      "precision": "date",
+      "kind": ""
+    },
+    {
+      "id": "2027-02-14-lune-14",
+      "date": "2027-02-14",
+      "title": "Premier quartier de Lune",
+      "type": "lune",
+      "priority": "interessant",
+      "visibility": "visible",
+      "period": "Instant astronomique (heure française)",
+      "material": "Œil nu / télescope selon l’objectif",
+      "description": "Relief lunaire bien marqué près du terminateur, intéressant au télescope.",
+      "advice": "Observer les cratères au voisinage du terminateur.",
+      "source": {
+        "name": "US Naval Observatory",
+        "url": "https://aa.usno.navy.mil/calculated/moon/phases?date=2026-08-12&format=p&nump=50&submit=Get+Data"
+      },
+      "utc": "2027-02-14T07:58:00Z",
+      "precision": "instant",
+      "kind": "premier"
+    },
+    {
+      "id": "2027-02-19-planete-49",
+      "date": "2027-02-19",
+      "title": "Mars à l’opposition",
+      "type": "planete",
+      "priority": "majeur",
+      "visibility": "visible",
+      "period": "Toute la nuit",
+      "material": "Télescope",
+      "description": "Mars se trouve à l’opposition. Son disque apparent reste modeste comparé aux meilleures oppositions, mais l’observation planétaire est favorisée.",
+      "advice": "Prévoir plusieurs acquisitions vidéo pour tenter de saisir les détails de surface.",
+      "source": {
+        "name": "Astrotempo – éphémérides 2027",
+        "url": "https://astrotempo.com/fr/evenements/2027/"
+      },
+      "utc": null,
+      "precision": "date",
+      "kind": ""
+    },
+    {
+      "id": "2027-02-21-eclipse-50",
+      "date": "2027-02-21",
+      "title": "Éclipse de Lune par la pénombre",
+      "type": "eclipse",
+      "priority": "interessant",
+      "visibility": "visible",
+      "period": "Maximum vers 00 h 13, heure française",
+      "material": "Œil nu / appareil photo",
+      "description": "Éclipse pénombrale visible depuis l’Europe, mais assombrissement très subtil, parfois difficile à détecter visuellement.",
+      "advice": "Réaliser des photos comparatives avant et autour du maximum.",
+      "source": {
+        "name": "NASA – éclipses à venir",
+        "url": "https://science.nasa.gov/eclipses/future-eclipses/"
+      },
+      "utc": "2027-02-20T23:13:00Z",
+      "precision": "approx",
+      "kind": ""
+    },
+    {
+      "id": "2027-02-21-lune-15",
+      "date": "2027-02-21",
+      "title": "Pleine Lune",
+      "type": "lune",
+      "priority": "interessant",
+      "visibility": "visible",
+      "period": "Instant astronomique (heure française)",
+      "material": "Œil nu / télescope selon l’objectif",
+      "description": "Lune entièrement éclairée, très lumineuse : ciel profond défavorisé.",
+      "advice": "Photographie du disque lunaire ; éviter les objets faibles.",
+      "source": {
+        "name": "US Naval Observatory",
+        "url": "https://aa.usno.navy.mil/calculated/moon/phases?date=2026-08-12&format=p&nump=50&submit=Get+Data"
+      },
+      "utc": "2027-02-20T23:23:00Z",
+      "precision": "instant",
+      "kind": "pleine"
+    },
+    {
+      "id": "2027-02-28-lune-16",
+      "date": "2027-02-28",
+      "title": "Dernier quartier de Lune",
+      "type": "lune",
+      "priority": "interessant",
+      "visibility": "visible",
+      "period": "Instant astronomique (heure française)",
+      "material": "Œil nu / télescope selon l’objectif",
+      "description": "Relief lunaire contrasté en seconde partie de nuit.",
+      "advice": "Observer la Lune avant l’aube, ou le ciel profond en début de nuit.",
+      "source": {
+        "name": "US Naval Observatory",
+        "url": "https://aa.usno.navy.mil/calculated/moon/phases?date=2026-08-12&format=p&nump=50&submit=Get+Data"
+      },
+      "utc": "2027-02-28T05:16:00Z",
+      "precision": "instant",
+      "kind": "dernier"
+    },
+    {
+      "id": "2027-03-04-conjonction-51",
+      "date": "2027-03-04",
+      "title": "Lune et Vénus : rapprochement",
+      "type": "conjonction",
+      "priority": "interessant",
+      "visibility": "variable",
+      "period": "Observation plutôt au matin selon leur hauteur",
+      "material": "Œil nu / jumelles",
+      "description": "Rapprochement apparent de la Lune et de Vénus.",
+      "advice": "Préparer le champ sur une application de planétarium.",
+      "source": {
+        "name": "Astrotempo – éphémérides 2027",
+        "url": "https://astrotempo.com/fr/evenements/2027/"
+      },
+      "utc": null,
+      "precision": "date",
+      "kind": ""
+    },
+    {
+      "id": "2027-03-08-lune-17",
+      "date": "2027-03-08",
+      "title": "Nouvelle Lune",
+      "type": "lune",
+      "priority": "majeur",
+      "visibility": "visible",
+      "period": "Instant astronomique (heure française)",
+      "material": "Œil nu / télescope selon l’objectif",
+      "description": "Ciel sans Lune, favorable à l’observation du ciel profond et à l’astrophotographie.",
+      "advice": "Privilégier les galaxies, nébuleuses et objets faibles.",
+      "source": {
+        "name": "US Naval Observatory",
+        "url": "https://aa.usno.navy.mil/calculated/moon/phases?date=2026-08-12&format=p&nump=50&submit=Get+Data"
+      },
+      "utc": "2027-03-08T09:29:00Z",
+      "precision": "instant",
+      "kind": "nouvelle"
+    },
+    {
+      "id": "2027-03-13-conjonction-52",
+      "date": "2027-03-13",
+      "title": "Lune proche des Pléiades",
+      "type": "conjonction",
+      "priority": "interessant",
+      "visibility": "visible",
+      "period": "Soirée / nuit",
+      "material": "Œil nu / jumelles",
+      "description": "La Lune passe près des Pléiades, occasion d’un cadrage lunaire et stellaire.",
+      "advice": "Photographier avec plusieurs expositions pour limiter la surexposition lunaire.",
+      "source": {
+        "name": "Astrotempo – éphémérides 2027",
+        "url": "https://astrotempo.com/fr/evenements/2027/"
+      },
+      "utc": null,
+      "precision": "date",
+      "kind": ""
+    },
+    {
+      "id": "2027-03-15-lune-18",
+      "date": "2027-03-15",
+      "title": "Premier quartier de Lune",
+      "type": "lune",
+      "priority": "interessant",
+      "visibility": "visible",
+      "period": "Instant astronomique (heure française)",
+      "material": "Œil nu / télescope selon l’objectif",
+      "description": "Relief lunaire bien marqué près du terminateur, intéressant au télescope.",
+      "advice": "Observer les cratères au voisinage du terminateur.",
+      "source": {
+        "name": "US Naval Observatory",
+        "url": "https://aa.usno.navy.mil/calculated/moon/phases?date=2026-08-12&format=p&nump=50&submit=Get+Data"
+      },
+      "utc": "2027-03-15T16:25:00Z",
+      "precision": "instant",
+      "kind": "premier"
+    },
+    {
+      "id": "2027-03-17-planete-53",
+      "date": "2027-03-17",
+      "title": "Mercure : élongation maximale du matin",
+      "type": "planete",
+      "priority": "specialise",
+      "visibility": "variable",
+      "period": "Aube, horizon est",
+      "material": "Œil nu / jumelles avec précaution",
+      "description": "Séparation maximale d’environ 28° à l’ouest du Soleil.",
+      "advice": "Observer avant le lever du Soleil, horizon est dégagé.",
+      "source": {
+        "name": "Astrotempo – éphémérides 2027",
+        "url": "https://astrotempo.com/fr/evenements/2027/"
+      },
+      "utc": null,
+      "precision": "date",
+      "kind": ""
+    },
+    {
+      "id": "2027-03-19-conjonction-54",
+      "date": "2027-03-19",
+      "title": "Lune près de Jupiter et de Mars",
+      "type": "conjonction",
+      "priority": "majeur",
+      "visibility": "visible",
+      "period": "Autour du 19 mars, soirée et nuit",
+      "material": "Œil nu / jumelles",
+      "description": "Passages rapprochés de la Lune près des deux planètes, intéressants pour une série photographique.",
+      "advice": "Suivre les positions les 18, 19 et 20 mars.",
+      "source": {
+        "name": "Astrotempo – éphémérides 2027",
+        "url": "https://astrotempo.com/fr/evenements/2027/"
+      },
+      "utc": null,
+      "precision": "date",
+      "kind": ""
+    },
+    {
+      "id": "2027-03-20-saison-55",
+      "date": "2027-03-20",
+      "title": "Équinoxe de printemps",
+      "type": "saison",
+      "priority": "specialise",
+      "visibility": "visible",
+      "period": "21 h 24 en France",
+      "material": "Aucun matériel",
+      "description": "Début astronomique du printemps dans l’hémisphère Nord.",
+      "advice": "Bon repère pour la préparation des séances de printemps.",
+      "source": {
+        "name": "Time and Date – équinoxe",
+        "url": "https://www.timeanddate.com/calendar/march-equinox.html"
+      },
+      "utc": "2027-03-20T20:24:00Z",
+      "precision": "instant",
+      "kind": ""
+    },
+    {
+      "id": "2027-03-22-lune-19",
+      "date": "2027-03-22",
+      "title": "Pleine Lune",
+      "type": "lune",
+      "priority": "interessant",
+      "visibility": "visible",
+      "period": "Instant astronomique (heure française)",
+      "material": "Œil nu / télescope selon l’objectif",
+      "description": "Lune entièrement éclairée, très lumineuse : ciel profond défavorisé.",
+      "advice": "Photographie du disque lunaire ; éviter les objets faibles.",
+      "source": {
+        "name": "US Naval Observatory",
+        "url": "https://aa.usno.navy.mil/calculated/moon/phases?date=2026-08-12&format=p&nump=50&submit=Get+Data"
+      },
+      "utc": "2027-03-22T10:44:00Z",
+      "precision": "instant",
+      "kind": "pleine"
+    },
+    {
+      "id": "2027-03-30-lune-20",
+      "date": "2027-03-30",
+      "title": "Dernier quartier de Lune",
+      "type": "lune",
+      "priority": "interessant",
+      "visibility": "visible",
+      "period": "Instant astronomique (heure française)",
+      "material": "Œil nu / télescope selon l’objectif",
+      "description": "Relief lunaire contrasté en seconde partie de nuit.",
+      "advice": "Observer la Lune avant l’aube, ou le ciel profond en début de nuit.",
+      "source": {
+        "name": "US Naval Observatory",
+        "url": "https://aa.usno.navy.mil/calculated/moon/phases?date=2026-08-12&format=p&nump=50&submit=Get+Data"
+      },
+      "utc": "2027-03-30T00:54:00Z",
+      "precision": "instant",
+      "kind": "dernier"
+    },
+    {
+      "id": "2027-03-31-conjonction-56",
+      "date": "2027-03-31",
+      "title": "Mars et Jupiter : rapprochement",
+      "type": "conjonction",
+      "priority": "interessant",
+      "visibility": "visible",
+      "period": "Ciel du soir, autour du 31 mars",
+      "material": "Œil nu / jumelles",
+      "description": "Les planètes apparaissent à environ 4° l’une de l’autre : joli alignement grand champ.",
+      "advice": "Observer quelques jours avant et après pour apprécier le déplacement relatif.",
+      "source": {
+        "name": "Star Walk – conjonctions planétaires",
+        "url": "https://starwalk.space/fr/news/planetary-conjunctions"
+      },
+      "utc": null,
+      "precision": "date",
+      "kind": ""
+    },
+    {
+      "id": "2027-04-04-conjonction-57",
+      "date": "2027-04-04",
+      "title": "Lune et Vénus : rapprochement",
+      "type": "conjonction",
+      "priority": "interessant",
+      "visibility": "variable",
+      "period": "Matin / aube",
+      "material": "Œil nu / jumelles",
+      "description": "Rapprochement apparent Lune–Vénus.",
+      "advice": "Horizon dégagé indispensable si l’ensemble est bas.",
+      "source": {
+        "name": "Astrotempo – éphémérides 2027",
+        "url": "https://astrotempo.com/fr/evenements/2027/"
+      },
+      "utc": null,
+      "precision": "date",
+      "kind": ""
+    },
+    {
+      "id": "2027-04-07-lune-21",
+      "date": "2027-04-07",
+      "title": "Nouvelle Lune",
+      "type": "lune",
+      "priority": "majeur",
+      "visibility": "visible",
+      "period": "Instant astronomique (heure française)",
+      "material": "Œil nu / télescope selon l’objectif",
+      "description": "Ciel sans Lune, favorable à l’observation du ciel profond et à l’astrophotographie.",
+      "advice": "Privilégier les galaxies, nébuleuses et objets faibles.",
+      "source": {
+        "name": "US Naval Observatory",
+        "url": "https://aa.usno.navy.mil/calculated/moon/phases?date=2026-08-12&format=p&nump=50&submit=Get+Data"
+      },
+      "utc": "2027-04-06T23:51:00Z",
+      "precision": "instant",
+      "kind": "nouvelle"
+    },
+    {
+      "id": "2027-04-10-conjonction-58",
+      "date": "2027-04-10",
+      "title": "Lune proche des Pléiades",
+      "type": "conjonction",
+      "priority": "interessant",
+      "visibility": "variable",
+      "period": "Crépuscule / soirée",
+      "material": "Œil nu / jumelles",
+      "description": "Rencontre apparente entre le croissant lunaire et les Pléiades, dans une saison moins favorable au fil des semaines.",
+      "advice": "Surveiller la hauteur sur l’horizon ouest.",
+      "source": {
+        "name": "Astrotempo – éphémérides 2027",
+        "url": "https://astrotempo.com/fr/evenements/2027/"
+      },
+      "utc": null,
+      "precision": "date",
+      "kind": ""
+    },
+    {
+      "id": "2027-04-14-lune-22",
+      "date": "2027-04-14",
+      "title": "Premier quartier de Lune",
+      "type": "lune",
+      "priority": "interessant",
+      "visibility": "visible",
+      "period": "Instant astronomique (heure française)",
+      "material": "Œil nu / télescope selon l’objectif",
+      "description": "Relief lunaire bien marqué près du terminateur, intéressant au télescope.",
+      "advice": "Observer les cratères au voisinage du terminateur.",
+      "source": {
+        "name": "US Naval Observatory",
+        "url": "https://aa.usno.navy.mil/calculated/moon/phases?date=2026-08-12&format=p&nump=50&submit=Get+Data"
+      },
+      "utc": "2027-04-13T22:56:00Z",
+      "precision": "instant",
+      "kind": "premier"
+    },
+    {
+      "id": "2027-04-15-conjonction-59",
+      "date": "2027-04-15",
+      "title": "Lune proche de Jupiter et de Mars",
+      "type": "conjonction",
+      "priority": "majeur",
+      "visibility": "visible",
+      "period": "Soirées du 15 au 16 avril",
+      "material": "Œil nu / jumelles",
+      "description": "La Lune passe près des deux planètes à un jour d’intervalle.",
+      "advice": "Comparer les cadrages sur deux soirées consécutives.",
+      "source": {
+        "name": "Astrotempo – éphémérides 2027",
+        "url": "https://astrotempo.com/fr/evenements/2027/"
+      },
+      "utc": null,
+      "precision": "date",
+      "kind": ""
+    },
+    {
+      "id": "2027-04-19-conjonction-60",
+      "date": "2027-04-19",
+      "title": "Mercure et Saturne : conjonction difficile",
+      "type": "conjonction",
+      "priority": "specialise",
+      "visibility": "difficile",
+      "period": "Aube, très bas près du Soleil",
+      "material": "Réservé aux observateurs expérimentés",
+      "description": "Conjonction serrée (~0,6°), mais faible élongation solaire : événement essentiellement théorique pour la Vendée.",
+      "advice": "Ne jamais pointer d’optique près du Soleil ; ne pas tenter sans conditions parfaitement sûres.",
+      "source": {
+        "name": "Star Walk – conjonctions planétaires",
+        "url": "https://starwalk.space/fr/news/planetary-conjunctions"
+      },
+      "utc": null,
+      "precision": "date",
+      "kind": ""
+    },
+    {
+      "id": "2027-04-21-lune-23",
+      "date": "2027-04-21",
+      "title": "Pleine Lune",
+      "type": "lune",
+      "priority": "interessant",
+      "visibility": "visible",
+      "period": "Instant astronomique (heure française)",
+      "material": "Œil nu / télescope selon l’objectif",
+      "description": "Lune entièrement éclairée, très lumineuse : ciel profond défavorisé.",
+      "advice": "Photographie du disque lunaire ; éviter les objets faibles.",
+      "source": {
+        "name": "US Naval Observatory",
+        "url": "https://aa.usno.navy.mil/calculated/moon/phases?date=2026-08-12&format=p&nump=50&submit=Get+Data"
+      },
+      "utc": "2027-04-20T22:27:00Z",
+      "precision": "instant",
+      "kind": "pleine"
+    },
+    {
+      "id": "2027-04-22-meteores-61",
+      "date": "2027-04-22",
+      "title": "Maximum des Lyrides",
+      "type": "meteores",
+      "priority": "interessant",
+      "visibility": "difficile",
+      "period": "Nuit du 21 au 22 ou du 22 au 23 avril selon la prévision",
+      "material": "Œil nu",
+      "description": "Essaim boréal d’activité modérée, pénalisé en 2027 par une Lune quasiment pleine.",
+      "advice": "Chercher les météores brillants en seconde partie de nuit.",
+      "source": {
+        "name": "International Meteor Organization",
+        "url": "https://www.imo.net/calendar/"
+      },
+      "utc": null,
+      "precision": "date",
+      "kind": ""
+    },
+    {
+      "id": "2027-04-28-lune-24",
+      "date": "2027-04-28",
+      "title": "Dernier quartier de Lune",
+      "type": "lune",
+      "priority": "interessant",
+      "visibility": "visible",
+      "period": "Instant astronomique (heure française)",
+      "material": "Œil nu / télescope selon l’objectif",
+      "description": "Relief lunaire contrasté en seconde partie de nuit.",
+      "advice": "Observer la Lune avant l’aube, ou le ciel profond en début de nuit.",
+      "source": {
+        "name": "US Naval Observatory",
+        "url": "https://aa.usno.navy.mil/calculated/moon/phases?date=2026-08-12&format=p&nump=50&submit=Get+Data"
+      },
+      "utc": "2027-04-28T20:18:00Z",
+      "precision": "instant",
+      "kind": "dernier"
+    },
+    {
+      "id": "2027-05-05-meteores-62",
+      "date": "2027-05-05",
+      "title": "Maximum des Êta Aquarides",
+      "type": "meteores",
+      "priority": "interessant",
+      "visibility": "difficile",
+      "period": "Nuit du 5 au 6 mai, surtout juste avant l’aube",
+      "material": "Œil nu",
+      "description": "Essaim issu de la comète de Halley, surtout favorable aux régions tropicales. Depuis la Vendée, radiant bas et fenêtre courte.",
+      "advice": "Regarder vers l’est en toute fin de nuit, horizon dégagé.",
+      "source": {
+        "name": "International Meteor Organization",
+        "url": "https://www.imo.net/calendar/"
+      },
+      "utc": null,
+      "precision": "date",
+      "kind": ""
+    },
+    {
+      "id": "2027-05-06-lune-25",
+      "date": "2027-05-06",
+      "title": "Nouvelle Lune",
+      "type": "lune",
+      "priority": "majeur",
+      "visibility": "visible",
+      "period": "Instant astronomique (heure française)",
+      "material": "Œil nu / télescope selon l’objectif",
+      "description": "Ciel sans Lune, favorable à l’observation du ciel profond et à l’astrophotographie.",
+      "advice": "Privilégier les galaxies, nébuleuses et objets faibles.",
+      "source": {
+        "name": "US Naval Observatory",
+        "url": "https://aa.usno.navy.mil/calculated/moon/phases?date=2026-08-12&format=p&nump=50&submit=Get+Data"
+      },
+      "utc": "2027-05-06T10:58:00Z",
+      "precision": "instant",
+      "kind": "nouvelle"
+    },
+    {
+      "id": "2027-05-07-conjonction-63",
+      "date": "2027-05-07",
+      "title": "Vénus et Saturne : conjonction",
+      "type": "conjonction",
+      "priority": "interessant",
+      "visibility": "variable",
+      "period": "Ciel du matin",
+      "material": "Œil nu / jumelles",
+      "description": "Rapprochement planétaire serré, d’environ 0,6°, dans le ciel du matin.",
+      "advice": "Vérifier la hauteur à l’aube et ne jamais chercher au voisinage du Soleil.",
+      "source": {
+        "name": "WhatTheStar – conjonctions planétaires",
+        "url": "https://www.whatthestar.com/planets"
+      },
+      "utc": null,
+      "precision": "date",
+      "kind": ""
+    },
+    {
+      "id": "2027-05-13-lune-26",
+      "date": "2027-05-13",
+      "title": "Premier quartier de Lune",
+      "type": "lune",
+      "priority": "interessant",
+      "visibility": "visible",
+      "period": "Instant astronomique (heure française)",
+      "material": "Œil nu / télescope selon l’objectif",
+      "description": "Relief lunaire bien marqué près du terminateur, intéressant au télescope.",
+      "advice": "Observer les cratères au voisinage du terminateur.",
+      "source": {
+        "name": "US Naval Observatory",
+        "url": "https://aa.usno.navy.mil/calculated/moon/phases?date=2026-08-12&format=p&nump=50&submit=Get+Data"
+      },
+      "utc": "2027-05-13T04:44:00Z",
+      "precision": "instant",
+      "kind": "premier"
+    },
+    {
+      "id": "2027-05-20-lune-27",
+      "date": "2027-05-20",
+      "title": "Pleine Lune",
+      "type": "lune",
+      "priority": "interessant",
+      "visibility": "visible",
+      "period": "Instant astronomique (heure française)",
+      "material": "Œil nu / télescope selon l’objectif",
+      "description": "Lune entièrement éclairée, très lumineuse : ciel profond défavorisé.",
+      "advice": "Photographie du disque lunaire ; éviter les objets faibles.",
+      "source": {
+        "name": "US Naval Observatory",
+        "url": "https://aa.usno.navy.mil/calculated/moon/phases?date=2026-08-12&format=p&nump=50&submit=Get+Data"
+      },
+      "utc": "2027-05-20T10:59:00Z",
+      "precision": "instant",
+      "kind": "pleine"
+    },
+    {
+      "id": "2027-05-28-lune-28",
+      "date": "2027-05-28",
+      "title": "Dernier quartier de Lune",
+      "type": "lune",
+      "priority": "interessant",
+      "visibility": "visible",
+      "period": "Instant astronomique (heure française)",
+      "material": "Œil nu / télescope selon l’objectif",
+      "description": "Relief lunaire contrasté en seconde partie de nuit.",
+      "advice": "Observer la Lune avant l’aube, ou le ciel profond en début de nuit.",
+      "source": {
+        "name": "US Naval Observatory",
+        "url": "https://aa.usno.navy.mil/calculated/moon/phases?date=2026-08-12&format=p&nump=50&submit=Get+Data"
+      },
+      "utc": "2027-05-28T13:58:00Z",
+      "precision": "instant",
+      "kind": "dernier"
+    }
+  ]
+}

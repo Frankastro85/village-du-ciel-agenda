@@ -1,0 +1,19 @@
+{
+  "name": "village-du-ciel-agenda-auto",
+  "version": "1.5.0",
+  "private": true,
+  "type": "module",
+  "description": "Catalogue astronomique automatique pour les Herbiers (85)",
+  "scripts": {
+    "generate": "node scripts/generate.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "discord:preview": "node scripts/discord-bulletin.mjs --dry-run",
+    "discord:send": "node scripts/discord-bulletin.mjs --send"
+  },
+  "dependencies": {
+    "astronomy-engine": "2.1.19"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
