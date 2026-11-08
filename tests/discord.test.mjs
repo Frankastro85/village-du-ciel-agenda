@@ -23,7 +23,9 @@ test('la charge Discord respecte les limites et interdit les mentions',()=>{
  assert.deepEqual(payload.allowed_mentions,{parse:[]});
  assert.ok(payload.embeds[0].fields.every(f=>f.value.length<=1024));
  assert.ok(!JSON.stringify(payload).includes('@everyone'));
- assert.equal(payload.embeds[0].fields.length,3);
+ assert.equal(payload.embeds[0].fields.length,2);
+ assert.match(payload.content,/AGENDA COMPLET/);
+ assert.ok(payload.content.includes('https://allsky.villageduciel.fr/Agenda-Astro/'));
 });
 test('webhook invalide interdit',async()=>{
  await assert.rejects(()=>sendToDiscord('https://example.com/not-webhook',{}),/Webhook/);
@@ -34,4 +36,27 @@ test('simulation de livraison valide',async()=>{
 });
 test('catalogue calculé obsolète signalé',()=>{
  assert.equal(generatedIsUsable({automationActive:true,events:[e('x','2026-11-07')],generatedAt:'2025-01-01T00:00:00Z'},new Date('2026-11-07T00:00:00Z')),false);
+});
+
+test('sections aujourd’hui et demain bien séparées',()=>{
+ const now=new Date('2026-11-08T07:00:00Z');
+ const events=[e('aujourd','2026-11-08','interessant',{title:'Éclipse fictive'}),e('demain','2026-11-09','majeur',{type:'lune',kind:'nouvelle',title:'Nouvelle Lune'}),e('j2','2026-11-10')];
+ const message=makeMessage(events,now);
+ const fields=message.embeds[0].fields;
+ assert.match(fields[0].name,/AUJOURD’HUI/);
+ assert.match(fields[1].name,/DEMAIN/);
+ assert.match(fields[0].value,/Éclipse fictive/);
+ assert.doesNotMatch(fields[0].value,/Nouvelle Lune/);
+ assert.match(fields[1].value,/Nouvelle Lune/);
+ assert.match(message.content,/DEMAIN : 1 événement/);
+ assert.doesNotMatch(fields[1].value,/MAJEUR/);
+ assert.match(fields[2].name,/2 à 3 jours/);
+ assert.match(fields[2].value,/Rapprochement/);
+});
+test('jour suivant correctement pris en compte au changement de jour parisien',()=>{
+ const now=new Date('2026-11-08T23:30:00Z'); // 9 novembre 00:30 Paris
+ const x=selectEvents([e('a','2026-11-09'),e('b','2026-11-10')],now);
+ assert.equal(x.today,'2026-11-09');
+ assert.deepEqual(x.todayEvents.map(e=>e.id),['a']);
+ assert.deepEqual(x.tomorrowEvents.map(e=>e.id),['b']);
 });

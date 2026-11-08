@@ -19,59 +19,100 @@ export function collectEvents(editorial,generated){
 }
 function sorted(xs){return xs.sort((a,b)=>a.date.localeCompare(b.date)||(priorityWeight[a.priority]??9)-(priorityWeight[b.priority]??9)||(a.utc||'').localeCompare(b.utc||'')||a.title.localeCompare(b.title));}
 export function selectEvents(events,now){
-  const today=parisDay(now),days3=addDays(today,3),days7=addDays(today,7);
+  const today=parisDay(now),tomorrow=addDays(today,1);
+  const days3=addDays(today,3),days7=addDays(today,7);
   const relevant=events.filter(e=>e.date>=today&&e.date<=days7);
+  const todayEvents=sorted(relevant.filter(e=>e.date===today));
+  const tomorrowEvents=sorted(relevant.filter(e=>e.date===tomorrow));
+  const laterEvents=sorted(relevant.filter(e=>e.date>tomorrow&&e.date<=days3));
   return {
-    today, 
-    todayEvents: sorted(relevant.filter(e=>e.date===today)),
-    nearEvents: sorted(relevant.filter(e=>e.date>today&&e.date<=days3)),
-    majorEvents: sorted(relevant.filter(e=>e.date>days3&&e.priority==='majeur'))
+    today,tomorrow,todayEvents,tomorrowEvents,laterEvents,
+    // Conserver nearEvents pour les appels existants (J+1 à J+3).
+    nearEvents: sorted([...tomorrowEvents,...laterEvents]),
+    majorEvents: sorted(relevant.filter(e=>e.date>days3&&e.priority==='majeur'&&e.type!=='lune')),
+    laterMoonPhases: sorted(relevant.filter(e=>e.date>days3&&e.type==='lune'))
   };
 }
 function clean(s){return String(s||'').replace(/[`*_~<>@]/g,'').replace(/\s+/g,' ').slice(0,135);}
-export function eventLine(e){
+const moonIcons={nouvelle:'🌑',premier:'🌓',pleine:'🌕',dernier:'🌗'};
+export function eventLine(e,{showDate=true}={}){
   const d=fmtDate.format(new Date(e.date+'T12:00:00Z'));
   // La date suffit si c'est une simple période sans horaire d'instant indiqué.
   const moment=e.utc&&e.precision!=='date'?` · instant ${fmtTime.format(new Date(e.utc))}`:'';
-  const tag=e.priority==='majeur'?' [MAJEUR]':'';
+  const isMoon=e.type==='lune';
+  const prefix=isMoon?(moonIcons[e.kind]||'🌙'):'•';
+  const tag=!isMoon&&e.priority==='majeur'?' [MAJEUR]':'';
   const vis=e.visibility==='difficile'?' [difficile]':e.visibility==='variable'?' [à confirmer]':'';
-  return `• **${d}** — ${clean(e.title)}${moment}${tag}${vis}`;
+  return `${prefix} ${showDate?'**'+d+'** — ':''}${clean(e.title)}${moment}${tag}${vis}`;
 }
-function field(name,events,limit=9){
-  const shown=events.slice(0,limit),lines=shown.map(eventLine);let value=lines.join('\n');
-  if(events.length>shown.length)value+=`\n… et ${events.length-shown.length} autre(s) à retrouver dans l’agenda.`;
-  while(value.length>1024&&lines.length>1){lines.pop();value=lines.join('\n')+`\n… voir l’agenda pour la suite.`;}
+function field(name,events,limit=9,{showDate=true}={}){
+  const shown=events.slice(0,limit),lines=shown.map(e=>eventLine(e,{showDate}));
+  let value=lines.join('\n');
+  if(events.length>shown.length)value+=`\n… et ${events.length-shown.length} autre(s) dans l'agenda complet.`;
+  while(value.length>1024&&lines.length>1){lines.pop();value=lines.join('\n')+'\n… autres événements dans l’agenda.';}
   if(value.length>1024)value=value.slice(0,1000)+'…';
-  return {name,value:value||'Aucun événement répertorié.',inline:false};
+  return {name,value:value||'Aucun événement signalé dans le catalogue.',inline:false};
+}
+const fmtShort=new Intl.DateTimeFormat('fr-FR',{weekday:'long',day:'numeric',month:'long',timeZone:'UTC'});
+function dayTitle(day){return fmtShort.format(new Date(day+'T12:00:00Z'));}
+function weatherField(day,heading){
+  // Quatre périodes restent disponibles, mais sur deux jours seulement.
+  // Aucune valeur n'est extrapolée lorsqu'une période est absente.
+  return {
+    name:heading,
+    value:day.periods.map(p=>`**${p.label}** · ${meteo.weatherText(p)}`).join('\n'),
+    inline:false
+  };
 }
 export function makeMessage(events,now,weather=null){
-  const {today,todayEvents,nearEvents,majorEvents}=selectEvents(events,now);
+  const {today,tomorrow,todayEvents,tomorrowEvents,laterEvents,majorEvents,laterMoonPhases}=selectEvents(events,now);
   const display=new Intl.DateTimeFormat('fr-FR',{dateStyle:'full',timeZone:tz}).format(now);
-  const weatherFields=(weather?.days||[]).slice(0,5).map(day=>({
-    name:meteo.dayLabel(day.date),
-    value:day.periods.map(p=>`**${p.label}** : ${meteo.weatherText(p)}`).join('\n'),
-    inline:false
-  }));
-  const ranked=skyScore.rankDays(weather?.days||[]);
-  const best=ranked.best;
-  const bestField=best?{name:'Meilleure soirée estimée',value:`**${meteo.dayLabel(best.date)} : ${best.score}/100 (${skyScore.label(best.level)})** · nuages ${best.clouds} % entre soirée et nuit. Indice indicatif pour ciel profond, pas une mesure de turbulence ou de transparence.`,inline:false}:{name:'Meilleure soirée',value:'Indéterminée : prévisions météorologiques insuffisantes.',inline:false};
-  const weatherEmbed={
-    title:'Météo pour observer · J à J+4',
-    description:'Les Herbiers (85) · Moyennes horaires. « Nuit » : 00–06 h le lendemain. Indice simplifié : nuages 76 %, fraction lunaire 14 %, vent 6 %, humidité 4 % (hauteur de Lune non prise en compte).',
-    color:0x28b8ae,
-    fields:[bestField,...(weatherFields.length?weatherFields:[{name:'Prévisions indisponibles',value:'Les données météo n’ont pas pu être récupérées ce matin. Consultez l’agenda pour réessayer.',inline:false}])],
-    footer:{text:'Prévisions indicatives · Open-Meteo (CC BY 4.0) · https://open-meteo.com/'}
-  };
+  // La sélection de la meilleure nuit ne porte volontairement que sur J / J+1.
+  const days=(weather?.days||[]).slice(0,2);
+  const ranking=skyScore.rankDays(days),best=ranking.best;
+  const poor=ranking.scores.filter(s=>s.available).every(s=>s.score<40);
+  const bestLabel=best?(poor?'Nuit la moins défavorable':'Meilleure nuit estimée'):'Conditions nocturnes';
+  const bestValue=best
+    ?`${meteo.dayLabel(best.date)} · **${best.score}/100 (${skyScore.label(best.level)})** · nuages du soir/nuit : ${best.clouds} %.`
+    :'Données insuffisantes pour comparer les deux nuits.';
+  const weatherFields=[{name:bestLabel,value:bestValue,inline:false},
+    ...days.map((d,i)=>weatherField(d,i===0?'☀️ AUJOURD’HUI · '+meteo.dayLabel(d.date):'🌙 DEMAIN · '+meteo.dayLabel(d.date)))];
+  if(!days.length)weatherFields.push({name:'Prévisions indisponibles',value:'Aucune donnée météo disponible ce matin. Consultez le site pour réessayer.',inline:false});
+
+  const eventFields=[
+    field(`🟠 AUJOURD’HUI · ${dayTitle(today)}`,todayEvents,8,{showDate:false}),
+    field(`🔵 DEMAIN · ${dayTitle(tomorrow)}`,tomorrowEvents,8,{showDate:false})
+  ];
+  if(laterEvents.length)eventFields.push(field('📆 Dans 2 à 3 jours',laterEvents,9));
+  if(majorEvents.length)eventFields.push(field('⭐ Événements majeurs à J+4–J+7',majorEvents,5));
+  if(laterMoonPhases.length)eventFields.push(field('🌙 Phases lunaires à J+4–J+7',laterMoonPhases,4));
+  const alerts=[
+    todayEvents.length?`🟠 **AUJOURD’HUI : ${todayEvents.length} événement${todayEvents.length>1?'s':''}**`:null,
+    tomorrowEvents.length?`🔵 **DEMAIN : ${tomorrowEvents.length} événement${tomorrowEvents.length>1?'s':''}**`:null
+  ].filter(Boolean).join(' · ');
+
   return {
     username:'Agenda Astro · Village du Ciel',
-    content:`**Bulletin astronomique — ${display}**\nLes Herbiers (85) · Observations et instants en heure française.`,
-    embeds:[{
-      title:'Les rendez-vous du ciel',url:AGENDA_URL,
-      description:'Prévisions indicatives : météo, hauteur des astres et sources à vérifier avant observation. Les rappels n’incluent pas les phénomènes déclarés invisibles localement.',
-      color:0x347ebc,
-      fields:[field('Aujourd’hui',todayEvents,8),field('Dans les 3 prochains jours',nearEvents,10),field('À anticiper dans les 7 jours · majeurs',majorEvents,5)],
-      footer:{text:`Village du Ciel · Les Herbiers · Agenda Astro · ${today}`}
-    },weatherEmbed],
+    // URL publique volontairement sur sa propre ligne, cliquable et visible sur mobile.
+    content:`🔭 **BULLETIN ASTRONOMIQUE — ${display}**\n📍 Les Herbiers (85) · heures françaises${alerts?'\n'+alerts:''}\n\n📅 **AGENDA COMPLET — ÉVÉNEMENTS ET FICHES**\n${AGENDA_URL}`,
+    embeds:[
+      {
+        title:'🔭 Rendez-vous astronomiques · aujourd’hui et demain',
+        url:AGENDA_URL,
+        description:'Les événements annoncés comme invisibles depuis Les Herbiers sont exclus. Les instants calculés ne sont pas toujours des heures d’observation.',
+        color:0xe8a76c,
+        fields:eventFields,
+        footer:{text:`Village du Ciel · Les Herbiers · ${today}`}
+      },
+      {
+        title:'☁️ Météo d’observation · aujourd’hui et demain',
+        url:AGENDA_URL,
+        description:'Nuages, température, vent et humidité. « Nuit suivante » = 00–06 h le lendemain. Indice indicatif pour le ciel profond, sans mesure de turbulence ni hauteur lunaire.',
+        color:0x36aabd,
+        fields:weatherFields,
+        footer:{text:'Prévisions indicatives · Open-Meteo (CC BY 4.0) · https://open-meteo.com/'}
+      }
+    ],
     allowed_mentions:{parse:[]}
   };
 }

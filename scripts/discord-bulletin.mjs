@@ -45,7 +45,7 @@ try{
   const result=await fetch(meteo.forecastURL(),{signal:AbortSignal.timeout(18000),headers:{Accept:'application/json'}});
   if(!result.ok)throw Error('HTTP '+result.status);
   const json=await result.json();if(json.error)throw Error(json.reason||'API météo indisponible');
-  weather=meteo.summarize(json,today,5);
+  weather=meteo.summarize(json,today,2);
   console.log(`Open-Meteo : météo sur ${weather.days.length} jours récupérée.`);
 }catch(err){console.warn(`Météo indisponible : ${err.message}. Aucun chiffre météo inventé.`);}
 const payload=makeMessage(events,now,weather);

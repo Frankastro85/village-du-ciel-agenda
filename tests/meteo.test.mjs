@@ -25,11 +25,23 @@ test('données manquantes sans valeurs imaginées',()=>{
  assert.equal(x.days[4].periods[3].available,false);
  assert.equal(weather.weatherText(x.days[4].periods[3]),'prévision indisponible');
 });
-test('embed Discord 5 jours sans dépasser les limites',()=>{
+test('bulletin Discord résumé à deux jours, les quatre périodes sont conservées',()=>{
  const payload=makeMessage([],new Date('2026-11-08T07:00:00Z'),weather.summarize(sample(),'2026-11-08',5));
  assert.equal(payload.embeds.length,2);
- assert.equal(payload.embeds[1].fields.length,6);
- assert.match(payload.embeds[1].fields[0].name,/Meilleure soirée/);
+ assert.equal(payload.embeds[1].fields.length,3);
+ assert.match(payload.embeds[1].title,/aujourd’hui et demain/);
+ assert.match(payload.embeds[1].fields[0].name,/(nuit|Nuit|Conditions)/);
+ const next=payload.embeds[1].fields.slice(1);
+ assert.equal(next.length,2);
+ assert.ok(next.every(f=>['Matin','Après-midi','Soirée','Nuit suivante'].every(period=>f.value.includes(period))));
+ assert.ok(!payload.embeds[1].fields.some(f=>f.name.includes('J+2')));
+ assert.match(payload.content,/allsky\.villageduciel\.fr\/Agenda-Astro\//);
  assert.ok(payload.embeds.flatMap(e=>e.fields).every(f=>f.value.length<=1024));
  assert.deepEqual(payload.allowed_mentions,{parse:[]});
+});
+
+test('météo non disponible : aucun chiffre inventé et lien conservé',()=>{
+ const payload=makeMessage([],new Date('2026-11-08T09:00:00Z'));
+ assert.match(payload.embeds[1].fields.at(-1).value,/Aucune donnée météo/);
+ assert.match(payload.content,/AGENDA COMPLET/);
 });
