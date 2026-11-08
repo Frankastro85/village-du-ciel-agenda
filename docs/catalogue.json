@@ -1,6 +1,6 @@
 {
   "version": "1.4",
-  "generatedAt": "2026-11-07T21:18:03.250Z",
+  "generatedAt": "2026-11-08T07:53:57.724Z",
   "location": {
     "name": "Les Herbiers (Vendée, France)",
     "latitude": 46.87,
@@ -8,8 +8,8 @@
     "timezone": "Europe/Paris"
   },
   "period": {
-    "start": "2026-11-07",
-    "end": "2027-05-09"
+    "start": "2026-11-08",
+    "end": "2027-05-10"
   },
   "automationActive": true,
   "engine": "astronomy-engine@2.1.19 + USNO",
@@ -22,25 +22,6 @@
   },
   "warnings": [],
   "events": [
-    {
-      "id": "auto-moon-Venus-202611071042",
-      "date": "2026-11-07",
-      "utc": "2026-11-07T10:42:18.388Z",
-      "precision": "minute",
-      "kind": "lune-venus",
-      "source": {
-        "name": "Astronomy Engine — calcul d’éphémérides",
-        "url": "https://github.com/cosinekitty/astronomy"
-      },
-      "title": "Rapprochement Lune – Vénus",
-      "type": "conjonction",
-      "priority": "majeur",
-      "visibility": "variable",
-      "period": "Autour de la date : chercher une fenêtre nocturne avec horizon dégagé.",
-      "material": "Œil nu / jumelles, selon la planète",
-      "description": "La Lune passe à environ 1,0° de Vénus dans le ciel (séparation géocentrique minimale). L’instant exact n’est pas nécessairement observable depuis Les Herbiers.",
-      "advice": "Vérifier la hauteur des objets, la météo et leur distance au Soleil ; ne jamais pointer d’instrument vers le Soleil."
-    },
     {
       "id": "auto-moon-nouvelle-202611090702",
       "date": "2026-11-09",
@@ -443,7 +424,7 @@
     {
       "id": "auto-elongation-Venus-202701031756",
       "date": "2027-01-03",
-      "utc": "2027-01-03T17:56:03.408Z",
+      "utc": "2027-01-03T17:56:03.410Z",
       "precision": "minute",
       "kind": "elongation-venus",
       "source": {
