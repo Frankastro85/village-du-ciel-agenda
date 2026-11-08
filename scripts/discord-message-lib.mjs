@@ -7,6 +7,7 @@ import {createRequire} from 'node:module';
 const require=createRequire(import.meta.url);
 const {merge,basic,freshness}=require('./catalogue-merge.cjs');
 const meteo=require('./meteo-astro.cjs');
+const skyScore=require('./score-ciel.cjs');
 const tz='Europe/Paris';
 const priorityWeight={majeur:0,interessant:1,specialise:2};
 const fmtDate=new Intl.DateTimeFormat('fr-FR',{day:'2-digit',month:'short',timeZone:'UTC'});
@@ -51,11 +52,14 @@ export function makeMessage(events,now,weather=null){
     value:day.periods.map(p=>`**${p.label}** : ${meteo.weatherText(p)}`).join('\n'),
     inline:false
   }));
+  const ranked=skyScore.rankDays(weather?.days||[]);
+  const best=ranked.best;
+  const bestField=best?{name:'Meilleure soirée estimée',value:`**${meteo.dayLabel(best.date)} : ${best.score}/100 (${skyScore.label(best.level)})** · nuages ${best.clouds} % entre soirée et nuit. Indice indicatif pour ciel profond, pas une mesure de turbulence ou de transparence.`,inline:false}:{name:'Meilleure soirée',value:'Indéterminée : prévisions météorologiques insuffisantes.',inline:false};
   const weatherEmbed={
     title:'Météo pour observer · J à J+4',
-    description:'Les Herbiers (85) · Moyennes horaires. La « nuit » correspond à 00–06 h le lendemain du jour indiqué.',
+    description:'Les Herbiers (85) · Moyennes horaires. « Nuit » : 00–06 h le lendemain. Indice simplifié : nuages 76 %, fraction lunaire 14 %, vent 6 %, humidité 4 % (hauteur de Lune non prise en compte).',
     color:0x28b8ae,
-    fields:weatherFields.length?weatherFields:[{name:'Prévisions indisponibles',value:'Les données météo n’ont pas pu être récupérées ce matin. Consultez l’agenda pour réessayer.',inline:false}],
+    fields:[bestField,...(weatherFields.length?weatherFields:[{name:'Prévisions indisponibles',value:'Les données météo n’ont pas pu être récupérées ce matin. Consultez l’agenda pour réessayer.',inline:false}])],
     footer:{text:'Prévisions indicatives · Open-Meteo (CC BY 4.0) · https://open-meteo.com/'}
   };
   return {

@@ -28,7 +28,8 @@ test('données manquantes sans valeurs imaginées',()=>{
 test('embed Discord 5 jours sans dépasser les limites',()=>{
  const payload=makeMessage([],new Date('2026-11-08T07:00:00Z'),weather.summarize(sample(),'2026-11-08',5));
  assert.equal(payload.embeds.length,2);
- assert.equal(payload.embeds[1].fields.length,5);
+ assert.equal(payload.embeds[1].fields.length,6);
+ assert.match(payload.embeds[1].fields[0].name,/Meilleure soirée/);
  assert.ok(payload.embeds.flatMap(e=>e.fields).every(f=>f.value.length<=1024));
  assert.deepEqual(payload.allowed_mentions,{parse:[]});
 });
