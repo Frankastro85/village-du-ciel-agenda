@@ -6,6 +6,7 @@ import {parisDay,addDays} from './catalogue-lib.mjs';
 import {createRequire} from 'node:module';
 const require=createRequire(import.meta.url);
 const {merge,basic,freshness}=require('./catalogue-merge.cjs');
+const meteo=require('./meteo-astro.cjs');
 const tz='Europe/Paris';
 const priorityWeight={majeur:0,interessant:1,specialise:2};
 const fmtDate=new Intl.DateTimeFormat('fr-FR',{day:'2-digit',month:'short',timeZone:'UTC'});
@@ -42,9 +43,21 @@ function field(name,events,limit=9){
   if(value.length>1024)value=value.slice(0,1000)+'…';
   return {name,value:value||'Aucun événement répertorié.',inline:false};
 }
-export function makeMessage(events,now){
+export function makeMessage(events,now,weather=null){
   const {today,todayEvents,nearEvents,majorEvents}=selectEvents(events,now);
   const display=new Intl.DateTimeFormat('fr-FR',{dateStyle:'full',timeZone:tz}).format(now);
+  const weatherFields=(weather?.days||[]).slice(0,5).map(day=>({
+    name:meteo.dayLabel(day.date),
+    value:day.periods.map(p=>`**${p.label}** : ${meteo.weatherText(p)}`).join('\n'),
+    inline:false
+  }));
+  const weatherEmbed={
+    title:'Météo pour observer · J à J+4',
+    description:'Les Herbiers (85) · Moyennes horaires. La « nuit » correspond à 00–06 h le lendemain du jour indiqué.',
+    color:0x28b8ae,
+    fields:weatherFields.length?weatherFields:[{name:'Prévisions indisponibles',value:'Les données météo n’ont pas pu être récupérées ce matin. Consultez l’agenda pour réessayer.',inline:false}],
+    footer:{text:'Prévisions indicatives · Open-Meteo (CC BY 4.0) · https://open-meteo.com/'}
+  };
   return {
     username:'Agenda Astro · Village du Ciel',
     content:`**Bulletin astronomique — ${display}**\nLes Herbiers (85) · Observations et instants en heure française.`,
@@ -54,7 +67,7 @@ export function makeMessage(events,now){
       color:0x347ebc,
       fields:[field('Aujourd’hui',todayEvents,8),field('Dans les 3 prochains jours',nearEvents,10),field('À anticiper dans les 7 jours · majeurs',majorEvents,5)],
       footer:{text:`Village du Ciel · Les Herbiers · Agenda Astro · ${today}`}
-    }],
+    },weatherEmbed],
     allowed_mentions:{parse:[]}
   };
 }

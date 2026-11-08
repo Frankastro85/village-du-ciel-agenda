@@ -7,6 +7,9 @@
 import {readFile,writeFile,mkdir} from 'node:fs/promises';
 import {parisDay} from './catalogue-lib.mjs';
 import {collectEvents,makeMessage,sendToDiscord,generatedIsUsable} from './discord-message-lib.mjs';
+import {createRequire} from 'node:module';
+const require=createRequire(import.meta.url);
+const meteo=require('./meteo-astro.cjs');
 const arg=process.argv.slice(2);
 const sending=arg.includes('--send');
 const forced=arg.includes('--force');
@@ -37,7 +40,15 @@ const usable=generatedIsUsable(computed,now);
 if(!usable)console.warn('ATTENTION : catalogue calculé absent ou périmé ; utiliser seulement les fiches éditoriales.');
 const events=collectEvents(local,usable?computed.events:[]);
 if(events.length===0)throw Error('Aucun événement valide, envoi annulé pour éviter un bulletin trompeur.');
-const payload=makeMessage(events,now);
+let weather=null;
+try{
+  const result=await fetch(meteo.forecastURL(),{signal:AbortSignal.timeout(18000),headers:{Accept:'application/json'}});
+  if(!result.ok)throw Error('HTTP '+result.status);
+  const json=await result.json();if(json.error)throw Error(json.reason||'API météo indisponible');
+  weather=meteo.summarize(json,today,5);
+  console.log(`Open-Meteo : météo sur ${weather.days.length} jours récupérée.`);
+}catch(err){console.warn(`Météo indisponible : ${err.message}. Aucun chiffre météo inventé.`);}
+const payload=makeMessage(events,now,weather);
 console.log(`Bulletin préparé (${today}, ${events.length} événements en catalogue).`);
 // Message de prévisualisation sans secret, utile avant activation.
 if(!sending){console.log(JSON.stringify(payload,null,2));process.exit(0);}
