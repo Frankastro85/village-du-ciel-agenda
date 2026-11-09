@@ -1,23 +1,37 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-09T20:03:59.701Z",
+  "generatedAt": "2026-11-09T20:24:20.241Z",
   "period": {
     "start": "2026-11-09",
     "end": "2027-11-09"
   },
-  "notice": "Veille de candidats à vérifier. Jamais automatiquement insérés dans le catalogue public ; l’invisibilité depuis la Vendée n’est PAS prouvée par une absence COBS.",
+  "rules": {
+    "comets": "magnitude estimée strictement inférieure à 10",
+    "occultations": "planètes brillantes et étoiles remarquables de magnitude <= 2",
+    "travelPanel": "éclipses uniquement"
+  },
+  "notice": "Candidats de veille du club ; visibilité locale et éphémérides à vérifier avant annonce. Aucun ajout automatique au calendrier, panneau de voyages ou Discord.",
   "sources": [
     {
       "source": "COBS",
       "date": "2026-11-09",
       "ok": true,
-      "sites": 5
+      "sites": 5,
+      "threshold": "magnitude < 10"
+    },
+    {
+      "source": "COBS",
+      "date": "2026-11-16",
+      "ok": true,
+      "sites": 5,
+      "threshold": "magnitude < 10"
     },
     {
       "source": "COBS",
       "date": "2026-11-23",
       "ok": true,
-      "sites": 5
+      "sites": 5,
+      "threshold": "magnitude < 10"
     },
     {
       "source": "TheSkyLive",
@@ -28,33 +42,33 @@
       "source": "TheSkyLive",
       "year": 2027,
       "ok": true,
-      "found": 35
-    },
-    {
-      "source": "NASA Science",
-      "ok": true,
-      "found": 0
-    },
-    {
-      "source": "Google News — comètes",
-      "ok": true,
-      "found": 0
-    },
-    {
-      "source": "Google News — occultations",
-      "ok": true,
-      "found": 0
+      "major": 25
     }
   ],
   "diagnostics": [
     "TheSkyLive 2026: HTTP 403"
   ],
   "counts": {
-    "candidateCount": 35,
-    "newOrUpdated": 35,
-    "sourceSuccess": 6,
+    "candidateCount": 25,
+    "detectedThisRun": 25,
+    "newDetected": 10,
+    "cometCount": 0,
+    "majorOccultationCount": 25,
+    "sourceSuccess": 4,
     "sourceFailed": 1
   },
+  "newIds": [
+    "occultation-2027-05-12-jupiter",
+    "occultation-2027-05-21-antares",
+    "occultation-2027-06-17-antares",
+    "occultation-2027-07-14-antares",
+    "occultation-2027-08-01-mercury",
+    "occultation-2027-08-02-venus",
+    "occultation-2027-08-11-antares",
+    "occultation-2027-09-07-antares",
+    "occultation-2027-10-04-antares",
+    "occultation-2027-11-01-antares"
+  ],
   "candidates": [
     {
       "id": "occultation-2027-01-04-antares",
@@ -64,13 +78,15 @@
       "source": "TheSkyLive · catalogue mondial",
       "sourceUrl": "https://theskylive.com/lunar-occultations/2027-01-04-antares",
       "priority": "haute",
-      "summary": "Occultation répertoriée le 2027-01-04 UTC, destination et visibilité locale à calculer.",
-      "why": "Le calendrier mondial ne garantit pas la visibilité depuis la Vendée ni un lieu européen.",
-      "destinationHint": "À déterminer",
-      "nextStep": "Ouvrir la carte mondiale et comparer Les Herbiers avec une ville d’Europe ou proche.",
+      "summary": "Occultation d'une étoile remarquable le 2027-01-04. Visibilité depuis la Vendée à vérifier.",
+      "why": "La présence dans un catalogue mondial ne prouve pas la visibilité depuis Les Herbiers.",
+      "destinationHint": "Veille du club — pas de proposition de voyage",
+      "nextStep": "Contrôler la carte de visibilité, les heures locales et les conditions d’observation.",
       "validation": "unverified",
       "sourceData": {
-        "slug": "2027-01-04-antares"
+        "slug": "2027-01-04-antares",
+        "importance": "majeure",
+        "magnitude": 1.1
       },
       "firstSeen": "2026-11-09",
       "lastSeen": "2026-11-09"
@@ -83,13 +99,36 @@
       "source": "TheSkyLive · catalogue mondial",
       "sourceUrl": "https://theskylive.com/lunar-occultations/2027-01-08-mercury",
       "priority": "haute",
-      "summary": "Occultation répertoriée le 2027-01-08 UTC, destination et visibilité locale à calculer.",
-      "why": "Le calendrier mondial ne garantit pas la visibilité depuis la Vendée ni un lieu européen.",
-      "destinationHint": "À déterminer",
-      "nextStep": "Ouvrir la carte mondiale et comparer Les Herbiers avec une ville d’Europe ou proche.",
+      "summary": "Occultation d'une planète brillante le 2027-01-08. Visibilité depuis la Vendée à vérifier.",
+      "why": "La présence dans un catalogue mondial ne prouve pas la visibilité depuis Les Herbiers.",
+      "destinationHint": "Veille du club — pas de proposition de voyage",
+      "nextStep": "Contrôler la carte de visibilité, les heures locales et les conditions d’observation.",
       "validation": "unverified",
       "sourceData": {
-        "slug": "2027-01-08-mercury"
+        "slug": "2027-01-08-mercury",
+        "importance": "majeure",
+        "magnitude": -1.2
+      },
+      "firstSeen": "2026-11-09",
+      "lastSeen": "2026-11-09"
+    },
+    {
+      "id": "occultation-2027-01-19-elnath",
+      "type": "occultation",
+      "title": "Occultation lunaire : elnath",
+      "observedDate": "2027-01-19",
+      "source": "TheSkyLive · catalogue mondial",
+      "sourceUrl": "https://theskylive.com/lunar-occultations/2027-01-19-elnath",
+      "priority": "haute",
+      "summary": "Occultation d'une étoile remarquable le 2027-01-19. Visibilité depuis la Vendée à vérifier.",
+      "why": "La présence dans un catalogue mondial ne prouve pas la visibilité depuis Les Herbiers.",
+      "destinationHint": "Veille du club — pas de proposition de voyage",
+      "nextStep": "Contrôler la carte de visibilité, les heures locales et les conditions d’observation.",
+      "validation": "unverified",
+      "sourceData": {
+        "slug": "2027-01-19-elnath",
+        "importance": "majeure",
+        "magnitude": 1.7
       },
       "firstSeen": "2026-11-09",
       "lastSeen": "2026-11-09"
@@ -102,13 +141,15 @@
       "source": "TheSkyLive · catalogue mondial",
       "sourceUrl": "https://theskylive.com/lunar-occultations/2027-01-31-antares",
       "priority": "haute",
-      "summary": "Occultation répertoriée le 2027-01-31 UTC, destination et visibilité locale à calculer.",
-      "why": "Le calendrier mondial ne garantit pas la visibilité depuis la Vendée ni un lieu européen.",
-      "destinationHint": "À déterminer",
-      "nextStep": "Ouvrir la carte mondiale et comparer Les Herbiers avec une ville d’Europe ou proche.",
+      "summary": "Occultation d'une étoile remarquable le 2027-01-31. Visibilité depuis la Vendée à vérifier.",
+      "why": "La présence dans un catalogue mondial ne prouve pas la visibilité depuis Les Herbiers.",
+      "destinationHint": "Veille du club — pas de proposition de voyage",
+      "nextStep": "Contrôler la carte de visibilité, les heures locales et les conditions d’observation.",
       "validation": "unverified",
       "sourceData": {
-        "slug": "2027-01-31-antares"
+        "slug": "2027-01-31-antares",
+        "importance": "majeure",
+        "magnitude": 1.1
       },
       "firstSeen": "2026-11-09",
       "lastSeen": "2026-11-09"
@@ -121,13 +162,36 @@
       "source": "TheSkyLive · catalogue mondial",
       "sourceUrl": "https://theskylive.com/lunar-occultations/2027-02-08-mercury",
       "priority": "haute",
-      "summary": "Occultation répertoriée le 2027-02-08 UTC, destination et visibilité locale à calculer.",
-      "why": "Le calendrier mondial ne garantit pas la visibilité depuis la Vendée ni un lieu européen.",
-      "destinationHint": "À déterminer",
-      "nextStep": "Ouvrir la carte mondiale et comparer Les Herbiers avec une ville d’Europe ou proche.",
+      "summary": "Occultation d'une planète brillante le 2027-02-08. Visibilité depuis la Vendée à vérifier.",
+      "why": "La présence dans un catalogue mondial ne prouve pas la visibilité depuis Les Herbiers.",
+      "destinationHint": "Veille du club — pas de proposition de voyage",
+      "nextStep": "Contrôler la carte de visibilité, les heures locales et les conditions d’observation.",
       "validation": "unverified",
       "sourceData": {
-        "slug": "2027-02-08-mercury"
+        "slug": "2027-02-08-mercury",
+        "importance": "majeure",
+        "magnitude": 0.2
+      },
+      "firstSeen": "2026-11-09",
+      "lastSeen": "2026-11-09"
+    },
+    {
+      "id": "occultation-2027-02-16-elnath",
+      "type": "occultation",
+      "title": "Occultation lunaire : elnath",
+      "observedDate": "2027-02-16",
+      "source": "TheSkyLive · catalogue mondial",
+      "sourceUrl": "https://theskylive.com/lunar-occultations/2027-02-16-elnath",
+      "priority": "haute",
+      "summary": "Occultation d'une étoile remarquable le 2027-02-16. Visibilité depuis la Vendée à vérifier.",
+      "why": "La présence dans un catalogue mondial ne prouve pas la visibilité depuis Les Herbiers.",
+      "destinationHint": "Veille du club — pas de proposition de voyage",
+      "nextStep": "Contrôler la carte de visibilité, les heures locales et les conditions d’observation.",
+      "validation": "unverified",
+      "sourceData": {
+        "slug": "2027-02-16-elnath",
+        "importance": "majeure",
+        "magnitude": 1.7
       },
       "firstSeen": "2026-11-09",
       "lastSeen": "2026-11-09"
@@ -140,13 +204,15 @@
       "source": "TheSkyLive · catalogue mondial",
       "sourceUrl": "https://theskylive.com/lunar-occultations/2027-02-20-jupiter",
       "priority": "haute",
-      "summary": "Occultation répertoriée le 2027-02-20 UTC, destination et visibilité locale à calculer.",
-      "why": "Le calendrier mondial ne garantit pas la visibilité depuis la Vendée ni un lieu européen.",
-      "destinationHint": "À déterminer",
-      "nextStep": "Ouvrir la carte mondiale et comparer Les Herbiers avec une ville d’Europe ou proche.",
+      "summary": "Occultation d'une planète brillante le 2027-02-20. Visibilité depuis la Vendée à vérifier.",
+      "why": "La présence dans un catalogue mondial ne prouve pas la visibilité depuis Les Herbiers.",
+      "destinationHint": "Veille du club — pas de proposition de voyage",
+      "nextStep": "Contrôler la carte de visibilité, les heures locales et les conditions d’observation.",
       "validation": "unverified",
       "sourceData": {
-        "slug": "2027-02-20-jupiter"
+        "slug": "2027-02-20-jupiter",
+        "importance": "majeure",
+        "magnitude": -2.6
       },
       "firstSeen": "2026-11-09",
       "lastSeen": "2026-11-09"
@@ -159,13 +225,15 @@
       "source": "TheSkyLive · catalogue mondial",
       "sourceUrl": "https://theskylive.com/lunar-occultations/2027-02-28-antares",
       "priority": "haute",
-      "summary": "Occultation répertoriée le 2027-02-28 UTC, destination et visibilité locale à calculer.",
-      "why": "Le calendrier mondial ne garantit pas la visibilité depuis la Vendée ni un lieu européen.",
-      "destinationHint": "À déterminer",
-      "nextStep": "Ouvrir la carte mondiale et comparer Les Herbiers avec une ville d’Europe ou proche.",
+      "summary": "Occultation d'une étoile remarquable le 2027-02-28. Visibilité depuis la Vendée à vérifier.",
+      "why": "La présence dans un catalogue mondial ne prouve pas la visibilité depuis Les Herbiers.",
+      "destinationHint": "Veille du club — pas de proposition de voyage",
+      "nextStep": "Contrôler la carte de visibilité, les heures locales et les conditions d’observation.",
       "validation": "unverified",
       "sourceData": {
-        "slug": "2027-02-28-antares"
+        "slug": "2027-02-28-antares",
+        "importance": "majeure",
+        "magnitude": 1.1
       },
       "firstSeen": "2026-11-09",
       "lastSeen": "2026-11-09"
@@ -178,13 +246,36 @@
       "source": "TheSkyLive · catalogue mondial",
       "sourceUrl": "https://theskylive.com/lunar-occultations/2027-03-06-mercury",
       "priority": "haute",
-      "summary": "Occultation répertoriée le 2027-03-06 UTC, destination et visibilité locale à calculer.",
-      "why": "Le calendrier mondial ne garantit pas la visibilité depuis la Vendée ni un lieu européen.",
-      "destinationHint": "À déterminer",
-      "nextStep": "Ouvrir la carte mondiale et comparer Les Herbiers avec une ville d’Europe ou proche.",
+      "summary": "Occultation d'une planète brillante le 2027-03-06. Visibilité depuis la Vendée à vérifier.",
+      "why": "La présence dans un catalogue mondial ne prouve pas la visibilité depuis Les Herbiers.",
+      "destinationHint": "Veille du club — pas de proposition de voyage",
+      "nextStep": "Contrôler la carte de visibilité, les heures locales et les conditions d’observation.",
       "validation": "unverified",
       "sourceData": {
-        "slug": "2027-03-06-mercury"
+        "slug": "2027-03-06-mercury",
+        "importance": "majeure",
+        "magnitude": 0.6
+      },
+      "firstSeen": "2026-11-09",
+      "lastSeen": "2026-11-09"
+    },
+    {
+      "id": "occultation-2027-03-15-elnath",
+      "type": "occultation",
+      "title": "Occultation lunaire : elnath",
+      "observedDate": "2027-03-15",
+      "source": "TheSkyLive · catalogue mondial",
+      "sourceUrl": "https://theskylive.com/lunar-occultations/2027-03-15-elnath",
+      "priority": "haute",
+      "summary": "Occultation d'une étoile remarquable le 2027-03-15. Visibilité depuis la Vendée à vérifier.",
+      "why": "La présence dans un catalogue mondial ne prouve pas la visibilité depuis Les Herbiers.",
+      "destinationHint": "Veille du club — pas de proposition de voyage",
+      "nextStep": "Contrôler la carte de visibilité, les heures locales et les conditions d’observation.",
+      "validation": "unverified",
+      "sourceData": {
+        "slug": "2027-03-15-elnath",
+        "importance": "majeure",
+        "magnitude": 1.7
       },
       "firstSeen": "2026-11-09",
       "lastSeen": "2026-11-09"
@@ -197,13 +288,15 @@
       "source": "TheSkyLive · catalogue mondial",
       "sourceUrl": "https://theskylive.com/lunar-occultations/2027-03-19-jupiter",
       "priority": "haute",
-      "summary": "Occultation répertoriée le 2027-03-19 UTC, destination et visibilité locale à calculer.",
-      "why": "Le calendrier mondial ne garantit pas la visibilité depuis la Vendée ni un lieu européen.",
-      "destinationHint": "À déterminer",
-      "nextStep": "Ouvrir la carte mondiale et comparer Les Herbiers avec une ville d’Europe ou proche.",
+      "summary": "Occultation d'une planète brillante le 2027-03-19. Visibilité depuis la Vendée à vérifier.",
+      "why": "La présence dans un catalogue mondial ne prouve pas la visibilité depuis Les Herbiers.",
+      "destinationHint": "Veille du club — pas de proposition de voyage",
+      "nextStep": "Contrôler la carte de visibilité, les heures locales et les conditions d’observation.",
       "validation": "unverified",
       "sourceData": {
-        "slug": "2027-03-19-jupiter"
+        "slug": "2027-03-19-jupiter",
+        "importance": "majeure",
+        "magnitude": -2.4
       },
       "firstSeen": "2026-11-09",
       "lastSeen": "2026-11-09"
@@ -216,13 +309,36 @@
       "source": "TheSkyLive · catalogue mondial",
       "sourceUrl": "https://theskylive.com/lunar-occultations/2027-03-27-antares",
       "priority": "haute",
-      "summary": "Occultation répertoriée le 2027-03-27 UTC, destination et visibilité locale à calculer.",
-      "why": "Le calendrier mondial ne garantit pas la visibilité depuis la Vendée ni un lieu européen.",
-      "destinationHint": "À déterminer",
-      "nextStep": "Ouvrir la carte mondiale et comparer Les Herbiers avec une ville d’Europe ou proche.",
+      "summary": "Occultation d'une étoile remarquable le 2027-03-27. Visibilité depuis la Vendée à vérifier.",
+      "why": "La présence dans un catalogue mondial ne prouve pas la visibilité depuis Les Herbiers.",
+      "destinationHint": "Veille du club — pas de proposition de voyage",
+      "nextStep": "Contrôler la carte de visibilité, les heures locales et les conditions d’observation.",
       "validation": "unverified",
       "sourceData": {
-        "slug": "2027-03-27-antares"
+        "slug": "2027-03-27-antares",
+        "importance": "majeure",
+        "magnitude": 1.1
+      },
+      "firstSeen": "2026-11-09",
+      "lastSeen": "2026-11-09"
+    },
+    {
+      "id": "occultation-2027-04-11-elnath",
+      "type": "occultation",
+      "title": "Occultation lunaire : elnath",
+      "observedDate": "2027-04-11",
+      "source": "TheSkyLive · catalogue mondial",
+      "sourceUrl": "https://theskylive.com/lunar-occultations/2027-04-11-elnath",
+      "priority": "haute",
+      "summary": "Occultation d'une étoile remarquable le 2027-04-11. Visibilité depuis la Vendée à vérifier.",
+      "why": "La présence dans un catalogue mondial ne prouve pas la visibilité depuis Les Herbiers.",
+      "destinationHint": "Veille du club — pas de proposition de voyage",
+      "nextStep": "Contrôler la carte de visibilité, les heures locales et les conditions d’observation.",
+      "validation": "unverified",
+      "sourceData": {
+        "slug": "2027-04-11-elnath",
+        "importance": "majeure",
+        "magnitude": 1.7
       },
       "firstSeen": "2026-11-09",
       "lastSeen": "2026-11-09"
@@ -235,13 +351,15 @@
       "source": "TheSkyLive · catalogue mondial",
       "sourceUrl": "https://theskylive.com/lunar-occultations/2027-04-15-jupiter",
       "priority": "haute",
-      "summary": "Occultation répertoriée le 2027-04-15 UTC, destination et visibilité locale à calculer.",
-      "why": "Le calendrier mondial ne garantit pas la visibilité depuis la Vendée ni un lieu européen.",
-      "destinationHint": "À déterminer",
-      "nextStep": "Ouvrir la carte mondiale et comparer Les Herbiers avec une ville d’Europe ou proche.",
+      "summary": "Occultation d'une planète brillante le 2027-04-15. Visibilité depuis la Vendée à vérifier.",
+      "why": "La présence dans un catalogue mondial ne prouve pas la visibilité depuis Les Herbiers.",
+      "destinationHint": "Veille du club — pas de proposition de voyage",
+      "nextStep": "Contrôler la carte de visibilité, les heures locales et les conditions d’observation.",
       "validation": "unverified",
       "sourceData": {
-        "slug": "2027-04-15-jupiter"
+        "slug": "2027-04-15-jupiter",
+        "importance": "majeure",
+        "magnitude": -2.2
       },
       "firstSeen": "2026-11-09",
       "lastSeen": "2026-11-09"
@@ -254,469 +372,225 @@
       "source": "TheSkyLive · catalogue mondial",
       "sourceUrl": "https://theskylive.com/lunar-occultations/2027-04-24-antares",
       "priority": "haute",
-      "summary": "Occultation répertoriée le 2027-04-24 UTC, destination et visibilité locale à calculer.",
-      "why": "Le calendrier mondial ne garantit pas la visibilité depuis la Vendée ni un lieu européen.",
-      "destinationHint": "À déterminer",
-      "nextStep": "Ouvrir la carte mondiale et comparer Les Herbiers avec une ville d’Europe ou proche.",
+      "summary": "Occultation d'une étoile remarquable le 2027-04-24. Visibilité depuis la Vendée à vérifier.",
+      "why": "La présence dans un catalogue mondial ne prouve pas la visibilité depuis Les Herbiers.",
+      "destinationHint": "Veille du club — pas de proposition de voyage",
+      "nextStep": "Contrôler la carte de visibilité, les heures locales et les conditions d’observation.",
       "validation": "unverified",
       "sourceData": {
-        "slug": "2027-04-24-antares"
+        "slug": "2027-04-24-antares",
+        "importance": "majeure",
+        "magnitude": 1.1
       },
       "firstSeen": "2026-11-09",
       "lastSeen": "2026-11-09"
     },
     {
-      "id": "occultation-2027-01-07-nunki",
+      "id": "occultation-2027-05-12-jupiter",
       "type": "occultation",
-      "title": "Occultation lunaire : nunki",
-      "observedDate": "2027-01-07",
+      "title": "Occultation lunaire : jupiter",
+      "observedDate": "2027-05-12",
       "source": "TheSkyLive · catalogue mondial",
-      "sourceUrl": "https://theskylive.com/lunar-occultations/2027-01-07-nunki",
-      "priority": "modérée",
-      "summary": "Occultation répertoriée le 2027-01-07 UTC, destination et visibilité locale à calculer.",
-      "why": "Le calendrier mondial ne garantit pas la visibilité depuis la Vendée ni un lieu européen.",
-      "destinationHint": "À déterminer",
-      "nextStep": "Ouvrir la carte mondiale et comparer Les Herbiers avec une ville d’Europe ou proche.",
+      "sourceUrl": "https://theskylive.com/lunar-occultations/2027-05-12-jupiter",
+      "priority": "haute",
+      "summary": "Occultation d'une planète brillante le 2027-05-12. Visibilité depuis la Vendée à vérifier.",
+      "why": "La présence dans un catalogue mondial ne prouve pas la visibilité depuis Les Herbiers.",
+      "destinationHint": "Veille du club — pas de proposition de voyage",
+      "nextStep": "Contrôler la carte de visibilité, les heures locales et les conditions d’observation.",
       "validation": "unverified",
       "sourceData": {
-        "slug": "2027-01-07-nunki"
+        "slug": "2027-05-12-jupiter",
+        "importance": "majeure",
+        "magnitude": -2
       },
       "firstSeen": "2026-11-09",
       "lastSeen": "2026-11-09"
     },
     {
-      "id": "occultation-2027-01-18-alcyone",
+      "id": "occultation-2027-05-21-antares",
       "type": "occultation",
-      "title": "Occultation lunaire : alcyone",
-      "observedDate": "2027-01-18",
+      "title": "Occultation lunaire : antares",
+      "observedDate": "2027-05-21",
       "source": "TheSkyLive · catalogue mondial",
-      "sourceUrl": "https://theskylive.com/lunar-occultations/2027-01-18-alcyone",
-      "priority": "modérée",
-      "summary": "Occultation répertoriée le 2027-01-18 UTC, destination et visibilité locale à calculer.",
-      "why": "Le calendrier mondial ne garantit pas la visibilité depuis la Vendée ni un lieu européen.",
-      "destinationHint": "À déterminer",
-      "nextStep": "Ouvrir la carte mondiale et comparer Les Herbiers avec une ville d’Europe ou proche.",
+      "sourceUrl": "https://theskylive.com/lunar-occultations/2027-05-21-antares",
+      "priority": "haute",
+      "summary": "Occultation d'une étoile remarquable le 2027-05-21. Visibilité depuis la Vendée à vérifier.",
+      "why": "La présence dans un catalogue mondial ne prouve pas la visibilité depuis Les Herbiers.",
+      "destinationHint": "Veille du club — pas de proposition de voyage",
+      "nextStep": "Contrôler la carte de visibilité, les heures locales et les conditions d’observation.",
       "validation": "unverified",
       "sourceData": {
-        "slug": "2027-01-18-alcyone"
+        "slug": "2027-05-21-antares",
+        "importance": "majeure",
+        "magnitude": 1.1
       },
       "firstSeen": "2026-11-09",
       "lastSeen": "2026-11-09"
     },
     {
-      "id": "occultation-2027-01-18-atlas",
+      "id": "occultation-2027-06-17-antares",
       "type": "occultation",
-      "title": "Occultation lunaire : atlas",
-      "observedDate": "2027-01-18",
+      "title": "Occultation lunaire : antares",
+      "observedDate": "2027-06-17",
       "source": "TheSkyLive · catalogue mondial",
-      "sourceUrl": "https://theskylive.com/lunar-occultations/2027-01-18-atlas",
-      "priority": "modérée",
-      "summary": "Occultation répertoriée le 2027-01-18 UTC, destination et visibilité locale à calculer.",
-      "why": "Le calendrier mondial ne garantit pas la visibilité depuis la Vendée ni un lieu européen.",
-      "destinationHint": "À déterminer",
-      "nextStep": "Ouvrir la carte mondiale et comparer Les Herbiers avec une ville d’Europe ou proche.",
+      "sourceUrl": "https://theskylive.com/lunar-occultations/2027-06-17-antares",
+      "priority": "haute",
+      "summary": "Occultation d'une étoile remarquable le 2027-06-17. Visibilité depuis la Vendée à vérifier.",
+      "why": "La présence dans un catalogue mondial ne prouve pas la visibilité depuis Les Herbiers.",
+      "destinationHint": "Veille du club — pas de proposition de voyage",
+      "nextStep": "Contrôler la carte de visibilité, les heures locales et les conditions d’observation.",
       "validation": "unverified",
       "sourceData": {
-        "slug": "2027-01-18-atlas"
+        "slug": "2027-06-17-antares",
+        "importance": "majeure",
+        "magnitude": 1.1
       },
       "firstSeen": "2026-11-09",
       "lastSeen": "2026-11-09"
     },
     {
-      "id": "occultation-2027-01-18-electra",
+      "id": "occultation-2027-07-14-antares",
       "type": "occultation",
-      "title": "Occultation lunaire : electra",
-      "observedDate": "2027-01-18",
+      "title": "Occultation lunaire : antares",
+      "observedDate": "2027-07-14",
       "source": "TheSkyLive · catalogue mondial",
-      "sourceUrl": "https://theskylive.com/lunar-occultations/2027-01-18-electra",
-      "priority": "modérée",
-      "summary": "Occultation répertoriée le 2027-01-18 UTC, destination et visibilité locale à calculer.",
-      "why": "Le calendrier mondial ne garantit pas la visibilité depuis la Vendée ni un lieu européen.",
-      "destinationHint": "À déterminer",
-      "nextStep": "Ouvrir la carte mondiale et comparer Les Herbiers avec une ville d’Europe ou proche.",
+      "sourceUrl": "https://theskylive.com/lunar-occultations/2027-07-14-antares",
+      "priority": "haute",
+      "summary": "Occultation d'une étoile remarquable le 2027-07-14. Visibilité depuis la Vendée à vérifier.",
+      "why": "La présence dans un catalogue mondial ne prouve pas la visibilité depuis Les Herbiers.",
+      "destinationHint": "Veille du club — pas de proposition de voyage",
+      "nextStep": "Contrôler la carte de visibilité, les heures locales et les conditions d’observation.",
       "validation": "unverified",
       "sourceData": {
-        "slug": "2027-01-18-electra"
+        "slug": "2027-07-14-antares",
+        "importance": "majeure",
+        "magnitude": 1.1
       },
       "firstSeen": "2026-11-09",
       "lastSeen": "2026-11-09"
     },
     {
-      "id": "occultation-2027-01-18-maia",
+      "id": "occultation-2027-08-01-mercury",
       "type": "occultation",
-      "title": "Occultation lunaire : maia",
-      "observedDate": "2027-01-18",
+      "title": "Occultation lunaire : mercury",
+      "observedDate": "2027-08-01",
       "source": "TheSkyLive · catalogue mondial",
-      "sourceUrl": "https://theskylive.com/lunar-occultations/2027-01-18-maia",
-      "priority": "modérée",
-      "summary": "Occultation répertoriée le 2027-01-18 UTC, destination et visibilité locale à calculer.",
-      "why": "Le calendrier mondial ne garantit pas la visibilité depuis la Vendée ni un lieu européen.",
-      "destinationHint": "À déterminer",
-      "nextStep": "Ouvrir la carte mondiale et comparer Les Herbiers avec une ville d’Europe ou proche.",
+      "sourceUrl": "https://theskylive.com/lunar-occultations/2027-08-01-mercury",
+      "priority": "haute",
+      "summary": "Occultation d'une planète brillante le 2027-08-01. Visibilité depuis la Vendée à vérifier.",
+      "why": "La présence dans un catalogue mondial ne prouve pas la visibilité depuis Les Herbiers.",
+      "destinationHint": "Veille du club — pas de proposition de voyage",
+      "nextStep": "Contrôler la carte de visibilité, les heures locales et les conditions d’observation.",
       "validation": "unverified",
       "sourceData": {
-        "slug": "2027-01-18-maia"
+        "slug": "2027-08-01-mercury",
+        "importance": "majeure",
+        "magnitude": -1.4
       },
       "firstSeen": "2026-11-09",
       "lastSeen": "2026-11-09"
     },
     {
-      "id": "occultation-2027-01-19-elnath",
+      "id": "occultation-2027-08-02-venus",
       "type": "occultation",
-      "title": "Occultation lunaire : elnath",
-      "observedDate": "2027-01-19",
+      "title": "Occultation lunaire : venus",
+      "observedDate": "2027-08-02",
       "source": "TheSkyLive · catalogue mondial",
-      "sourceUrl": "https://theskylive.com/lunar-occultations/2027-01-19-elnath",
-      "priority": "modérée",
-      "summary": "Occultation répertoriée le 2027-01-19 UTC, destination et visibilité locale à calculer.",
-      "why": "Le calendrier mondial ne garantit pas la visibilité depuis la Vendée ni un lieu européen.",
-      "destinationHint": "À déterminer",
-      "nextStep": "Ouvrir la carte mondiale et comparer Les Herbiers avec une ville d’Europe ou proche.",
+      "sourceUrl": "https://theskylive.com/lunar-occultations/2027-08-02-venus",
+      "priority": "haute",
+      "summary": "Occultation d'une planète brillante le 2027-08-02. Visibilité depuis la Vendée à vérifier.",
+      "why": "La présence dans un catalogue mondial ne prouve pas la visibilité depuis Les Herbiers.",
+      "destinationHint": "Veille du club — pas de proposition de voyage",
+      "nextStep": "Contrôler la carte de visibilité, les heures locales et les conditions d’observation.",
       "validation": "unverified",
       "sourceData": {
-        "slug": "2027-01-19-elnath"
+        "slug": "2027-08-02-venus",
+        "importance": "majeure",
+        "magnitude": -3.9
       },
       "firstSeen": "2026-11-09",
       "lastSeen": "2026-11-09"
     },
     {
-      "id": "occultation-2027-02-03-nunki",
+      "id": "occultation-2027-08-11-antares",
       "type": "occultation",
-      "title": "Occultation lunaire : nunki",
-      "observedDate": "2027-02-03",
+      "title": "Occultation lunaire : antares",
+      "observedDate": "2027-08-11",
       "source": "TheSkyLive · catalogue mondial",
-      "sourceUrl": "https://theskylive.com/lunar-occultations/2027-02-03-nunki",
-      "priority": "modérée",
-      "summary": "Occultation répertoriée le 2027-02-03 UTC, destination et visibilité locale à calculer.",
-      "why": "Le calendrier mondial ne garantit pas la visibilité depuis la Vendée ni un lieu européen.",
-      "destinationHint": "À déterminer",
-      "nextStep": "Ouvrir la carte mondiale et comparer Les Herbiers avec une ville d’Europe ou proche.",
+      "sourceUrl": "https://theskylive.com/lunar-occultations/2027-08-11-antares",
+      "priority": "haute",
+      "summary": "Occultation d'une étoile remarquable le 2027-08-11. Visibilité depuis la Vendée à vérifier.",
+      "why": "La présence dans un catalogue mondial ne prouve pas la visibilité depuis Les Herbiers.",
+      "destinationHint": "Veille du club — pas de proposition de voyage",
+      "nextStep": "Contrôler la carte de visibilité, les heures locales et les conditions d’observation.",
       "validation": "unverified",
       "sourceData": {
-        "slug": "2027-02-03-nunki"
+        "slug": "2027-08-11-antares",
+        "importance": "majeure",
+        "magnitude": 1.1
       },
       "firstSeen": "2026-11-09",
       "lastSeen": "2026-11-09"
     },
     {
-      "id": "occultation-2027-02-14-alcyone",
+      "id": "occultation-2027-09-07-antares",
       "type": "occultation",
-      "title": "Occultation lunaire : alcyone",
-      "observedDate": "2027-02-14",
+      "title": "Occultation lunaire : antares",
+      "observedDate": "2027-09-07",
       "source": "TheSkyLive · catalogue mondial",
-      "sourceUrl": "https://theskylive.com/lunar-occultations/2027-02-14-alcyone",
-      "priority": "modérée",
-      "summary": "Occultation répertoriée le 2027-02-14 UTC, destination et visibilité locale à calculer.",
-      "why": "Le calendrier mondial ne garantit pas la visibilité depuis la Vendée ni un lieu européen.",
-      "destinationHint": "À déterminer",
-      "nextStep": "Ouvrir la carte mondiale et comparer Les Herbiers avec une ville d’Europe ou proche.",
+      "sourceUrl": "https://theskylive.com/lunar-occultations/2027-09-07-antares",
+      "priority": "haute",
+      "summary": "Occultation d'une étoile remarquable le 2027-09-07. Visibilité depuis la Vendée à vérifier.",
+      "why": "La présence dans un catalogue mondial ne prouve pas la visibilité depuis Les Herbiers.",
+      "destinationHint": "Veille du club — pas de proposition de voyage",
+      "nextStep": "Contrôler la carte de visibilité, les heures locales et les conditions d’observation.",
       "validation": "unverified",
       "sourceData": {
-        "slug": "2027-02-14-alcyone"
+        "slug": "2027-09-07-antares",
+        "importance": "majeure",
+        "magnitude": 1.1
       },
       "firstSeen": "2026-11-09",
       "lastSeen": "2026-11-09"
     },
     {
-      "id": "occultation-2027-02-14-electra",
+      "id": "occultation-2027-10-04-antares",
       "type": "occultation",
-      "title": "Occultation lunaire : electra",
-      "observedDate": "2027-02-14",
+      "title": "Occultation lunaire : antares",
+      "observedDate": "2027-10-04",
       "source": "TheSkyLive · catalogue mondial",
-      "sourceUrl": "https://theskylive.com/lunar-occultations/2027-02-14-electra",
-      "priority": "modérée",
-      "summary": "Occultation répertoriée le 2027-02-14 UTC, destination et visibilité locale à calculer.",
-      "why": "Le calendrier mondial ne garantit pas la visibilité depuis la Vendée ni un lieu européen.",
-      "destinationHint": "À déterminer",
-      "nextStep": "Ouvrir la carte mondiale et comparer Les Herbiers avec une ville d’Europe ou proche.",
+      "sourceUrl": "https://theskylive.com/lunar-occultations/2027-10-04-antares",
+      "priority": "haute",
+      "summary": "Occultation d'une étoile remarquable le 2027-10-04. Visibilité depuis la Vendée à vérifier.",
+      "why": "La présence dans un catalogue mondial ne prouve pas la visibilité depuis Les Herbiers.",
+      "destinationHint": "Veille du club — pas de proposition de voyage",
+      "nextStep": "Contrôler la carte de visibilité, les heures locales et les conditions d’observation.",
       "validation": "unverified",
       "sourceData": {
-        "slug": "2027-02-14-electra"
+        "slug": "2027-10-04-antares",
+        "importance": "majeure",
+        "magnitude": 1.1
       },
       "firstSeen": "2026-11-09",
       "lastSeen": "2026-11-09"
     },
     {
-      "id": "occultation-2027-02-14-maia",
+      "id": "occultation-2027-11-01-antares",
       "type": "occultation",
-      "title": "Occultation lunaire : maia",
-      "observedDate": "2027-02-14",
+      "title": "Occultation lunaire : antares",
+      "observedDate": "2027-11-01",
       "source": "TheSkyLive · catalogue mondial",
-      "sourceUrl": "https://theskylive.com/lunar-occultations/2027-02-14-maia",
-      "priority": "modérée",
-      "summary": "Occultation répertoriée le 2027-02-14 UTC, destination et visibilité locale à calculer.",
-      "why": "Le calendrier mondial ne garantit pas la visibilité depuis la Vendée ni un lieu européen.",
-      "destinationHint": "À déterminer",
-      "nextStep": "Ouvrir la carte mondiale et comparer Les Herbiers avec une ville d’Europe ou proche.",
+      "sourceUrl": "https://theskylive.com/lunar-occultations/2027-11-01-antares",
+      "priority": "haute",
+      "summary": "Occultation d'une étoile remarquable le 2027-11-01. Visibilité depuis la Vendée à vérifier.",
+      "why": "La présence dans un catalogue mondial ne prouve pas la visibilité depuis Les Herbiers.",
+      "destinationHint": "Veille du club — pas de proposition de voyage",
+      "nextStep": "Contrôler la carte de visibilité, les heures locales et les conditions d’observation.",
       "validation": "unverified",
       "sourceData": {
-        "slug": "2027-02-14-maia"
-      },
-      "firstSeen": "2026-11-09",
-      "lastSeen": "2026-11-09"
-    },
-    {
-      "id": "occultation-2027-02-16-elnath",
-      "type": "occultation",
-      "title": "Occultation lunaire : elnath",
-      "observedDate": "2027-02-16",
-      "source": "TheSkyLive · catalogue mondial",
-      "sourceUrl": "https://theskylive.com/lunar-occultations/2027-02-16-elnath",
-      "priority": "modérée",
-      "summary": "Occultation répertoriée le 2027-02-16 UTC, destination et visibilité locale à calculer.",
-      "why": "Le calendrier mondial ne garantit pas la visibilité depuis la Vendée ni un lieu européen.",
-      "destinationHint": "À déterminer",
-      "nextStep": "Ouvrir la carte mondiale et comparer Les Herbiers avec une ville d’Europe ou proche.",
-      "validation": "unverified",
-      "sourceData": {
-        "slug": "2027-02-16-elnath"
-      },
-      "firstSeen": "2026-11-09",
-      "lastSeen": "2026-11-09"
-    },
-    {
-      "id": "occultation-2027-03-03-nunki",
-      "type": "occultation",
-      "title": "Occultation lunaire : nunki",
-      "observedDate": "2027-03-03",
-      "source": "TheSkyLive · catalogue mondial",
-      "sourceUrl": "https://theskylive.com/lunar-occultations/2027-03-03-nunki",
-      "priority": "modérée",
-      "summary": "Occultation répertoriée le 2027-03-03 UTC, destination et visibilité locale à calculer.",
-      "why": "Le calendrier mondial ne garantit pas la visibilité depuis la Vendée ni un lieu européen.",
-      "destinationHint": "À déterminer",
-      "nextStep": "Ouvrir la carte mondiale et comparer Les Herbiers avec une ville d’Europe ou proche.",
-      "validation": "unverified",
-      "sourceData": {
-        "slug": "2027-03-03-nunki"
-      },
-      "firstSeen": "2026-11-09",
-      "lastSeen": "2026-11-09"
-    },
-    {
-      "id": "occultation-2027-03-13-alcyone",
-      "type": "occultation",
-      "title": "Occultation lunaire : alcyone",
-      "observedDate": "2027-03-13",
-      "source": "TheSkyLive · catalogue mondial",
-      "sourceUrl": "https://theskylive.com/lunar-occultations/2027-03-13-alcyone",
-      "priority": "modérée",
-      "summary": "Occultation répertoriée le 2027-03-13 UTC, destination et visibilité locale à calculer.",
-      "why": "Le calendrier mondial ne garantit pas la visibilité depuis la Vendée ni un lieu européen.",
-      "destinationHint": "À déterminer",
-      "nextStep": "Ouvrir la carte mondiale et comparer Les Herbiers avec une ville d’Europe ou proche.",
-      "validation": "unverified",
-      "sourceData": {
-        "slug": "2027-03-13-alcyone"
-      },
-      "firstSeen": "2026-11-09",
-      "lastSeen": "2026-11-09"
-    },
-    {
-      "id": "occultation-2027-03-13-atlas",
-      "type": "occultation",
-      "title": "Occultation lunaire : atlas",
-      "observedDate": "2027-03-13",
-      "source": "TheSkyLive · catalogue mondial",
-      "sourceUrl": "https://theskylive.com/lunar-occultations/2027-03-13-atlas",
-      "priority": "modérée",
-      "summary": "Occultation répertoriée le 2027-03-13 UTC, destination et visibilité locale à calculer.",
-      "why": "Le calendrier mondial ne garantit pas la visibilité depuis la Vendée ni un lieu européen.",
-      "destinationHint": "À déterminer",
-      "nextStep": "Ouvrir la carte mondiale et comparer Les Herbiers avec une ville d’Europe ou proche.",
-      "validation": "unverified",
-      "sourceData": {
-        "slug": "2027-03-13-atlas"
-      },
-      "firstSeen": "2026-11-09",
-      "lastSeen": "2026-11-09"
-    },
-    {
-      "id": "occultation-2027-03-13-electra",
-      "type": "occultation",
-      "title": "Occultation lunaire : electra",
-      "observedDate": "2027-03-13",
-      "source": "TheSkyLive · catalogue mondial",
-      "sourceUrl": "https://theskylive.com/lunar-occultations/2027-03-13-electra",
-      "priority": "modérée",
-      "summary": "Occultation répertoriée le 2027-03-13 UTC, destination et visibilité locale à calculer.",
-      "why": "Le calendrier mondial ne garantit pas la visibilité depuis la Vendée ni un lieu européen.",
-      "destinationHint": "À déterminer",
-      "nextStep": "Ouvrir la carte mondiale et comparer Les Herbiers avec une ville d’Europe ou proche.",
-      "validation": "unverified",
-      "sourceData": {
-        "slug": "2027-03-13-electra"
-      },
-      "firstSeen": "2026-11-09",
-      "lastSeen": "2026-11-09"
-    },
-    {
-      "id": "occultation-2027-03-13-maia",
-      "type": "occultation",
-      "title": "Occultation lunaire : maia",
-      "observedDate": "2027-03-13",
-      "source": "TheSkyLive · catalogue mondial",
-      "sourceUrl": "https://theskylive.com/lunar-occultations/2027-03-13-maia",
-      "priority": "modérée",
-      "summary": "Occultation répertoriée le 2027-03-13 UTC, destination et visibilité locale à calculer.",
-      "why": "Le calendrier mondial ne garantit pas la visibilité depuis la Vendée ni un lieu européen.",
-      "destinationHint": "À déterminer",
-      "nextStep": "Ouvrir la carte mondiale et comparer Les Herbiers avec une ville d’Europe ou proche.",
-      "validation": "unverified",
-      "sourceData": {
-        "slug": "2027-03-13-maia"
-      },
-      "firstSeen": "2026-11-09",
-      "lastSeen": "2026-11-09"
-    },
-    {
-      "id": "occultation-2027-03-15-elnath",
-      "type": "occultation",
-      "title": "Occultation lunaire : elnath",
-      "observedDate": "2027-03-15",
-      "source": "TheSkyLive · catalogue mondial",
-      "sourceUrl": "https://theskylive.com/lunar-occultations/2027-03-15-elnath",
-      "priority": "modérée",
-      "summary": "Occultation répertoriée le 2027-03-15 UTC, destination et visibilité locale à calculer.",
-      "why": "Le calendrier mondial ne garantit pas la visibilité depuis la Vendée ni un lieu européen.",
-      "destinationHint": "À déterminer",
-      "nextStep": "Ouvrir la carte mondiale et comparer Les Herbiers avec une ville d’Europe ou proche.",
-      "validation": "unverified",
-      "sourceData": {
-        "slug": "2027-03-15-elnath"
-      },
-      "firstSeen": "2026-11-09",
-      "lastSeen": "2026-11-09"
-    },
-    {
-      "id": "occultation-2027-03-30-nunki",
-      "type": "occultation",
-      "title": "Occultation lunaire : nunki",
-      "observedDate": "2027-03-30",
-      "source": "TheSkyLive · catalogue mondial",
-      "sourceUrl": "https://theskylive.com/lunar-occultations/2027-03-30-nunki",
-      "priority": "modérée",
-      "summary": "Occultation répertoriée le 2027-03-30 UTC, destination et visibilité locale à calculer.",
-      "why": "Le calendrier mondial ne garantit pas la visibilité depuis la Vendée ni un lieu européen.",
-      "destinationHint": "À déterminer",
-      "nextStep": "Ouvrir la carte mondiale et comparer Les Herbiers avec une ville d’Europe ou proche.",
-      "validation": "unverified",
-      "sourceData": {
-        "slug": "2027-03-30-nunki"
-      },
-      "firstSeen": "2026-11-09",
-      "lastSeen": "2026-11-09"
-    },
-    {
-      "id": "occultation-2027-04-10-alcyone",
-      "type": "occultation",
-      "title": "Occultation lunaire : alcyone",
-      "observedDate": "2027-04-10",
-      "source": "TheSkyLive · catalogue mondial",
-      "sourceUrl": "https://theskylive.com/lunar-occultations/2027-04-10-alcyone",
-      "priority": "modérée",
-      "summary": "Occultation répertoriée le 2027-04-10 UTC, destination et visibilité locale à calculer.",
-      "why": "Le calendrier mondial ne garantit pas la visibilité depuis la Vendée ni un lieu européen.",
-      "destinationHint": "À déterminer",
-      "nextStep": "Ouvrir la carte mondiale et comparer Les Herbiers avec une ville d’Europe ou proche.",
-      "validation": "unverified",
-      "sourceData": {
-        "slug": "2027-04-10-alcyone"
-      },
-      "firstSeen": "2026-11-09",
-      "lastSeen": "2026-11-09"
-    },
-    {
-      "id": "occultation-2027-04-10-atlas",
-      "type": "occultation",
-      "title": "Occultation lunaire : atlas",
-      "observedDate": "2027-04-10",
-      "source": "TheSkyLive · catalogue mondial",
-      "sourceUrl": "https://theskylive.com/lunar-occultations/2027-04-10-atlas",
-      "priority": "modérée",
-      "summary": "Occultation répertoriée le 2027-04-10 UTC, destination et visibilité locale à calculer.",
-      "why": "Le calendrier mondial ne garantit pas la visibilité depuis la Vendée ni un lieu européen.",
-      "destinationHint": "À déterminer",
-      "nextStep": "Ouvrir la carte mondiale et comparer Les Herbiers avec une ville d’Europe ou proche.",
-      "validation": "unverified",
-      "sourceData": {
-        "slug": "2027-04-10-atlas"
-      },
-      "firstSeen": "2026-11-09",
-      "lastSeen": "2026-11-09"
-    },
-    {
-      "id": "occultation-2027-04-10-electra",
-      "type": "occultation",
-      "title": "Occultation lunaire : electra",
-      "observedDate": "2027-04-10",
-      "source": "TheSkyLive · catalogue mondial",
-      "sourceUrl": "https://theskylive.com/lunar-occultations/2027-04-10-electra",
-      "priority": "modérée",
-      "summary": "Occultation répertoriée le 2027-04-10 UTC, destination et visibilité locale à calculer.",
-      "why": "Le calendrier mondial ne garantit pas la visibilité depuis la Vendée ni un lieu européen.",
-      "destinationHint": "À déterminer",
-      "nextStep": "Ouvrir la carte mondiale et comparer Les Herbiers avec une ville d’Europe ou proche.",
-      "validation": "unverified",
-      "sourceData": {
-        "slug": "2027-04-10-electra"
-      },
-      "firstSeen": "2026-11-09",
-      "lastSeen": "2026-11-09"
-    },
-    {
-      "id": "occultation-2027-04-10-maia",
-      "type": "occultation",
-      "title": "Occultation lunaire : maia",
-      "observedDate": "2027-04-10",
-      "source": "TheSkyLive · catalogue mondial",
-      "sourceUrl": "https://theskylive.com/lunar-occultations/2027-04-10-maia",
-      "priority": "modérée",
-      "summary": "Occultation répertoriée le 2027-04-10 UTC, destination et visibilité locale à calculer.",
-      "why": "Le calendrier mondial ne garantit pas la visibilité depuis la Vendée ni un lieu européen.",
-      "destinationHint": "À déterminer",
-      "nextStep": "Ouvrir la carte mondiale et comparer Les Herbiers avec une ville d’Europe ou proche.",
-      "validation": "unverified",
-      "sourceData": {
-        "slug": "2027-04-10-maia"
-      },
-      "firstSeen": "2026-11-09",
-      "lastSeen": "2026-11-09"
-    },
-    {
-      "id": "occultation-2027-04-11-elnath",
-      "type": "occultation",
-      "title": "Occultation lunaire : elnath",
-      "observedDate": "2027-04-11",
-      "source": "TheSkyLive · catalogue mondial",
-      "sourceUrl": "https://theskylive.com/lunar-occultations/2027-04-11-elnath",
-      "priority": "modérée",
-      "summary": "Occultation répertoriée le 2027-04-11 UTC, destination et visibilité locale à calculer.",
-      "why": "Le calendrier mondial ne garantit pas la visibilité depuis la Vendée ni un lieu européen.",
-      "destinationHint": "À déterminer",
-      "nextStep": "Ouvrir la carte mondiale et comparer Les Herbiers avec une ville d’Europe ou proche.",
-      "validation": "unverified",
-      "sourceData": {
-        "slug": "2027-04-11-elnath"
-      },
-      "firstSeen": "2026-11-09",
-      "lastSeen": "2026-11-09"
-    },
-    {
-      "id": "occultation-2027-04-26-nunki",
-      "type": "occultation",
-      "title": "Occultation lunaire : nunki",
-      "observedDate": "2027-04-26",
-      "source": "TheSkyLive · catalogue mondial",
-      "sourceUrl": "https://theskylive.com/lunar-occultations/2027-04-26-nunki",
-      "priority": "modérée",
-      "summary": "Occultation répertoriée le 2027-04-26 UTC, destination et visibilité locale à calculer.",
-      "why": "Le calendrier mondial ne garantit pas la visibilité depuis la Vendée ni un lieu européen.",
-      "destinationHint": "À déterminer",
-      "nextStep": "Ouvrir la carte mondiale et comparer Les Herbiers avec une ville d’Europe ou proche.",
-      "validation": "unverified",
-      "sourceData": {
-        "slug": "2027-04-26-nunki"
+        "slug": "2027-11-01-antares",
+        "importance": "majeure",
+        "magnitude": 1.1
       },
       "firstSeen": "2026-11-09",
       "lastSeen": "2026-11-09"
