@@ -1,84 +1,78 @@
 #!/usr/bin/env node
 /**
- * Candidats de comètes et occultations pour revue éditoriale.
- * Ne modifie JAMAIS docs/grands-evenements.json ni le site FTP.
- * Aucun texte provenant d'une source externe n'est publié comme événement vérifié.
+ * Veille de candidats d'observation pour le club.
+ * Uniquement : comètes de magnitude estimée < 10 et occultations majeures.
+ * N'écrit JAMAIS dans le catalogue de voyages ni dans le FTP/Discord.
  */
 import fs from 'node:fs';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
-import {SITES, plannerURL, parsePlanner, cometCandidates, parseOccultationYear, parseRSS, mergeCandidates} from './veille-rares-lib.mjs';
+import {SITES,plannerURL,parsePlanner,cometCandidates,parseOccultationYear,mergeCandidates,eligible} from './veille-rares-lib.mjs';
+
 const REPO=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const OUT=path.join(REPO,'docs','veille-evenements-rares.json');
-const now = process.env.ASTRO_REFERENCE_DATE ? new Date(process.env.ASTRO_REFERENCE_DATE+'T12:00:00Z') : new Date();
-if(!Number.isFinite(+now)) throw new Error('ASTRO_REFERENCE_DATE invalide');
-const date=(offset=0)=>new Date(+now+offset*86400000).toISOString().slice(0,10);
-const plusYear=()=>new Date(Date.UTC(now.getUTCFullYear()+1,now.getUTCMonth(),now.getUTCDate())).toISOString().slice(0,10);
-const status=[];
-const diagnostics=[];
-const errors=[];
-const MAX_MS=16000;
-async function get(url,type){
-  const response=await fetch(url,{signal:AbortSignal.timeout(MAX_MS),headers:{'User-Agent':'VillageDuCiel-AstroAgenda/1.0 (community astronomy monitoring; no commercial crawling)','Accept':type==='json'?'application/json':'application/rss+xml, application/xml, text/html;q=0.8, */*;q=0.4'}});
+const now=process.env.ASTRO_REFERENCE_DATE?new Date(process.env.ASTRO_REFERENCE_DATE+'T12:00:00Z'):new Date();
+if(!Number.isFinite(+now))throw new Error('ASTRO_REFERENCE_DATE invalide');
+const day=(plus=0)=>new Date(+now+plus*86400000).toISOString().slice(0,10);
+const end=new Date(Date.UTC(now.getUTCFullYear()+1,now.getUTCMonth(),now.getUTCDate())).toISOString().slice(0,10);
+const sources=[],diagnostics=[],found=[];
+const TIMEOUT=16000;
+async function get(url,kind){
+  const response=await fetch(url,{signal:AbortSignal.timeout(TIMEOUT),headers:{
+    'User-Agent':'VillageDuCiel-AstroAgenda/1.1 (astronomy club event watch)',
+    'Accept':kind==='json'?'application/json':'text/html, */*;q=0.4'}});
   if(!response.ok)throw new Error('HTTP '+response.status);
-  const text=await response.text();
-  if(text.length>4_000_000) throw new Error('Réponse trop volumineuse');
-  return type==='json'?JSON.parse(text):text;
+  const body=await response.text();
+  if(body.length>4_000_000)throw new Error('Réponse trop volumineuse');
+  return kind==='json'?JSON.parse(body):body;
 }
 
-const candidates=[];
-// Observations planifiées : 5 lieux x 2 dates, sans aucune conclusion définitive sur la géométrie.
-for(const day of [date(0),date(14)]){
-  const planners=new Map();let successes=0;
-  const replies=await Promise.allSettled(SITES.map(async site=>({site, data:parsePlanner(await get(plannerURL(site,day),'json'))})));
+// COBS : on interroge la Vendée et plusieurs sites de référence, sans déduire une nécessité de voyage.
+// Échantillons J, J+7 et J+14 pour détecter une comète devenant plus brillante.
+for(const observationDay of [day(0),day(7),day(14)]){
+  const planners=new Map();let ok=0;
+  const replies=await Promise.allSettled(SITES.map(async site=>({site,comets:parsePlanner(await get(plannerURL(site,observationDay),'json'))})));
   for(let i=0;i<replies.length;i++){
-    const result=replies[i],site=SITES[i];
-    if(result.status==='fulfilled'){
-      planners.set(site.id,result.value.data);successes++;
-    }else errors.push(`COBS ${day} ${site.name}: ${String(result.reason?.message||result.reason).slice(0,120)}`);
+    const r=replies[i];
+    if(r.status==='fulfilled'){ok++;planners.set(r.value.site.id,r.value.comets);}
+    else diagnostics.push(`COBS ${observationDay} ${SITES[i].name}: ${String(r.reason?.message||r.reason).slice(0,100)}`);
   }
-  if(successes){status.push({source:'COBS',date:day,ok:true,sites:successes});candidates.push(...cometCandidates(planners,day));}
-  else status.push({source:'COBS',date:day,ok:false,sites:0});
+  sources.push({source:'COBS',date:observationDay,ok:ok>0,sites:ok,threshold:'magnitude < 10'});
+  if(ok)found.push(...cometCandidates(planners,observationDay));
 }
 
-// Occultations : extraction des seules occurrences ayant des liens explicites.
-// Certains hébergeurs bloquent la consultation automatisée : indisponibilité non bloquante.
+// Événements mondiaux : seulement planètes brillantes / étoiles de magnitude <= 2.
 for(const year of [...new Set([now.getUTCFullYear(),now.getUTCFullYear()+1])]){
-  const u=`https://theskylive.com/lunar-occultations/${year}`;
   try{
-    const html=await get(u,'html');
-    const found=parseOccultationYear(html,date(0),plusYear());
-    status.push({source:'TheSkyLive',year,ok:true,found:found.length});candidates.push(...found);
-  }catch(e){status.push({source:'TheSkyLive',year,ok:false}); errors.push(`TheSkyLive ${year}: ${e.message}`);}
+    const html=await get(`https://theskylive.com/lunar-occultations/${year}`,'html');
+    const candidates=parseOccultationYear(html,day(),end);
+    sources.push({source:'TheSkyLive',year,ok:true,major:candidates.length});
+    found.push(...candidates);
+  }catch(e){sources.push({source:'TheSkyLive',year,ok:false});diagnostics.push(`TheSkyLive ${year}: ${e.message}`);}
 }
+if(!sources.some(s=>s.ok))throw new Error('Sources indisponibles : ancien rapport conservé. '+diagnostics.join(' | '));
 
-// Veille journalistique ciblée (NASA et Google News). Ce sont des signaux, pas des éphémérides.
-const feeds=[
-  {name:'NASA Science',url:'https://science.nasa.gov/feed/'},
-  {name:'Google News — comètes',url:'https://news.google.com/rss/search?q='+encodeURIComponent('("bright comet" OR "comète brillante" OR "naked eye comet") when:14d')+'&hl=fr&gl=FR&ceid=FR:fr'},
-  {name:'Google News — occultations',url:'https://news.google.com/rss/search?q='+encodeURIComponent('("lunar occultation" OR "occultation lunaire" OR "planetary occultation") when:14d')+'&hl=fr&gl=FR&ceid=FR:fr'}
-];
-const feedResponses=await Promise.allSettled(feeds.map(async feed=>({feed,items:parseRSS(await get(feed.url,'xml'),feed.name,now)})));
-for(let i=0;i<feeds.length;i++){
-  const r=feedResponses[i];
-  if(r.status==='fulfilled'){
-    status.push({source:r.value.feed.name,ok:true,found:r.value.items.length}); candidates.push(...r.value.items);
-  }else{status.push({source:feeds[i].name,ok:false});errors.push(`${feeds[i].name}: ${String(r.reason?.message||r.reason).slice(0,120)}`);}
-}
-
-// Ne pas effacer les découvertes précédentes si toutes les sources sont hors ligne.
-if(!status.some(s=>s.ok))throw new Error('Toutes les sources sont indisponibles : catalogue de veille conservé, pas de publication de données vides. '+errors.join(' | '));
 let previous=[];
 if(fs.existsSync(OUT)){
-  try{const prev=JSON.parse(fs.readFileSync(OUT,'utf8'));if(prev.schema===1 && Array.isArray(prev.candidates))previous=prev.candidates;}
-  catch(e){diagnostics.push('Ancien fichier JSON non exploitable : '+e.message);}
+  try{const old=JSON.parse(fs.readFileSync(OUT,'utf8'));if(old.schema===1 && Array.isArray(old.candidates))previous=old.candidates;}
+  catch(e){diagnostics.push('Ancien rapport invalide : '+e.message);}
 }
-const current=mergeCandidates(previous,candidates,now);
-const doc={schema:1,generatedAt:now.toISOString(),period:{start:date(),end:plusYear()},
-  notice:'Veille de candidats à vérifier. Jamais automatiquement insérés dans le catalogue public ; l’invisibilité depuis la Vendée n’est PAS prouvée par une absence COBS.',
-  sources:status,diagnostics:[...diagnostics,...errors].slice(0,35),
-  counts:{candidateCount:current.length,newOrUpdated:candidates.length,sourceSuccess:status.filter(s=>s.ok).length,sourceFailed:status.filter(s=>!s.ok).length},
-  candidates:current};
+// Écraser les résultats génériques historiques du précédent moteur : uniquement les candidats éligibles.
+const priorIds=new Set(previous.filter(eligible).map(c=>c.id));
+const fresh=new Map(found.filter(eligible).map(c=>[c.id,c]));
+const newIds=[...fresh.keys()].filter(id=>!priorIds.has(id));
+const current=mergeCandidates(previous,[...fresh.values()],now);
+// Les candidats non revus lors de cette exécution restent en historique 14 jours, sans nouvelle alerte.
+const doc={schema:1,generatedAt:now.toISOString(),period:{start:day(),end},
+  rules:{comets:'magnitude estimée strictement inférieure à 10',
+    occultations:'planètes brillantes et étoiles remarquables de magnitude <= 2',
+    travelPanel:'éclipses uniquement'},
+  notice:'Candidats de veille du club ; visibilité locale et éphémérides à vérifier avant annonce. Aucun ajout automatique au calendrier, panneau de voyages ou Discord.',
+  sources,diagnostics:diagnostics.slice(0,40),
+  counts:{candidateCount:current.length,detectedThisRun:fresh.size,newDetected:newIds.length,
+    cometCount:current.filter(c=>c.type==='comete').length,majorOccultationCount:current.filter(c=>c.type==='occultation').length,
+    sourceSuccess:sources.filter(s=>s.ok).length,sourceFailed:sources.filter(s=>!s.ok).length},
+  newIds,candidates:current};
 fs.mkdirSync(path.dirname(OUT),{recursive:true});
 fs.writeFileSync(OUT,JSON.stringify(doc,null,2)+'\n','utf8');
-console.log(`Veille : ${doc.counts.candidateCount} candidats, ${doc.counts.sourceSuccess} sources répondent, ${doc.counts.sourceFailed} sources indisponibles.`);
+console.log(`Veille du club : ${current.length} candidats éligibles (${doc.counts.cometCount} comètes m<10, ${doc.counts.majorOccultationCount} occultations majeures), ${newIds.length} nouveau(x).`);

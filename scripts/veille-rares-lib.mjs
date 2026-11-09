@@ -1,9 +1,10 @@
 /**
- * Veille des comètes/occultations — fonctions sans effets de bord.
- * Les candidats sont des PISTES À VALIDER, pas des événements publiables.
+ * Veille du club Village du Ciel : occultations MAJEURES et comètes m < 10.
+ * Le résultat alimente une revue GitHub, jamais directement l'agenda public.
  */
 import {createHash} from 'node:crypto';
 
+export const COMET_MAG_LIMIT = 10; // STRICTEMENT < 10, pas <= 10
 export const SITES = Object.freeze([
   {id:'vendee',name:'Les Herbiers',country:'France',lat:46.87,lon:-1.01},
   {id:'cadix',name:'Cadix',country:'Espagne',lat:36.53,lon:-6.29},
@@ -11,141 +12,128 @@ export const SITES = Object.freeze([
   {id:'tunis',name:'Tunis',country:'Tunisie',lat:36.81,lon:10.18},
   {id:'athenes',name:'Athènes',country:'Grèce',lat:37.98,lon:23.73}
 ]);
-export const REVIEW_LABEL = 'À vérifier avant publication';
-const isoDay = value => new Date(value).toISOString().slice(0,10);
-const validDate = value => /^20\d\d-\d\d-\d\d$/.test(String(value)) && !Number.isNaN(Date.parse(value+'T12:00:00Z'));
 const DAY = 86400000;
-const norm = value => String(value??'').normalize('NFKC').trim();
-const normalizedDesignation = obj => norm(obj.mpc_name||obj.comet_name||obj.comet_fullname).toUpperCase().replace(/\s+/g,'');
+const norm = x => String(x ?? '').normalize('NFKC').trim();
+const text = x => norm(x).replace(/\s+/g,' ').slice(0,300);
+const hash = x => createHash('sha256').update(x).digest('hex').slice(0,16);
+const dayKey = date => date.toISOString().slice(0,10);
+const validDay = d => /^20\d{2}-\d{2}-\d{2}$/.test(String(d)) && !Number.isNaN(Date.parse(d+'T12:00:00Z'));
+const designation = c => norm(c.mpc_name||c.comet_name||c.comet_fullname).toUpperCase().replace(/\s+/g,'');
 const round1 = n => Math.round(n*10)/10;
-const compact = value => norm(value).replace(/\s+/g,' ').slice(0,300);
-const digest = value => createHash('sha256').update(value).digest('hex').slice(0,16);
 
-export function plannerURL(site, day){
-  if(!validDate(day)) throw new Error('Date invalide');
-  const url = new URL('https://cobs.si/api/planner.api');
-  const p = {date:day,lat:site.lat,long:site.lon,alt:100,lim_mag:6.5,min_alt:15,sun_alt:-12,min_sol:25,min_moon:10,filter:1};
-  for(const [k,v] of Object.entries(p))url.searchParams.set(k,String(v));
-  return url.toString();
+// Sources : https://cobs.si/help/cobs_api/planner_api/
+export function plannerURL(site,day){
+  if(!validDay(day)) throw new Error('Date invalide');
+  const u=new URL('https://cobs.si/api/planner.api');
+  const params={date:day,lat:site.lat,long:site.lon,alt:100,
+    lim_mag:'9.99',min_alt:10,sun_alt:-12,min_sol:20,min_moon:0,filter:1};
+  for(const [k,v] of Object.entries(params))u.searchParams.set(k,String(v));
+  return u.toString();
 }
 export function parsePlanner(payload){
-  if(!payload || !Array.isArray(payload.comet_list) || !payload.signature?.source?.toLowerCase().includes('cobs'))
-    throw new Error('COBS : schéma de réponse inattendu');
-  if(!/^1\./.test(String(payload.signature.version)))throw new Error('COBS : version API non validée');
-  return payload.comet_list.filter(c =>
-    normalizedDesignation(c) && Number.isFinite(+c.magnitude) &&
-    Number.isFinite(+c.best_alt) && Number.isFinite(+c.sun_elongation))
-    .map(c=>({designation:normalizedDesignation(c),name:compact(c.comet_fullname||c.comet_name),
-      magnitude:+c.magnitude,altitude:+c.best_alt,elongation:+c.sun_elongation,
-      sourceMethod:Number(c.orbit_calc_source),bestTime:compact(c.best_time)}));
+  if(!payload||!Array.isArray(payload.comet_list)||!payload.signature?.source?.toLowerCase().includes('cobs'))
+    throw new Error('COBS : schéma inattendu');
+  if(!/^1\./.test(String(payload.signature.version)))throw new Error('COBS : version API inconnue');
+  return payload.comet_list.filter(c=>c && designation(c) && c.magnitude !== null && c.magnitude !== '' &&
+      Number.isFinite(Number(c.magnitude)) && Number(c.magnitude)<COMET_MAG_LIMIT &&
+      Number.isFinite(Number(c.best_alt)) && Number.isFinite(Number(c.sun_elongation)))
+    .map(c=>({designation:designation(c),name:text(c.comet_fullname||c.comet_name||c.mpc_name),
+      magnitude:Number(c.magnitude),altitude:Number(c.best_alt),elongation:Number(c.sun_elongation),
+      bestTime:text(c.best_time),sourceMethod:Number(c.orbit_calc_source)}));
 }
 export function cometCandidates(planners,day){
-  // planners : Map<site.id, tableau> ; disponibilité de la Vendée vérifiée séparément.
-  const local = planners.get('vendee');
-  const byName = new Map();
-  for(const site of SITES.filter(s=>s.id!=='vendee')){
+  // Une comète visible depuis les Herbiers est ELIGIBLE : ce n'est pas une sélection de voyages.
+  const byName=new Map(),here=new Set((planners.get('vendee')||[]).map(c=>c.designation));
+  for(const site of SITES){
     for(const c of planners.get(site.id)||[]){
-      if(c.magnitude>5.8 || c.altitude<15 || c.elongation<25)continue;
-      const current = byName.get(c.designation);
-      if(!current || c.magnitude<current.magnitude)byName.set(c.designation,{...c,site});
+      if(!(Number.isFinite(c.magnitude)&&c.magnitude<COMET_MAG_LIMIT) || c.altitude<10 || c.elongation<20)continue;
+      const old=byName.get(c.designation);
+      if(!old || (!old.siteIsLocal&&site.id==='vendee') || (old.siteIsLocal===Boolean(site.id==='vendee')&&c.magnitude<old.magnitude))
+        byName.set(c.designation,{...c,site,siteIsLocal:site.id==='vendee'});
     }
   }
-  return [...byName.values()].filter(c=>{
-    // Un objet observé dans les conditions choisies en Vendée n'est pas un événement "ailleurs".
-    return !Array.isArray(local) || !local.some(l=>l.designation===c.designation && l.magnitude<=6.5);
-  }).sort((a,b)=>a.magnitude-b.magnitude).slice(0,12).map(c=>({
-    id:`comete-${digest(c.designation)}`,type:'comete',title:`Comète ${c.name}`,
+  return [...byName.values()].sort((a,b)=>a.magnitude-b.magnitude).slice(0,35).map(c=>({
+    id:`comete-${hash(c.designation)}`,type:'comete',title:`Comète ${c.name}`,
     observedDate:day,source:'COBS · Comet Planner',sourceUrl:'https://cobs.si/',
-    priority:c.magnitude<=4.5?'haute':'modérée',
-    summary:`Magnitude estimée ${round1(c.magnitude)} · hauteur ${Math.round(c.altitude)}° à ${c.site.name} (${c.site.country}).`,
-    why: Array.isArray(local) ?
-      'Non présente dans la liste COBS pour Les Herbiers avec les mêmes filtres. Cela ne démontre pas son invisibilité.' :
-      'Données Vendée indisponibles : visibilité locale non contrôlée.',
-    destinationHint:`${c.site.name}, ${c.site.country}`,
-    nextStep:'Vérifier éphémérides, magnitude récente, durée de visibilité et comparaison géométrique avec la Vendée.',
-    validation:'unverified',sourceData:{designation:c.designation,magnitude:c.magnitude,siteId:c.site.id,sourceMethod:c.sourceMethod}
+    priority:c.magnitude<6?'haute':'modérée',
+    summary:`Magnitude estimée ${c.magnitude.toFixed(2)} (< 10), hauteur indicative ${Math.round(c.altitude)}° à ${c.site.name}.`,
+    why: here.has(c.designation)?'Présente dans les prévisions pour Les Herbiers ; vérifier météo et éphémérides.':
+      'Détectée dans un site du réseau ; visibilité depuis Les Herbiers non déterminée.',
+    destinationHint:'Veille du club — aucun déplacement recommandé automatiquement',
+    nextStep:'Confirmer la magnitude sur des observations récentes et les horaires depuis Les Herbiers.',
+    validation:'unverified',sourceData:{designation:c.designation,magnitude:c.magnitude,
+      bestTime:c.bestTime,siteId:c.site.id,vendeeInPlanner:here.has(c.designation),sourceMethod:c.sourceMethod}
   }));
 }
 
-function decodeEntities(text){
-  return String(text).replace(/&#(\d+);/g,(_,n)=>String.fromCodePoint(Math.min(1114111,Number(n))))
-    .replace(/&#x([a-f\d]+);/gi,(_,n)=>String.fromCodePoint(Math.min(1114111,parseInt(n,16))))
-    .replace(/&(?:amp|lt|gt|quot|apos|nbsp);/g,e=>({'&amp;':'&','&lt;':'<','&gt;':'>','&quot;':'"','&apos;':"'",'&nbsp;':' '}[e]));
+function decodeEntities(s){return String(s).replace(/&#(\d+);/g,(_,n)=>String.fromCodePoint(Math.min(1114111,Number(n))))
+  .replace(/&#x([a-f\d]+);/gi,(_,n)=>String.fromCodePoint(Math.min(1114111,parseInt(n,16))))
+  .replace(/&(?:amp|lt|gt|quot|apos|nbsp);/g,e=>({'&amp;':'&','&lt;':'<','&gt;':'>','&quot;':'"','&apos;':"'",'&nbsp;':' '}[e]));}
+const plain = s=>text(decodeEntities(String(s).replace(/<[^>]*>/g,' ')));
+const PLANETS = new Set(['mercury','venus','mars','jupiter','saturn']);
+const STAR_MAG = Object.freeze({antares:1.1,aldebaran:0.9,regulus:1.4,spica:1.0,pollux:1.1,
+  elnath:1.7,castor:1.6,betelgeuse:0.5});
+export function importantOccultationSlug(slug, magnitude=null){
+  const obj=String(slug).replace(/^20\d\d-\d\d-\d\d-/,'').toLowerCase().replace(/-/g,' ');
+  if(PLANETS.has(obj))return true;
+  if(Object.prototype.hasOwnProperty.call(STAR_MAG,obj))return true;
+  // Les autres étoiles sont retenues uniquement si la colonne de magnitude est exploitable.
+  return magnitude !== null && Number.isFinite(magnitude) && magnitude <= 2 && magnitude >= -2;
 }
-const plaintext = html=>compact(decodeEntities(String(html).replace(/<[^>]*>/g,' ')));
 export function parseOccultationYear(html,start,end){
   if(typeof html!=='string'||html.length<100)return [];
-  // Table HTML publique : le contenu ou le balisage peut changer. Source opportuniste.
   const out=[];
   for(const match of html.matchAll(/<tr\b[^>]*>([\s\S]*?)<\/tr>/gi)){
     const row=match[1];
-    const href = row.match(/(?:href=["'])([^"']*\/lunar-occultations\/(20\d\d-\d\d-\d\d-[a-z0-9-]+)[^"']*)["']/i);
+    const href=row.match(/href=["']([^"']*\/lunar-occultations\/(20\d\d-\d\d-\d\d-[a-z0-9-]+)[^"']*)["']/i);
     if(!href)continue;
     const slug=href[2],date=slug.slice(0,10);
-    if(!validDate(date)||date<start||date>end)continue;
-    const cells=[...row.matchAll(/<td\b[^>]*>([\s\S]*?)<\/td>/gi)].map(c=>plaintext(c[1]));
-    const magnitudeText=cells.find(c=>/^[−-]?\d+(?:\.\d+)?$/.test(c));
+    if(!validDay(date)||date<start||date>end)continue;
+    const cells=[...row.matchAll(/<td\b[^>]*>([\s\S]*?)<\/td>/gi)].map(c=>plain(c[1]));
+    // TheSkyLive : Date | Objet | Mag. | Lune | Visibilité. Ne jamais confondre date et magnitude.
+    const rawMag=cells[2]?.replace('−','-').trim();
+    const mag=rawMag && /^[+-]?\d+(?:[.,]\d+)?$/.test(rawMag)?Number(rawMag.replace(',','.')):null;
+    if(!importantOccultationSlug(slug,mag))continue;
     const name=slug.slice(11).replace(/-/g,' ');
-    const planet=/^(venus|mars|mercury|jupiter|saturn|uranus|neptune)$/i.test(name);
-    // Ne pas tout importer : étoiles brillantes uniquement, ou planète.
-    const relevant=/^(antares|aldebaran|regulus|spica|nunki|alcyone|electra|maia|atlas|pollux|pleiades|betelgeuse)/i.test(name);
-    const m=magnitudeText?Number(magnitudeText.replace('−','-')):null;
-    if(!planet && !relevant && !(Number.isFinite(m)&&m<=2.5))continue;
+    const planet=PLANETS.has(name);
     out.push({id:`occultation-${slug}`,type:'occultation',title:`Occultation lunaire : ${name}`,
       observedDate:date,source:'TheSkyLive · catalogue mondial',
       sourceUrl:'https://theskylive.com/lunar-occultations/'+slug,
-      priority:planet||name==='antares'?'haute':'modérée',
-      summary:`Occultation répertoriée le ${date} UTC, destination et visibilité locale à calculer.`,
-      why:'Le calendrier mondial ne garantit pas la visibilité depuis la Vendée ni un lieu européen.',
-      destinationHint:'À déterminer',nextStep:'Ouvrir la carte mondiale et comparer Les Herbiers avec une ville d’Europe ou proche.',
-      validation:'unverified',sourceData:{slug}});
+      priority:'haute',
+      summary:`Occultation d'${planet?'une planète brillante':'une étoile remarquable'} le ${date}. Visibilité depuis la Vendée à vérifier.`,
+      why:'La présence dans un catalogue mondial ne prouve pas la visibilité depuis Les Herbiers.',
+      destinationHint:'Veille du club — pas de proposition de voyage',
+      nextStep:'Contrôler la carte de visibilité, les heures locales et les conditions d’observation.',
+      validation:'unverified',sourceData:{slug,importance:'majeure',magnitude:mag}
+    });
   }
-  return [...new Map(out.map(e=>[e.id,e])).values()].slice(0,35);
+  return [...new Map(out.map(e=>[e.id,e])).values()].slice(0,45);
 }
 
-function rssField(block,field){
-  const tag=field.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
-  const m=block.match(new RegExp(`<${tag}(?:\\s[^>]*)?>([\\s\\S]*?)<\\/${tag}>`,'i'));
-  return m?plaintext(m[1].replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g,'$1')):'';
+export function eligible(c){
+  if(!c||c.validation!=='unverified')return false;
+  if(c.type==='comete')return c.sourceData?.magnitude !== null &&
+    Number.isFinite(Number(c.sourceData?.magnitude)) && Number(c.sourceData.magnitude)<COMET_MAG_LIMIT;
+  if(c.type==='occultation')return typeof c.sourceData?.slug==='string' &&
+    importantOccultationSlug(c.sourceData.slug,
+      Number.isFinite(c.sourceData.magnitude)?c.sourceData.magnitude:null);
+  return false; // Pas d'article sans magnitude vérifiée, pas de petites occultations
 }
-export function parseRSS(xml,source,now=new Date()){
-  if(typeof xml!=='string'|| !(/<rss\b|<feed\b/i.test(xml)))throw new Error('Flux RSS/Atom invalide');
-  const blocks = [...xml.matchAll(/<(?:item|entry)\b[^>]*>([\s\S]*?)<\/(?:item|entry)>/gi)].map(m=>m[1]);
-  const out=[];
-  for(const b of blocks){
-    const title=rssField(b,'title');
-    const summary=rssField(b,'description')||rssField(b,'summary');
-    const dateString=rssField(b,'pubDate')||rssField(b,'published')||rssField(b,'updated');
-    let link=rssField(b,'link');
-    if(!link){const lm=b.match(/<link\b[^>]*href=["']([^"']+)["']/i);if(lm)link=decodeEntities(lm[1]);}
-    const d=new Date(dateString);
-    if(!title||!Number.isFinite(d.getTime())||d>now||now-d>31*DAY)continue;
-    if(!/^https:\/\//i.test(link))continue;
-    const blob=(title+' '+summary).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
-    let type;
-    if(/occultation|stellar occult|lunar occult|occulting/.test(blob))type='occultation';
-    else if(/comet|comete|cometary/.test(blob) && /bright|visible|naked.eye|observ|sky|earth|magnitude|apparent|eclat|lumineus/.test(blob))type='comete';
-    else continue;
-    out.push({id:`actualite-${digest(link)}`,type,title:title.slice(0,160),observedDate:isoDay(d),
-      source,sourceUrl:link,priority:'modérée',summary:summary.slice(0,260),
-      why:'Signal d’actualité : ni date de phénomène ni visibilité depuis la Vendée confirmées.',
-      destinationHint:'À déterminer',nextStep:'Lire l’article original, identifier la date et valider les circonstances géographiques.',
-      validation:'unverified',sourceData:{kind:'article'}});
+export function mergeCandidates(previous,current,now=new Date()){
+  const today=dayKey(now),kept=new Map();
+  for(const c of previous||[]){
+    if(!eligible(c)||!validDay(c.lastSeen||c.observedDate))continue;
+    const age=Date.parse(today+'T12:00:00Z')-Date.parse((c.lastSeen||c.observedDate)+'T12:00:00Z');
+    if(age>14*DAY)continue;
+    if(c.type==='occultation' && c.observedDate<today)continue;
+    kept.set(c.id,{...c,priority:c.type==='occultation'?'haute':c.sourceData.magnitude<6?'haute':'modérée',
+      sourceData:c.type==='occultation'?{...c.sourceData,importance:'majeure'}:c.sourceData});
   }
-  return out.slice(0,25);
-}
-
-export function mergeCandidates(oldList,newList,now=new Date()){
-  const today=isoDay(now),kept=new Map();
-  for(const candidate of oldList||[]){
-    if(!candidate?.id||!validDate(candidate.lastSeen||candidate.observedDate))continue;
-    const oldAge=Date.parse(today+'T12:00:00Z')-Date.parse((candidate.lastSeen||candidate.observedDate)+'T12:00:00Z');
-    if(oldAge<=45*DAY) kept.set(candidate.id,candidate);
+  for(const c of current){
+    if(!eligible(c))continue;
+    const old=kept.get(c.id);
+    kept.set(c.id,{...c,firstSeen:old?.firstSeen||today,lastSeen:today});
   }
-  for(const candidate of newList){
-    if(!candidate?.id||candidate.validation!=='unverified')continue;
-    const prior=kept.get(candidate.id);
-    kept.set(candidate.id,{...candidate,firstSeen:prior?.firstSeen||today,lastSeen:today});
-  }
-  return [...kept.values()].sort((a,b)=>({haute:0,'modérée':1}[a.priority]??2)-({haute:0,'modérée':1}[b.priority]??2) || b.lastSeen.localeCompare(a.lastSeen)||a.id.localeCompare(b.id)).slice(0,140);
+  return [...kept.values()].sort((a,b)=>({haute:0,'modérée':1}[a.priority]??2)-({haute:0,'modérée':1}[b.priority]??2)
+    ||a.observedDate.localeCompare(b.observedDate)||a.id.localeCompare(b.id)).slice(0,120);
 }
