@@ -1,7 +1,8 @@
 name: Agenda Astro — bulletin Discord quotidien
+
 on:
   schedule:
-    - cron: '10 8 * * *'  # 08:10 heure française (hiver et été)
+    - cron: '10 8 * * *'  # 08 h 10, heure française
       timezone: 'Europe/Paris'
   workflow_dispatch:
     inputs:
@@ -13,11 +14,14 @@ on:
         options:
           - tester
           - envoyer
+
 permissions:
   contents: write
+
 concurrency:
   group: agenda-astro-discord
   cancel-in-progress: false
+
 jobs:
   discord:
     runs-on: ubuntu-latest
@@ -25,24 +29,55 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: true
+          fetch-depth: 0
+
+      # Une autre action (catalogue, intervention manuelle) peut avoir avance main.
+      # Repartir de la version la plus recente AVANT la publication Discord.
+      - name: Synchroniser la branche avant le bulletin
+        run: |
+          git fetch origin main
+          git merge --ff-only origin/main
+
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+
       - name: Préparer l'aperçu (sans publication)
         if: github.event_name == 'workflow_dispatch' && inputs.action == 'tester'
         run: node scripts/discord-bulletin.mjs --dry-run
+
       - name: Envoyer le bulletin sur Discord
         if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.action == 'envoyer')
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: node scripts/discord-bulletin.mjs --send
+
+      # Discord est deja contacte a ce stade. Ne pas forcer le push :
+      # recuperer/rejouer les nouveaux commits avant chaque essai.
       - name: Mémoriser la dernière publication pour éviter les doublons
         if: success() && (github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.action == 'envoyer'))
+        shell: bash
         run: |
+          set -euo pipefail
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git config user.name 'github-actions[bot]'
           git add data/discord-last-send.json
-          if ! git diff --cached --quiet; then
-            git commit -m "Bulletin Discord $(date -u +%F)"
-            git push
+          if git diff --cached --quiet; then
+            echo 'Aucune nouvelle date à enregistrer.'
+            exit 0
           fi
+          git commit -m "Bulletin Discord $(date -u +%F)"
+
+          for tentative in 1 2 3 4 5; do
+            echo "Synchronisation du suivi Discord (essai ${tentative}/5)..."
+            git fetch origin main
+            git rebase origin/main
+            if git push origin HEAD:main; then
+              echo 'Date de publication sauvegardée sur GitHub.'
+              exit 0
+            fi
+            echo 'La branche a évolué entre-temps : nouvel essai.'
+            sleep 2
+          done
+          echo 'Échec de la sauvegarde. Le bulletin a pu être envoyé : ne pas relancer sans vérification.' >&2
+          exit 1
