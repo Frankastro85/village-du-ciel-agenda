@@ -1,0 +1,264 @@
+{
+  "schema": 1,
+  "generatedAt": "2026-11-09T19:32:50.834Z",
+  "period": {
+    "start": "2026-11-09",
+    "end": "2028-02-09"
+  },
+  "source": "Village du Ciel · calculs Astronomy Engine et fiches éditoriales vérifiées",
+  "coverage": {
+    "solar": "Éclipses totales et annulaires calculées pour un réseau de villes européennes, méditerranéennes et proches : échantillonnage non exhaustif.",
+    "lunar": "Éclipses lunaires totales dont le maximum n’est pas suffisamment observable en Vendée, pour les villes échantillonnées.",
+    "other": "Occultations, comètes et autres phénomènes : ajout après validation éditoriale (pas de découverte automatique)."
+  },
+  "counts": {
+    "total": 4,
+    "editorial": 4,
+    "computed": 0
+  },
+  "events": [
+    {
+      "id": "eclipse-annulaire-2027",
+      "date": "2027-02-06",
+      "title": "Éclipse annulaire de Soleil",
+      "category": "Éclipse solaire",
+      "region": "Afrique de l’Ouest — Ghana, Côte d’Ivoire, Togo, Bénin, Nigeria",
+      "priority": "Exceptionnel",
+      "vendee": "Aucune annularité : la bande traverse notamment l’Afrique occidentale.",
+      "timing": "En fin d’après-midi (par exemple vers 17 h 52 à Accra, heure locale). Les horaires varient selon la destination et le Soleil est bas.",
+      "observation": "Un anneau de lumière entoure la Lune au maximum ; l’observation de la phase annulaire impose un déplacement dans la bande correspondante. Destination assez éloignée de l’Europe : projet de voyage à part entière.",
+      "practical": [
+        "Vérifier précisément que le site retenu est dans la bande d’annularité, et que la phase maximale précède le coucher du Soleil.",
+        "Prévoir la météo, l’horizon ouest dégagé, l’accessibilité et les conditions de voyage.",
+        "Observer exclusivement avec des protections solaires certifiées ISO 12312-2 et des filtres adaptés sur les instruments : l’anneau solaire ne peut jamais être observé à l’œil nu.",
+        "Les distances indiquées sont à vol d’oiseau ; un déplacement nécessitera généralement un vol international."
+      ],
+      "places": [
+        {
+          "name": "Accra",
+          "country": "Ghana",
+          "lat": 5.6037,
+          "lon": -0.187,
+          "duration": "Maximum vers 17 h 52, heure locale",
+          "note": "Annularité visible dans la capitale, mais Soleil bas ; vérifier l’horizon et les conditions précises."
+        },
+        {
+          "name": "Cape Coast",
+          "country": "Ghana",
+          "lat": 5.1053,
+          "lon": -1.2466,
+          "duration": "Annularité en fin d’après-midi",
+          "note": "Ville du littoral dans la zone de visibilité ; vérifier les circonstances locales."
+        },
+        {
+          "name": "Lomé",
+          "country": "Togo",
+          "lat": 6.1375,
+          "lon": 1.2123,
+          "duration": "Annularité en fin d’après-midi",
+          "note": "Alternative ouest-africaine ; horaires et horizon à confirmer."
+        }
+      ],
+      "sources": [
+        {
+          "name": "NASA — éclipses à venir",
+          "url": "https://science.nasa.gov/eclipses/future-eclipses/"
+        },
+        {
+          "name": "Time and Date — éclipse du 6 février",
+          "url": "https://www.timeanddate.com/eclipse/solar/2027-february-6"
+        },
+        {
+          "name": "Time and Date — Accra",
+          "url": "https://www.timeanddate.com/eclipse/in/ghana/accra?iso=20270206"
+        }
+      ],
+      "reviewStatus": "verified",
+      "lastReviewed": "2026-11-09",
+      "origin": "editorial"
+    },
+    {
+      "id": "occultation-nunki-2027",
+      "date": "2027-05-24",
+      "title": "Occultation de Nunki par la Lune",
+      "category": "Occultation stellaire",
+      "region": "Grèce, Tunisie et Algérie — observation complète favorisée",
+      "priority": "Pour passionnés",
+      "vendee": "La disparition de l’étoile se produit sous l’horizon près de Nantes : seule sa réapparition est potentiellement observable ; le phénomène complet nécessite un autre site.",
+      "timing": "Nuit du 23 au 24 mai 2027. Exemple à Athènes : environ 02 h 06–03 h 38 (heure grecque du 24 mai).",
+      "observation": "La Lune masque temporairement Nunki, une étoile brillante du Sagittaire (magnitude 2,1). Événement accessible aux jumelles ou à un petit télescope, mais moins spectaculaire qu’une éclipse.",
+      "practical": [
+        "Préférer une occultation complète : disparition et réapparition au-dessus de l’horizon, de nuit.",
+        "Vérifier le fuseau horaire et l’altitude de la Lune au lieu exact ; les heures changent selon la ville.",
+        "Utiliser de bonnes jumelles ou un télescope et préparer la direction de l’étoile à l’avance.",
+        "L’éclat de la Lune gibbeuse rend le bord éclairé plus difficile à suivre."
+      ],
+      "places": [
+        {
+          "name": "Athènes",
+          "country": "Grèce",
+          "lat": 37.9838,
+          "lon": 23.7275,
+          "duration": "≈ 02 h 06–03 h 38, heure locale",
+          "note": "Les deux phases sont annoncées visibles ; Lune à une hauteur favorable."
+        },
+        {
+          "name": "Sahline",
+          "country": "Tunisie",
+          "lat": 35.75,
+          "lon": 10.71,
+          "duration": "≈ 23 h 42–01 h 07, heure locale",
+          "note": "Observation complète en pleine nuit, depuis un site avec horizon sud-est dégagé."
+        },
+        {
+          "name": "Alger",
+          "country": "Algérie",
+          "lat": 36.7538,
+          "lon": 3.0588,
+          "duration": "≈ 23 h 35–00 h 53, heure locale",
+          "note": "Fenêtre annoncée, Lune basse : vérifier les circonstances exactes et la ligne d’horizon."
+        }
+      ],
+      "sources": [
+        {
+          "name": "TheSkyLive — occultation de Nunki",
+          "url": "https://theskylive.com/lunar-occultations/2027-05-24-nunki"
+        },
+        {
+          "name": "TheSkyLive — Athènes",
+          "url": "https://theskylive.com/lunar-occultations/2027-05-24-nunki?geoid=264888"
+        },
+        {
+          "name": "TheSkyLive — Tunisie",
+          "url": "https://theskylive.com/lunar-occultations/2027-05-24-nunki?geoid=2473190"
+        }
+      ],
+      "reviewStatus": "verified",
+      "lastReviewed": "2026-11-09",
+      "origin": "editorial"
+    },
+    {
+      "id": "eclipse-totale-2027",
+      "date": "2027-08-02",
+      "title": "Éclipse totale de Soleil",
+      "category": "Éclipse solaire",
+      "region": "Andalousie, Gibraltar, Maroc et Afrique du Nord",
+      "priority": "Exceptionnel",
+      "vendee": "Seulement partielle en Vendée ; la couronne solaire et la nuit en plein jour ne seront visibles que dans la bande de totalité.",
+      "timing": "En Espagne, phase totale vers 10 h 45–10 h 50 (heure d’été espagnole), selon le site.",
+      "observation": "Un rendez-vous astronomique majeur de 2027. Le déplacement dans la bande de totalité est indispensable pour observer la couronne solaire.",
+      "practical": [
+        "Choisir un site dans la bande de totalité ; quelques kilomètres peuvent faire une grande différence sur sa durée.",
+        "Réserver hébergement, transports et stationnement très en avance (période touristique du début août).",
+        "Prévoir un site de repli météorologique et repérer les accès la veille.",
+        "Lunettes solaires ISO 12312-2 et filtres photographiques adaptés indispensables hors totalité ; retirer le filtre uniquement pendant la totalité complète, puis le remettre avant la réapparition du Soleil."
+      ],
+      "places": [
+        {
+          "name": "Cádiz",
+          "country": "Espagne",
+          "lat": 36.5298,
+          "lon": -6.292,
+          "duration": "≈ 2 min 55 s de totalité",
+          "note": "Ville accessible en voiture ; totalité plus courte qu’au détroit."
+        },
+        {
+          "name": "Tarifa",
+          "country": "Espagne",
+          "lat": 36.0128,
+          "lon": -5.605,
+          "duration": "≈ 4 min 39 s de totalité",
+          "note": "Très bon compromis en Espagne continentale ; vent et affluence à anticiper."
+        },
+        {
+          "name": "Ceuta",
+          "country": "Espagne",
+          "lat": 35.8894,
+          "lon": -5.3213,
+          "duration": "≈ 4 min 49 s de totalité",
+          "note": "Très belle durée ; trajet routier et traversée maritime à planifier."
+        },
+        {
+          "name": "Tanger",
+          "country": "Maroc",
+          "lat": 35.7595,
+          "lon": -5.834,
+          "duration": "≈ 4 min 51 s de totalité",
+          "note": "Longue totalité ; vérifier les formalités de voyage et l’accès aux sites."
+        },
+        {
+          "name": "Sfax",
+          "country": "Tunisie",
+          "lat": 34.7406,
+          "lon": 10.7603,
+          "duration": "≈ 5 min 40 s de totalité",
+          "note": "Durée plus longue qu’en Espagne, mais déplacement international."
+        }
+      ],
+      "sources": [
+        {
+          "name": "IGN Espagne — carte officielle",
+          "url": "https://astronomia.ign.es/en/eclipses-de-sol-y-luna/eclipse-total-sol-de-2-de-agosto-2027"
+        },
+        {
+          "name": "NASA — éclipses à venir",
+          "url": "https://science.nasa.gov/eclipses/future-eclipses/"
+        },
+        {
+          "name": "Time and Date — Espagne",
+          "url": "https://www.timeanddate.com/eclipse/in/spain?iso=20270802"
+        }
+      ],
+      "reviewStatus": "verified",
+      "lastReviewed": "2026-11-09",
+      "origin": "editorial"
+    },
+    {
+      "id": "eclipse-annulaire-2028",
+      "date": "2028-01-26",
+      "title": "Éclipse annulaire de Soleil",
+      "category": "Éclipse solaire",
+      "region": "Espagne, Portugal et extrême nord du Maroc",
+      "priority": "Exceptionnel",
+      "vendee": "Partielle seulement en Vendée ; l’anneau solaire impose de rejoindre la bande d’annularité.",
+      "timing": "En fin d’après-midi, avec un Soleil bas au-dessus de l’horizon ouest.",
+      "observation": "Événement déjà répertorié, qui apparaîtra automatiquement quand sa date entrera dans la fenêtre glissante des 12 mois.",
+      "practical": [
+        "Vérifier la bande d’annularité et la hauteur du Soleil selon la ville.",
+        "Anticiper la météo de janvier et rechercher un horizon ouest parfaitement dégagé.",
+        "Les protections solaires restent obligatoires pendant toute une éclipse annulaire."
+      ],
+      "places": [
+        {
+          "name": "Faro",
+          "country": "Portugal",
+          "lat": 37.0194,
+          "lon": -7.9304,
+          "duration": "Phase annulaire en fin d’après-midi",
+          "note": "Horizon ouest dégagé essentiel."
+        },
+        {
+          "name": "Séville",
+          "country": "Espagne",
+          "lat": 37.3891,
+          "lon": -5.9845,
+          "duration": "Phase annulaire en fin d’après-midi",
+          "note": "Ville bien desservie, emplacement exact à confirmer."
+        }
+      ],
+      "sources": [
+        {
+          "name": "Société astronomique africaine — échéances",
+          "url": "https://www.africanastronomicalsociety.org/solar-eclipse-2020/upcoming-solar-eclipses/"
+        },
+        {
+          "name": "Time and Date — annularité 2028",
+          "url": "https://www.timeanddate.com/eclipse/solar/2028-january-26"
+        }
+      ],
+      "reviewStatus": "verified",
+      "lastReviewed": "2026-11-09",
+      "origin": "editorial"
+    }
+  ]
+}
