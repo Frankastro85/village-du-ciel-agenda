@@ -1,0 +1,39 @@
+name: Agenda Astro - Veille des phenomenes rares
+
+on:
+  schedule:
+    - cron: '41 8 5 * *' # 5 de chaque mois, à 08:41 UTC
+  workflow_dispatch:
+
+permissions:
+  issues: write
+
+jobs:
+  revue:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ouvrir une revue mensuelle sans doublon
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const {owner, repo} = context.repo;
+            const month = new Date().toISOString().slice(0,7);
+            const title = `Agenda Astro — phénomènes rares à contrôler — ${month}`;
+            const issues = await github.paginate(github.rest.issues.listForRepo, {owner,repo,state:'all',per_page:100});
+            if (issues.some(issue => !issue.pull_request && issue.title === title)) {
+              core.info('Revue mensuelle déjà ouverte.');
+              return;
+            }
+            const body = `Cette revue mensuelle complète le calcul automatique des éclipses. Aucune nouvelle comète ni occultation ne doit être publiée sans validation de sa visibilité géographique.\n\n`+
+              `**Sources à consulter**\n`+
+              `- [IOTA — prédictions d’occultations](https://occultations.org/observing/occultation-predictions/)\n`+
+              `- [COBS — observations de comètes](https://cobs.si/)\n`+
+              `- [Observatoire de Paris — observations cométaires](https://lesia.obspm.fr/comets/)\n`+
+              `- [NASA/GSFC — éclipses](https://eclipse.gsfc.nasa.gov/SEpath/SEpath.html)\n\n`+
+              `**Critères pour ajouter un événement**\n`+
+              `1. Phénomène réellement majeur et pas simplement visible en tout point de France.\n`+
+              `2. Absence ou visibilité très incomplète depuis Les Herbiers.\n`+
+              `3. Un ou plusieurs lieux d’observation en Europe, Méditerranée ou pays proches, avec cartes/horaires fiables.\n`+
+              `4. Inscrire la fiche dans \`data/grands-evenements-editoriaux.json\` avec \`reviewStatus: verified\` après vérification ; le prochain workflow la publiera.\n\n`+
+              `La création de cette issue est un **rappel**, pas une preuve de découverte ni une validation automatique.`;
+            await github.rest.issues.create({owner,repo,title,body});

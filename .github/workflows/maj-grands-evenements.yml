@@ -1,0 +1,43 @@
+name: Agenda Astro - Grands evenements internationaux
+
+on:
+  schedule:
+    - cron: '23 7 * * 1' # Chaque lundi à 07:23 UTC, sans effet sur le bulletin Discord
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: astro-grands-evenements
+  cancel-in-progress: false
+
+jobs:
+  publication:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Charger le depot
+        uses: actions/checkout@v4
+      - name: Installer Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Installer le moteur astronomique independamment du package du projet
+        run: npm install --no-save --package-lock=false --ignore-scripts astronomy-engine@2.1.19
+      - name: Actualiser les evenements internationaux
+        run: node scripts/maj-grands-evenements.mjs
+      - name: Valider la sortie
+        run: node tests/verifier-grands-evenements.mjs
+      - name: Publier le catalogue JSON dans docs (GitHub Pages)
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/grands-evenements.json
+          if git diff --cached --quiet; then
+            echo 'Aucun changement de donnees.'
+          else
+            git commit -m 'astro: actualiser les grands evenements internationaux'
+            git push
+          fi
