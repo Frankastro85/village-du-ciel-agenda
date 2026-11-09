@@ -1,8 +1,8 @@
-name: Agenda Astro - Veille des phenomenes rares
+name: Agenda Astro - Veille du club (occultations majeures et cometes m<10)
 
 on:
   schedule:
-    - cron: '41 8 * * 2' # Chaque mardi à 08:41 UTC (09:41/10:41 en France)
+    - cron: '41 8 * * 2' # Chaque mardi 08:41 UTC
   workflow_dispatch:
 
 permissions:
@@ -10,7 +10,7 @@ permissions:
   issues: write
 
 concurrency:
-  group: astro-veille-rares
+  group: agenda-astro-veille-club
   cancel-in-progress: false
 
 jobs:
@@ -26,63 +26,77 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Tester le parseur de la veille
+      - name: Tester les criteres du club
         run: node tests/verifier-veille-rares.mjs
 
-      - name: Examiner les annonces et les cometes observables
+      - name: Rechercher uniquement les occultations majeures et cometes de magnitude inferieure a 10
         run: node scripts/veille-evenements-rares.mjs
 
-      - name: Vérifier le fichier de veille
-        shell: bash
+      - name: Verifier les filtres avant publication du rapport
         run: |
-          node -e 'const d=require("./docs/veille-evenements-rares.json");if(d.schema!==1||!Array.isArray(d.candidates)||!d.sources.some(s=>s.ok)||d.candidates.some(c=>c.validation!=="unverified")){process.exit(1)};console.log(d.counts)'
+          node --input-type=module -e '
+          import fs from "node:fs";
+          const d=JSON.parse(fs.readFileSync("docs/veille-evenements-rares.json","utf8"));
+          if(d.schema!==1||!Array.isArray(d.candidates)||!d.sources?.some(s=>s.ok))process.exit(1);
+          if(d.candidates.some(c=>c.validation!=="unverified" ||
+            (c.type==="comete" && !(Number.isFinite(c.sourceData?.magnitude)&&c.sourceData.magnitude<10)) ||
+            (c.type==="occultation" && c.sourceData?.importance!=="majeure") ||
+            !["comete","occultation"].includes(c.type)))process.exit(1);
+          console.log(d.counts);
+          '
 
-      - name: Archiver les candidats dans GitHub Pages (pas sur le site public)
-        shell: bash
+      - name: Archiver le rapport de veille (ne modifie pas le panneau FTP)
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add docs/veille-evenements-rares.json
           if git diff --cached --quiet; then
-            echo 'Aucun changement.'
+            echo 'Aucun changement dans le rapport.'
           else
-            git commit -m 'astro: veille des phenomenes rares a verifier'
+            git commit -m 'astro: veille club magnitude inferieure a 10 et occultations majeures'
             git push
           fi
 
-      - name: Mettre à jour la revue mensuelle dans Issues
+      - name: Mettre a jour les alertes du club dans Issues
         uses: actions/github-script@v7
-        continue-on-error: true # Si les Issues ne sont pas activées, le JSON reste archivé.
+        continue-on-error: true
         with:
           script: |
-            const fs = require('fs');
-            const data = JSON.parse(fs.readFileSync('docs/veille-evenements-rares.json','utf8'));
-            const {owner,repo} = context.repo;
-            const month = new Date().toISOString().slice(0,7);
-            const title = `Agenda Astro — phénomènes rares à contrôler — ${month}`;
-            const clean = text => String(text||'').replace(/[\r\n|<>\[\]]/g,' ').slice(0,200);
-            const link = url => {try{const u=new URL(url);return u.protocol==='https:'?u.toString():'';}catch{return '';}};
-            const sourceSummary = data.sources.map(s => `- ${clean(s.source)}${s.date?' '+s.date:''}${s.year?' '+s.year:''} : ${s.ok?'OK':'indisponible'}`).join('\n');
-            const recent = data.candidates.filter(c => Date.now()-Date.parse(c.lastSeen+'T12:00:00Z')<32*86400000).slice(0,35);
-            const rows=recent.map(c=>`- **${clean(c.title)}** · ${clean(c.type)} · ${clean(c.priority)} · ${clean(c.observedDate)} — ${clean(c.summary)} ${link(c.sourceUrl)?`[Source](${link(c.sourceUrl)})`:''} — **${clean(c.why)}**`).join('\n');
-            const body = `## Candidats à vérifier · ${month}\n\n`+
-              `**Attention : aucune de ces pistes n'est une prédiction de visibilité validée.** `+
-              `L'absence d'une comète dans le relevé des Herbiers ne prouve pas qu'elle y est invisible.\n\n`+
-              `${recent.length} pistes recensées récemment dans la veille (liste complète : \`docs/veille-evenements-rares.json\`).\n\n`+
-              `${rows||'Aucune piste particulière cette période.'}\n\n`+
-              `### État des sources\n${sourceSummary}\n\n`+
-              `### Pour publier sur l’Agenda Astro\n`+
-              `1. Contrôler date, phénomène, magnitude, cartes et horaires sur au moins une source astronomique fiable.\n`+
-              `2. Vérifier la visibilité réelle depuis Les Herbiers et les destinations proposées.\n`+
-              `3. Rédiger et valider la fiche dans \`data/grands-evenements-editoriaux.json\` avec \`reviewStatus: "verified"\`.\n`+
-              `4. Exécuter le workflow \`Agenda Astro - Grands evenements internationaux\` pour actualiser le panneau.\n\n`+
-              `**Cette issue est un rapport de veille ; pas une publication automatique.**`;
-            const existing = await github.paginate(github.rest.issues.listForRepo,{owner,repo,state:'all',per_page:100});
-            const issue = existing.find(x=>!x.pull_request && x.title===title);
-            if(issue) {
-              await github.rest.issues.update({owner,repo,issue_number:issue.number,body});
-              core.info(`Issue mensuelle mise à jour : #${issue.number}`);
-            } else {
-              const created = await github.rest.issues.create({owner,repo,title,body});
-              core.info(`Issue mensuelle créée : #${created.data.number}`);
+            const fs=require('fs');
+            const d=JSON.parse(fs.readFileSync('docs/veille-evenements-rares.json','utf8'));
+            const {owner,repo}=context.repo;
+            const today=d.generatedAt.slice(0,10);
+            const month=today.slice(0,7);
+            // Conserver le titre de la revue precedente pour mettre à jour sans doublon.
+            const title=`Agenda Astro — phénomènes rares à contrôler — ${month}`;
+            const safe=s=>String(s??'').replace(/[\r\n|<>\[\]]/g,' ').slice(0,230);
+            const url=s=>{try{const u=new URL(s);return u.protocol==='https:'?u.toString():'';}catch{return '';}};
+            const active=d.candidates.filter(c=>c.lastSeen===today);
+            const candidateLine=c=>{
+              const mag=c.type==='comete'?` · magnitude ${Number(c.sourceData.magnitude).toFixed(2)}`:'';
+              return `- **${safe(c.title)}**${mag} · ${safe(c.observedDate)} — ${safe(c.summary)}${url(c.sourceUrl)?` — [Source](${url(c.sourceUrl)})`:''}`;
+            };
+            const sources=d.sources.map(s=>`- ${safe(s.source)} ${safe(s.date||s.year||'')} : ${s.ok?'OK':'indisponible'}`).join('\n');
+            const body=`## Veille astronomique du club — ${month}\n\n`+
+              `**Règles :** occultations de planètes brillantes ou d'étoiles remarquables (magnitude ≤ 2), comètes de magnitude estimée **strictement inférieure à 10**.\n\n`+
+              `**${active.length} candidat(s) détecté(s) lors de cette exécution ; ${d.counts.newDetected} nouveau(x).**\n\n`+
+              `${active.map(candidateLine).join('\n')||'Aucun événement répondant aux critères cette semaine.'}\n\n`+
+              `### Sources\n${sources}\n\n`+
+              `**Précaution :** visibilité depuis Les Herbiers non automatiquement validée ; magnitude cométaire prévisionnelle. Vérifier avant diffusion auprès du public.\n`+
+              `Les voyages pour les éclipses restent dans le panneau séparé « Grands rendez-vous astro ailleurs ».\n`+
+              `Rapport complet : \`docs/veille-evenements-rares.json\`. Aucun événement de cette veille n'est ajouté au panneau ni envoyé sur Discord.`;
+            const issues=await github.paginate(github.rest.issues.listForRepo,{owner,repo,state:'all',per_page:100});
+            const issue=issues.find(x=>!x.pull_request&&x.title===title);
+            let number;
+            if(issue){
+              await github.rest.issues.update({owner,repo,issue_number:issue.number,body});number=issue.number;
+            }else{
+              const created=await github.rest.issues.create({owner,repo,title,body});number=created.data.number;
             }
+            const newCandidates=d.candidates.filter(c=>d.newIds.includes(c.id) && c.lastSeen===today);
+            if(newCandidates.length && issue){
+              const comment=`**${newCandidates.length} nouvelle(s) piste(s) répondant aux critères du club**\n\n`+
+                newCandidates.map(candidateLine).join('\n')+'\n\nÀ vérifier avant annonce aux membres.';
+              await github.rest.issues.createComment({owner,repo,issue_number:number,body:comment});
+            }
+            core.info(`Revue #${number} actualisée ; ${newCandidates.length} nouveau(x) signalé(s).`);
