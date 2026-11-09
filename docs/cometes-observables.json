@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "generatedAt": "2026-11-09T20:54:18.784Z",
+  "location": {
+    "name": "Les Herbiers (Vendée)",
+    "lat": 46.87,
+    "lon": -1.01
+  },
+  "rules": {
+    "magnitude": "strictement inférieure à 10",
+    "sunAltitude": "Soleil ≤ -18°",
+    "cometAltitude": "comète ≥ 20°",
+    "solarElongation": "≥ 30°",
+    "recentObservations": "filtre COBS = observations récentes (30 jours)",
+    "sourceMethods": "paramètres photométriques COBS basés sur observations récentes"
+  },
+  "sampledDates": [
+    "2026-11-09",
+    "2026-11-16",
+    "2026-11-23",
+    "2026-11-30"
+  ],
+  "sourceStatus": "COBS observatoire local",
+  "notice": "Dates échantillonnées : ce ne sont PAS les dates de début/fin de visibilité. Magnitudes prévisionnelles et météo non garanties.",
+  "comets": []
+}

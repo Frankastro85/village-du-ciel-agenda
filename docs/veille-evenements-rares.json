@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-09T20:24:20.241Z",
+  "generatedAt": "2026-11-09T20:54:18.784Z",
   "period": {
     "start": "2026-11-09",
     "end": "2027-11-09"
@@ -34,6 +34,13 @@
       "threshold": "magnitude < 10"
     },
     {
+      "source": "COBS",
+      "date": "2026-11-30",
+      "ok": true,
+      "sites": 5,
+      "threshold": "magnitude < 10"
+    },
+    {
       "source": "TheSkyLive",
       "year": 2026,
       "ok": false
@@ -51,24 +58,13 @@
   "counts": {
     "candidateCount": 25,
     "detectedThisRun": 25,
-    "newDetected": 10,
+    "newDetected": 0,
     "cometCount": 0,
     "majorOccultationCount": 25,
-    "sourceSuccess": 4,
+    "sourceSuccess": 5,
     "sourceFailed": 1
   },
-  "newIds": [
-    "occultation-2027-05-12-jupiter",
-    "occultation-2027-05-21-antares",
-    "occultation-2027-06-17-antares",
-    "occultation-2027-07-14-antares",
-    "occultation-2027-08-01-mercury",
-    "occultation-2027-08-02-venus",
-    "occultation-2027-08-11-antares",
-    "occultation-2027-09-07-antares",
-    "occultation-2027-10-04-antares",
-    "occultation-2027-11-01-antares"
-  ],
+  "newIds": [],
   "candidates": [
     {
       "id": "occultation-2027-01-04-antares",
