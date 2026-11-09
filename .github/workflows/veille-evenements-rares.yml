@@ -2,38 +2,87 @@ name: Agenda Astro - Veille des phenomenes rares
 
 on:
   schedule:
-    - cron: '41 8 5 * *' # 5 de chaque mois, à 08:41 UTC
+    - cron: '41 8 * * 2' # Chaque mardi à 08:41 UTC (09:41/10:41 en France)
   workflow_dispatch:
 
 permissions:
+  contents: write
   issues: write
 
+concurrency:
+  group: astro-veille-rares
+  cancel-in-progress: false
+
 jobs:
-  revue:
+  veille:
     runs-on: ubuntu-latest
+    timeout-minutes: 12
     steps:
-      - name: Ouvrir une revue mensuelle sans doublon
+      - name: Charger le depot
+        uses: actions/checkout@v4
+
+      - name: Installer Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Tester le parseur de la veille
+        run: node tests/verifier-veille-rares.mjs
+
+      - name: Examiner les annonces et les cometes observables
+        run: node scripts/veille-evenements-rares.mjs
+
+      - name: Vérifier le fichier de veille
+        shell: bash
+        run: |
+          node -e 'const d=require("./docs/veille-evenements-rares.json");if(d.schema!==1||!Array.isArray(d.candidates)||!d.sources.some(s=>s.ok)||d.candidates.some(c=>c.validation!=="unverified")){process.exit(1)};console.log(d.counts)'
+
+      - name: Archiver les candidats dans GitHub Pages (pas sur le site public)
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/veille-evenements-rares.json
+          if git diff --cached --quiet; then
+            echo 'Aucun changement.'
+          else
+            git commit -m 'astro: veille des phenomenes rares a verifier'
+            git push
+          fi
+
+      - name: Mettre à jour la revue mensuelle dans Issues
         uses: actions/github-script@v7
+        continue-on-error: true # Si les Issues ne sont pas activées, le JSON reste archivé.
         with:
           script: |
-            const {owner, repo} = context.repo;
+            const fs = require('fs');
+            const data = JSON.parse(fs.readFileSync('docs/veille-evenements-rares.json','utf8'));
+            const {owner,repo} = context.repo;
             const month = new Date().toISOString().slice(0,7);
             const title = `Agenda Astro — phénomènes rares à contrôler — ${month}`;
-            const issues = await github.paginate(github.rest.issues.listForRepo, {owner,repo,state:'all',per_page:100});
-            if (issues.some(issue => !issue.pull_request && issue.title === title)) {
-              core.info('Revue mensuelle déjà ouverte.');
-              return;
+            const clean = text => String(text||'').replace(/[\r\n|<>\[\]]/g,' ').slice(0,200);
+            const link = url => {try{const u=new URL(url);return u.protocol==='https:'?u.toString():'';}catch{return '';}};
+            const sourceSummary = data.sources.map(s => `- ${clean(s.source)}${s.date?' '+s.date:''}${s.year?' '+s.year:''} : ${s.ok?'OK':'indisponible'}`).join('\n');
+            const recent = data.candidates.filter(c => Date.now()-Date.parse(c.lastSeen+'T12:00:00Z')<32*86400000).slice(0,35);
+            const rows=recent.map(c=>`- **${clean(c.title)}** · ${clean(c.type)} · ${clean(c.priority)} · ${clean(c.observedDate)} — ${clean(c.summary)} ${link(c.sourceUrl)?`[Source](${link(c.sourceUrl)})`:''} — **${clean(c.why)}**`).join('\n');
+            const body = `## Candidats à vérifier · ${month}\n\n`+
+              `**Attention : aucune de ces pistes n'est une prédiction de visibilité validée.** `+
+              `L'absence d'une comète dans le relevé des Herbiers ne prouve pas qu'elle y est invisible.\n\n`+
+              `${recent.length} pistes recensées récemment dans la veille (liste complète : \`docs/veille-evenements-rares.json\`).\n\n`+
+              `${rows||'Aucune piste particulière cette période.'}\n\n`+
+              `### État des sources\n${sourceSummary}\n\n`+
+              `### Pour publier sur l’Agenda Astro\n`+
+              `1. Contrôler date, phénomène, magnitude, cartes et horaires sur au moins une source astronomique fiable.\n`+
+              `2. Vérifier la visibilité réelle depuis Les Herbiers et les destinations proposées.\n`+
+              `3. Rédiger et valider la fiche dans \`data/grands-evenements-editoriaux.json\` avec \`reviewStatus: "verified"\`.\n`+
+              `4. Exécuter le workflow \`Agenda Astro - Grands evenements internationaux\` pour actualiser le panneau.\n\n`+
+              `**Cette issue est un rapport de veille ; pas une publication automatique.**`;
+            const existing = await github.paginate(github.rest.issues.listForRepo,{owner,repo,state:'all',per_page:100});
+            const issue = existing.find(x=>!x.pull_request && x.title===title);
+            if(issue) {
+              await github.rest.issues.update({owner,repo,issue_number:issue.number,body});
+              core.info(`Issue mensuelle mise à jour : #${issue.number}`);
+            } else {
+              const created = await github.rest.issues.create({owner,repo,title,body});
+              core.info(`Issue mensuelle créée : #${created.data.number}`);
             }
-            const body = `Cette revue mensuelle complète le calcul automatique des éclipses. Aucune nouvelle comète ni occultation ne doit être publiée sans validation de sa visibilité géographique.\n\n`+
-              `**Sources à consulter**\n`+
-              `- [IOTA — prédictions d’occultations](https://occultations.org/observing/occultation-predictions/)\n`+
-              `- [COBS — observations de comètes](https://cobs.si/)\n`+
-              `- [Observatoire de Paris — observations cométaires](https://lesia.obspm.fr/comets/)\n`+
-              `- [NASA/GSFC — éclipses](https://eclipse.gsfc.nasa.gov/SEpath/SEpath.html)\n\n`+
-              `**Critères pour ajouter un événement**\n`+
-              `1. Phénomène réellement majeur et pas simplement visible en tout point de France.\n`+
-              `2. Absence ou visibilité très incomplète depuis Les Herbiers.\n`+
-              `3. Un ou plusieurs lieux d’observation en Europe, Méditerranée ou pays proches, avec cartes/horaires fiables.\n`+
-              `4. Inscrire la fiche dans \`data/grands-evenements-editoriaux.json\` avec \`reviewStatus: verified\` après vérification ; le prochain workflow la publiera.\n\n`+
-              `La création de cette issue est un **rappel**, pas une preuve de découverte ni une validation automatique.`;
-            await github.rest.issues.create({owner,repo,title,body});
