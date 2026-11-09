@@ -1,22 +1,40 @@
 import assert from 'node:assert/strict';
-import {plannerURL,parsePlanner,cometCandidates,parseRSS,parseOccultationYear,mergeCandidates} from '../scripts/veille-rares-lib.mjs';
+import {plannerURL,parsePlanner,cometCandidates,parseOccultationYear,importantOccultationSlug,eligible,mergeCandidates} from '../scripts/veille-rares-lib.mjs';
+
 const site={id:'vendee',lat:46.87,lon:-1.01};
-assert.match(plannerURL(site,'2026-11-09'),/lim_mag=6.5/);
-const cobs=(name='C/2026 A1',mag=4.6)=>({signature:{source:'COBS Query API',version:'1.3'},comet_list:[{
-  comet_fullname:name,mpc_name:'K26A010',magnitude:mag,best_alt:40,sun_elongation:90,best_time:'2026-11-09 21:00',orbit_calc_source:1
-}]});
-const comet=parsePlanner(cobs());assert.equal(comet.length,1);
-let found=cometCandidates(new Map([['vendee',[]],['cadix',comet]]),'2026-11-09');
-assert.equal(found.length,1);assert.equal(found[0].validation,'unverified');
-found=cometCandidates(new Map([['vendee',comet],['cadix',comet]]),'2026-11-09');
-assert.equal(found.length,0,'Une comète observable aux Herbiers est exclue de la liste ailleurs');
-assert.equal(cometCandidates(new Map([['cadix',parsePlanner(cobs('C/2026 A1',8.1))]]),'2026-11-09').length,0);
-const html='<html><body><table><tr><td>24 May</td><td><a href="/lunar-occultations/2027-05-24-nunki">Nunki</a></td><td>2.1</td></tr></table></body></html>';
-assert.equal(parseOccultationYear(html,'2026-11-09','2027-11-09').length,1);
+assert.match(plannerURL(site,'2026-11-09'),/lim_mag=9.99/);
+assert.match(plannerURL(site,'2026-11-09'),/filter=1/);
+const pack=(mag,name='C/2026 ABC')=>({signature:{source:'COBS Query API',version:'1.3'},comet_list:[{
+  comet_fullname:name,mpc_name:'K26Z001',magnitude:mag,best_alt:35,sun_elongation:60,best_time:'2026-11-09 22:00',orbit_calc_source:1}]});
+assert.equal(parsePlanner(pack(9.99)).length,1);
+assert.equal(parsePlanner(pack(10.0)).length,0,'magnitude 10 exclue');
+assert.equal(parsePlanner(pack(10.5)).length,0);
+assert.equal(parsePlanner(pack(null)).length,0,'magnitude nulle ne signifie pas 0');
+const c=parsePlanner(pack(9.2));
+let a=cometCandidates(new Map([['vendee',c]]),'2026-11-09');
+assert.equal(a.length,1,'Comète visible aux Herbiers incluse dans la veille');
+assert.equal(a[0].sourceData.magnitude,9.2);
+assert.equal(a[0].sourceData.vendeeInPlanner,true);
+assert.ok(eligible(a[0]));
+const html=`<html><table>
+<tr><td>4 Jan</td><td><a href="/lunar-occultations/2027-01-04-antares">Antares</a></td><td>1.1</td><td>9%</td><td>—</td></tr>
+<tr><td>8 Jan</td><td><a href="/lunar-occultations/2027-01-08-mercury">Mercury</a></td><td>-1.0</td><td>1%</td><td>—</td></tr>
+<tr><td>18 Jan</td><td><a href="/lunar-occultations/2027-01-18-alcyone">Alcyone</a></td><td>2.9</td><td>97%</td><td>—</td></tr>
+<tr><td>24 May</td><td><a href="/lunar-occultations/2027-05-24-nunki">Nunki</a></td><td>2.1</td><td>80%</td><td>—</td></tr>
+<tr><td>25 May</td><td><a href="/lunar-occultations/2027-05-25-rarestar">Star</a></td><td>1.8</td><td>20%</td><td>—</td></tr>
+</table></html>`;
+const occ=parseOccultationYear(html,'2026-11-09','2027-11-09');
+assert.equal(occ.length,3,'Seulement les objets remarquables retenus');
+assert.ok(occ.every(eligible));
+assert.ok(importantOccultationSlug('2027-01-04-antares'));
+assert.ok(!importantOccultationSlug('2027-05-24-nunki',2.1));
+assert.ok(!importantOccultationSlug('2027-01-18-alcyone',2.9));
 assert.equal(parseOccultationYear(html,'2028-01-01','2029-01-01').length,0);
-const rss=`<?xml version="1.0"?><rss version="2.0"><channel><item><title>Bright comet visible from the sky</title><link>https://example.org/astronomy/comet</link><pubDate>Mon, 09 Nov 2026 09:00:00 GMT</pubDate><description>Comet observing forecast</description></item></channel></rss>`;
-assert.equal(parseRSS(rss,'Exemple',new Date('2026-11-09T12:00:00Z')).length,1);
-const first=mergeCandidates([],cometCandidates(new Map([['vendee',[]],['cadix',comet]]),'2026-11-09'),new Date('2026-11-09T12:00:00Z'));
-const second=mergeCandidates(first,first,new Date('2026-11-16T12:00:00Z'));
-assert.equal(second.length,1);assert.equal(second[0].firstSeen,'2026-11-09');assert.equal(second[0].lastSeen,'2026-11-16');
-console.log('Veille rare : 9 contrôles OK (COBS, comparateur Vendée, occultations, RSS, fusion).');
+const before=mergeCandidates([],a,new Date('2026-11-09T12:00:00Z'));
+assert.equal(before.length,1);
+assert.equal(mergeCandidates(before,a,new Date('2026-11-16T12:00:00Z')).length,1);
+const old=[{...a[0],sourceData:{...a[0].sourceData,magnitude:10}}];
+assert.equal(mergeCandidates(old,[],new Date('2026-11-09T12:00:00Z')).length,0);
+const olderOcc=[{...occ[0],sourceData:{slug:'2027-01-04-antares'},lastSeen:'2026-11-08'}];
+assert.equal(mergeCandidates(olderOcc,[],new Date('2026-11-09T12:00:00Z'))[0].sourceData.importance,'majeure');
+console.log('Veille du club : filtres de magnitude <10, occultations majeures, validité géographique non déduite, fusion OK.');
