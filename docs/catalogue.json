@@ -1,6 +1,6 @@
 {
   "version": "1.4",
-  "generatedAt": "2026-11-08T19:37:04.078Z",
+  "generatedAt": "2026-11-09T09:57:07.579Z",
   "location": {
     "name": "Les Herbiers (Vendée, France)",
     "latitude": 46.87,
@@ -8,8 +8,8 @@
     "timezone": "Europe/Paris"
   },
   "period": {
-    "start": "2026-11-08",
-    "end": "2027-05-10"
+    "start": "2026-11-09",
+    "end": "2027-05-11"
   },
   "automationActive": true,
   "engine": "astronomy-engine@2.1.19 + USNO",
@@ -542,7 +542,7 @@
     {
       "id": "auto-elongation-Venus-202701031756",
       "date": "2027-01-03",
-      "utc": "2027-01-03T17:56:03.410Z",
+      "utc": "2027-01-03T17:56:03.407Z",
       "precision": "minute",
       "kind": "elongation-venus",
       "source": {
