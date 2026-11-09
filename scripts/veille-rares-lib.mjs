@@ -26,7 +26,7 @@ export function plannerURL(site,day){
   if(!validDay(day)) throw new Error('Date invalide');
   const u=new URL('https://cobs.si/api/planner.api');
   const params={date:day,lat:site.lat,long:site.lon,alt:100,
-    lim_mag:'9.99',min_alt:10,sun_alt:-12,min_sol:20,min_moon:0,filter:1};
+    lim_mag:'9.99',min_alt:20,sun_alt:-18,min_sol:30,min_moon:0,filter:1};
   for(const [k,v] of Object.entries(params))u.searchParams.set(k,String(v));
   return u.toString();
 }
@@ -39,7 +39,7 @@ export function parsePlanner(payload){
       Number.isFinite(Number(c.best_alt)) && Number.isFinite(Number(c.sun_elongation)))
     .map(c=>({designation:designation(c),name:text(c.comet_fullname||c.comet_name||c.mpc_name),
       magnitude:Number(c.magnitude),altitude:Number(c.best_alt),elongation:Number(c.sun_elongation),
-      bestTime:text(c.best_time),sourceMethod:Number(c.orbit_calc_source)}));
+      bestTime:text(c.best_time),constellation:text(c.constelation),trend:text(c.trend),sourceMethod:Number(c.orbit_calc_source)}));
 }
 export function cometCandidates(planners,day){
   // Une comète visible depuis les Herbiers est ELIGIBLE : ce n'est pas une sélection de voyages.
@@ -136,4 +136,34 @@ export function mergeCandidates(previous,current,now=new Date()){
   }
   return [...kept.values()].sort((a,b)=>({haute:0,'modérée':1}[a.priority]??2)-({haute:0,'modérée':1}[b.priority]??2)
     ||a.observedDate.localeCompare(b.observedDate)||a.id.localeCompare(b.id)).slice(0,120);
+}
+
+// Catalogue PUBLIC de comètes locales : pas une liste d'événements ponctuels.
+// Une présence dans le planificateur COBS indique une fenêtre géométrique
+// favorable selon ses hypothèses ; elle ne garantit ni ciel clair ni éclat réel.
+export function publicComets(localSamples,now=new Date()){
+  if(!(localSamples instanceof Map))throw new Error('Échantillons manquants');
+  const start=dayKey(now);const records=new Map();
+  for(const [date,comets] of localSamples){
+    if(!validDay(date) || date<start || !Array.isArray(comets))continue;
+    for(const c of comets){
+      if(!c.designation || !Number.isFinite(c.magnitude) || !(c.magnitude<10)
+        || !(c.altitude>=20) || !(c.elongation>=30)
+        || ![1,2].includes(c.sourceMethod))continue;
+      if(!records.has(c.designation))records.set(c.designation,{
+        id:'comete-'+hash(c.designation),designation:c.designation,
+        title:'Comète '+text(c.name||c.designation),source:'COBS · Comet Planner',samples:[]
+      });
+      records.get(c.designation).samples.push({date,magnitude:c.magnitude,
+        altitude:Math.round(c.altitude),elongation:Math.round(c.elongation),
+        bestTime:text(c.bestTime),constellation:text(c.constellation),trend:text(c.trend),
+        estimation:c.sourceMethod===1?'observations des 30 derniers jours':'observations récentes (moins d’un an)'});
+    }
+  }
+  return [...records.values()].map(r=>{
+    r.samples.sort((a,b)=>a.date.localeCompare(b.date));
+    r.firstSample=r.samples[0].date;r.lastSample=r.samples.at(-1).date;
+    r.magnitude=r.samples[0].magnitude;
+    return r;
+  }).sort((a,b)=>a.magnitude-b.magnitude||a.title.localeCompare(b.title)).slice(0,30);
 }
