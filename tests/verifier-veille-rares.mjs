@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {plannerURL,parsePlanner,cometCandidates,parseOccultationYear,importantOccultationSlug,eligible,mergeCandidates} from '../scripts/veille-rares-lib.mjs';
+import {plannerURL,parsePlanner,cometCandidates,parseOccultationYear,importantOccultationSlug,eligible,mergeCandidates,publicComets} from '../scripts/veille-rares-lib.mjs';
 
 const site={id:'vendee',lat:46.87,lon:-1.01};
 assert.match(plannerURL(site,'2026-11-09'),/lim_mag=9.99/);
@@ -38,3 +38,15 @@ assert.equal(mergeCandidates(old,[],new Date('2026-11-09T12:00:00Z')).length,0);
 const olderOcc=[{...occ[0],sourceData:{slug:'2027-01-04-antares'},lastSeen:'2026-11-08'}];
 assert.equal(mergeCandidates(olderOcc,[],new Date('2026-11-09T12:00:00Z'))[0].sourceData.importance,'majeure');
 console.log('Veille du club : filtres de magnitude <10, occultations majeures, validité géographique non déduite, fusion OK.');
+
+const local=new Map([['2026-11-09',parsePlanner(pack(9.2))],['2026-11-16',parsePlanner(pack(9.7))]]);
+const publicList=publicComets(local,new Date('2026-11-09T00:00:00Z'));
+assert.equal(publicList.length,1);
+assert.equal(publicList[0].samples.length,2);
+assert.equal(publicList[0].firstSample,'2026-11-09');
+assert.equal(publicList[0].lastSample,'2026-11-16');
+const absent=publicComets(new Map([['2026-11-09',parsePlanner(pack(10))]]),new Date('2026-11-09T12:00:00Z'));
+assert.equal(absent.length,0,'Magnitude >=10 jamais publiée');
+const tooLow=publicComets(new Map([['2026-11-09', [{...c[0],altitude:12}]]]),new Date('2026-11-09T12:00:00Z'));
+assert.equal(tooLow.length,0,'Comète basse non retenue');
+console.log('Catalogue cométaire séparé : seuils, dates multiples et visibilité locale simulée OK.');
