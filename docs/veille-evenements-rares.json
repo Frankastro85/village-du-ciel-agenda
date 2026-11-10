@@ -1,9 +1,9 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-09T20:54:18.784Z",
+  "generatedAt": "2026-11-10T16:35:43.868Z",
   "period": {
-    "start": "2026-11-09",
-    "end": "2027-11-09"
+    "start": "2026-11-10",
+    "end": "2027-11-10"
   },
   "rules": {
     "comets": "magnitude estimée strictement inférieure à 10",
@@ -14,28 +14,28 @@
   "sources": [
     {
       "source": "COBS",
-      "date": "2026-11-09",
+      "date": "2026-11-10",
       "ok": true,
       "sites": 5,
       "threshold": "magnitude < 10"
     },
     {
       "source": "COBS",
-      "date": "2026-11-16",
+      "date": "2026-11-17",
       "ok": true,
       "sites": 5,
       "threshold": "magnitude < 10"
     },
     {
       "source": "COBS",
-      "date": "2026-11-23",
+      "date": "2026-11-24",
       "ok": true,
       "sites": 5,
       "threshold": "magnitude < 10"
     },
     {
       "source": "COBS",
-      "date": "2026-11-30",
+      "date": "2026-12-01",
       "ok": true,
       "sites": 5,
       "threshold": "magnitude < 10"
@@ -85,7 +85,7 @@
         "magnitude": 1.1
       },
       "firstSeen": "2026-11-09",
-      "lastSeen": "2026-11-09"
+      "lastSeen": "2026-11-10"
     },
     {
       "id": "occultation-2027-01-08-mercury",
@@ -106,7 +106,7 @@
         "magnitude": -1.2
       },
       "firstSeen": "2026-11-09",
-      "lastSeen": "2026-11-09"
+      "lastSeen": "2026-11-10"
     },
     {
       "id": "occultation-2027-01-19-elnath",
@@ -127,7 +127,7 @@
         "magnitude": 1.7
       },
       "firstSeen": "2026-11-09",
-      "lastSeen": "2026-11-09"
+      "lastSeen": "2026-11-10"
     },
     {
       "id": "occultation-2027-01-31-antares",
@@ -148,7 +148,7 @@
         "magnitude": 1.1
       },
       "firstSeen": "2026-11-09",
-      "lastSeen": "2026-11-09"
+      "lastSeen": "2026-11-10"
     },
     {
       "id": "occultation-2027-02-08-mercury",
@@ -169,7 +169,7 @@
         "magnitude": 0.2
       },
       "firstSeen": "2026-11-09",
-      "lastSeen": "2026-11-09"
+      "lastSeen": "2026-11-10"
     },
     {
       "id": "occultation-2027-02-16-elnath",
@@ -190,7 +190,7 @@
         "magnitude": 1.7
       },
       "firstSeen": "2026-11-09",
-      "lastSeen": "2026-11-09"
+      "lastSeen": "2026-11-10"
     },
     {
       "id": "occultation-2027-02-20-jupiter",
@@ -211,7 +211,7 @@
         "magnitude": -2.6
       },
       "firstSeen": "2026-11-09",
-      "lastSeen": "2026-11-09"
+      "lastSeen": "2026-11-10"
     },
     {
       "id": "occultation-2027-02-28-antares",
@@ -232,7 +232,7 @@
         "magnitude": 1.1
       },
       "firstSeen": "2026-11-09",
-      "lastSeen": "2026-11-09"
+      "lastSeen": "2026-11-10"
     },
     {
       "id": "occultation-2027-03-06-mercury",
@@ -253,7 +253,7 @@
         "magnitude": 0.6
       },
       "firstSeen": "2026-11-09",
-      "lastSeen": "2026-11-09"
+      "lastSeen": "2026-11-10"
     },
     {
       "id": "occultation-2027-03-15-elnath",
@@ -274,7 +274,7 @@
         "magnitude": 1.7
       },
       "firstSeen": "2026-11-09",
-      "lastSeen": "2026-11-09"
+      "lastSeen": "2026-11-10"
     },
     {
       "id": "occultation-2027-03-19-jupiter",
@@ -295,7 +295,7 @@
         "magnitude": -2.4
       },
       "firstSeen": "2026-11-09",
-      "lastSeen": "2026-11-09"
+      "lastSeen": "2026-11-10"
     },
     {
       "id": "occultation-2027-03-27-antares",
@@ -316,7 +316,7 @@
         "magnitude": 1.1
       },
       "firstSeen": "2026-11-09",
-      "lastSeen": "2026-11-09"
+      "lastSeen": "2026-11-10"
     },
     {
       "id": "occultation-2027-04-11-elnath",
@@ -337,7 +337,7 @@
         "magnitude": 1.7
       },
       "firstSeen": "2026-11-09",
-      "lastSeen": "2026-11-09"
+      "lastSeen": "2026-11-10"
     },
     {
       "id": "occultation-2027-04-15-jupiter",
@@ -358,7 +358,7 @@
         "magnitude": -2.2
       },
       "firstSeen": "2026-11-09",
-      "lastSeen": "2026-11-09"
+      "lastSeen": "2026-11-10"
     },
     {
       "id": "occultation-2027-04-24-antares",
@@ -379,7 +379,7 @@
         "magnitude": 1.1
       },
       "firstSeen": "2026-11-09",
-      "lastSeen": "2026-11-09"
+      "lastSeen": "2026-11-10"
     },
     {
       "id": "occultation-2027-05-12-jupiter",
@@ -400,7 +400,7 @@
         "magnitude": -2
       },
       "firstSeen": "2026-11-09",
-      "lastSeen": "2026-11-09"
+      "lastSeen": "2026-11-10"
     },
     {
       "id": "occultation-2027-05-21-antares",
@@ -421,7 +421,7 @@
         "magnitude": 1.1
       },
       "firstSeen": "2026-11-09",
-      "lastSeen": "2026-11-09"
+      "lastSeen": "2026-11-10"
     },
     {
       "id": "occultation-2027-06-17-antares",
@@ -442,7 +442,7 @@
         "magnitude": 1.1
       },
       "firstSeen": "2026-11-09",
-      "lastSeen": "2026-11-09"
+      "lastSeen": "2026-11-10"
     },
     {
       "id": "occultation-2027-07-14-antares",
@@ -463,7 +463,7 @@
         "magnitude": 1.1
       },
       "firstSeen": "2026-11-09",
-      "lastSeen": "2026-11-09"
+      "lastSeen": "2026-11-10"
     },
     {
       "id": "occultation-2027-08-01-mercury",
@@ -484,7 +484,7 @@
         "magnitude": -1.4
       },
       "firstSeen": "2026-11-09",
-      "lastSeen": "2026-11-09"
+      "lastSeen": "2026-11-10"
     },
     {
       "id": "occultation-2027-08-02-venus",
@@ -505,7 +505,7 @@
         "magnitude": -3.9
       },
       "firstSeen": "2026-11-09",
-      "lastSeen": "2026-11-09"
+      "lastSeen": "2026-11-10"
     },
     {
       "id": "occultation-2027-08-11-antares",
@@ -526,7 +526,7 @@
         "magnitude": 1.1
       },
       "firstSeen": "2026-11-09",
-      "lastSeen": "2026-11-09"
+      "lastSeen": "2026-11-10"
     },
     {
       "id": "occultation-2027-09-07-antares",
@@ -547,7 +547,7 @@
         "magnitude": 1.1
       },
       "firstSeen": "2026-11-09",
-      "lastSeen": "2026-11-09"
+      "lastSeen": "2026-11-10"
     },
     {
       "id": "occultation-2027-10-04-antares",
@@ -568,7 +568,7 @@
         "magnitude": 1.1
       },
       "firstSeen": "2026-11-09",
-      "lastSeen": "2026-11-09"
+      "lastSeen": "2026-11-10"
     },
     {
       "id": "occultation-2027-11-01-antares",
@@ -589,7 +589,7 @@
         "magnitude": 1.1
       },
       "firstSeen": "2026-11-09",
-      "lastSeen": "2026-11-09"
+      "lastSeen": "2026-11-10"
     }
   ]
 }
