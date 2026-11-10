@@ -1,6 +1,6 @@
 {
   "version": "1.4",
-  "generatedAt": "2026-11-09T20:52:48.897Z",
+  "generatedAt": "2026-11-10T10:04:34.114Z",
   "location": {
     "name": "Les Herbiers (Vendée, France)",
     "latitude": 46.87,
@@ -8,8 +8,8 @@
     "timezone": "Europe/Paris"
   },
   "period": {
-    "start": "2026-11-09",
-    "end": "2027-05-11"
+    "start": "2026-11-10",
+    "end": "2027-05-12"
   },
   "automationActive": true,
   "engine": "astronomy-engine@2.1.19 + USNO",
@@ -22,25 +22,6 @@
   },
   "warnings": [],
   "events": [
-    {
-      "id": "auto-moon-nouvelle-202611090702",
-      "date": "2026-11-09",
-      "utc": "2026-11-09T07:02:00.000Z",
-      "precision": "minute",
-      "kind": "nouvelle",
-      "title": "Nouvelle Lune",
-      "type": "lune",
-      "priority": "majeur",
-      "visibility": "visible",
-      "period": "Instant exact de la phase, affiché en heure française.",
-      "material": "Œil nu / télescope selon objectif",
-      "description": "Absence de clair de Lune : période favorable aux objets faibles du ciel profond.",
-      "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
-      "source": {
-        "name": "US Naval Observatory — API officielle",
-        "url": "https://aa.usno.navy.mil/data/api"
-      }
-    },
     {
       "id": "auto-essaim-2026-11-12-tauridesdunord",
       "date": "2026-11-12",
