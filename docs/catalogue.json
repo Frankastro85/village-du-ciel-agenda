@@ -1,6 +1,6 @@
 {
   "version": "1.4",
-  "generatedAt": "2026-11-10T10:04:34.114Z",
+  "generatedAt": "2026-11-11T08:51:34.462Z",
   "location": {
     "name": "Les Herbiers (Vendée, France)",
     "latitude": 46.87,
@@ -8,8 +8,8 @@
     "timezone": "Europe/Paris"
   },
   "period": {
-    "start": "2026-11-10",
-    "end": "2027-05-12"
+    "start": "2026-11-11",
+    "end": "2027-05-13"
   },
   "automationActive": true,
   "engine": "astronomy-engine@2.1.19 + USNO",
@@ -523,7 +523,7 @@
     {
       "id": "auto-elongation-Venus-202701031756",
       "date": "2027-01-03",
-      "utc": "2027-01-03T17:56:03.407Z",
+      "utc": "2027-01-03T17:56:03.411Z",
       "precision": "minute",
       "kind": "elongation-venus",
       "source": {
@@ -1590,6 +1590,63 @@
         "bestNightMinAlt": null,
         "bestNightNextDay": false,
         "note": "Calcul géométrique à 46,87°N / 1,01°O. Le meilleur créneau maximise la hauteur minimale des objets (Soleil < −12°, objets > 10°), hors horizon réel, Lune, météo et turbulence."
+      }
+    },
+    {
+      "id": "auto-moon-Jupiter-202705122152",
+      "date": "2027-05-12",
+      "utc": "2027-05-12T21:52:26.685Z",
+      "precision": "minute",
+      "kind": "lune-jupiter",
+      "source": {
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
+      },
+      "title": "Rapprochement Lune – Jupiter",
+      "type": "conjonction",
+      "priority": "interessant",
+      "visibility": "variable",
+      "period": "Autour de la date : chercher une fenêtre nocturne avec horizon dégagé.",
+      "material": "Œil nu / jumelles, selon la planète",
+      "description": "La Lune passe à environ 1,2° de Jupiter dans le ciel (séparation géocentrique minimale). L’instant exact n’est pas nécessairement observable depuis Les Herbiers.",
+      "advice": "Vérifier la hauteur des objets, la météo et leur distance au Soleil ; ne jamais pointer d’instrument vers le Soleil.",
+      "observation": {
+        "atInstant": [
+          {
+            "label": "Jupiter",
+            "altitude": 34.6,
+            "azimuth": 256.3
+          },
+          {
+            "label": "Lune",
+            "altitude": 32.6,
+            "azimuth": 255.8
+          }
+        ],
+        "daylightAtInstant": false,
+        "bestNightUTC": "2027-05-12T21:00:00.000Z",
+        "bestNightMinAlt": 40.9,
+        "bestNightNextDay": false,
+        "note": "Calcul géométrique à 46,87°N / 1,01°O. Le meilleur créneau maximise la hauteur minimale des objets (Soleil < −12°, objets > 10°), hors horizon réel, Lune, météo et turbulence."
+      }
+    },
+    {
+      "id": "auto-moon-premier-202705130444",
+      "date": "2027-05-13",
+      "utc": "2027-05-13T04:44:00.000Z",
+      "precision": "minute",
+      "kind": "premier",
+      "title": "Premier quartier",
+      "type": "lune",
+      "priority": "interessant",
+      "visibility": "visible",
+      "period": "Instant exact de la phase, affiché en heure française.",
+      "material": "Œil nu / télescope selon objectif",
+      "description": "Phase principale du cycle lunaire ; visibilité à adapter à l’heure locale.",
+      "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
+      "source": {
+        "name": "US Naval Observatory — API officielle",
+        "url": "https://aa.usno.navy.mil/data/api"
       }
     }
   ]
