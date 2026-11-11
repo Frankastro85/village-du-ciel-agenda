@@ -64,6 +64,42 @@ function weatherField(day,heading){
     inline:false
   };
 }
+// Mettre en avant l'événement principal du jour dans un encart Discord dédié.
+// Les champs existants (aujourd'hui, demain, J+2/J+3, événements majeurs, Lune)
+// et l'encart météo restent strictement inchangés.
+function focusTodayEmbed(todayEvents,today){
+  if(!todayEvents.length)return null;
+  // Priorité à un phénomène non lunaire : une phase de Lune ne doit pas masquer
+  // une pluie d'étoiles ou une occultation même si sa priorité est « majeur ».
+  const ranked=[...todayEvents].sort((a,b)=>{
+    const aMoon=a.type==='lune'?1:0,bMoon=b.type==='lune'?1:0;
+    return aMoon-bMoon||(priorityWeight[a.priority]??9)-(priorityWeight[b.priority]??9);
+  });
+  const e=ranked[0];
+  const detail=[];
+  if(e.period)detail.push(`**Période indiquée :** ${cleanDetail(e.period,220)}`);
+  if(e.utc && e.precision!=='date' && Number.isFinite(Date.parse(e.utc))) {
+    detail.push(`**Instant du phénomène :** ${fmtTime.format(new Date(e.utc))} (heure française ; pas nécessairement l'heure d'observation)`);
+  }
+  if(e.description)detail.push(cleanDetail(e.description,480));
+  if(e.advice)detail.push(`**Conseil :** ${cleanDetail(e.advice,300)}`);
+  if(e.visibility==='difficile')detail.push('**Visibilité locale :** observation difficile.');
+  if(e.visibility==='variable')detail.push('**Visibilité locale :** à confirmer avant l’observation.');
+  if(todayEvents.length>1)detail.push(`**${todayEvents.length-1} autre(s) événement(s) aujourd’hui** : voir la liste complète ci-dessous.`);
+  const badge=e.priority==='majeur'?'⭐ MAJEUR · ÉVÉNEMENT DU JOUR':'ÉVÉNEMENT DU JOUR';
+  return {
+    title:`🟠 ${clean(e.title)}`,
+    url:AGENDA_URL,
+    description:`**${badge} · ${dayTitle(today)}**\n\n${detail.join('\n')}`,
+    color:0xf2a744,
+    footer:{text:'Événement du jour · Les Herbiers (85) · détails et autres événements ci-dessous'}
+  };
+}
+function cleanDetail(text,max=300){
+  // Texte éditorial provenant du catalogue : aucun formatage ni mention Discord
+  // injectée depuis les données.
+  return String(text??'').replace(/[`*_~<>@]/g,'').replace(/\s+/g,' ').trim().slice(0,max);
+}
 export function makeMessage(events,now,weather=null){
   const {today,tomorrow,todayEvents,tomorrowEvents,laterEvents,majorEvents,laterMoonPhases}=selectEvents(events,now);
   const display=new Intl.DateTimeFormat('fr-FR',{dateStyle:'full',timeZone:tz}).format(now);
@@ -91,11 +127,15 @@ export function makeMessage(events,now,weather=null){
     tomorrowEvents.length?`🔵 **DEMAIN : ${tomorrowEvents.length} événement${tomorrowEvents.length>1?'s':''}**`:null
   ].filter(Boolean).join(' · ');
 
+  const todayFocus=focusTodayEmbed(todayEvents,today);
   return {
     username:'Agenda Astro · Village du Ciel',
     // URL publique volontairement sur sa propre ligne, cliquable et visible sur mobile.
     content:`🔭 **BULLETIN ASTRONOMIQUE — ${display}**\n📍 Les Herbiers (85) · heures françaises${alerts?'\n'+alerts:''}\n\n📅 **AGENDA COMPLET — ÉVÉNEMENTS ET FICHES**\n${AGENDA_URL}`,
     embeds:[
+      // Un seul encart supplémentaire : toutes les informations initiales sont
+      // conservées dans les deux encarts historiques qui suivent.
+      ...(todayFocus?[todayFocus]:[]),
       {
         title:'🔭 Rendez-vous astronomiques · aujourd’hui et demain',
         url:AGENDA_URL,
