@@ -64,42 +64,109 @@ function weatherField(day,heading){
     inline:false
   };
 }
-// Mettre en avant l'événement principal du jour dans un encart Discord dédié.
-// Les champs existants (aujourd'hui, demain, J+2/J+3, événements majeurs, Lune)
-// et l'encart météo restent strictement inchangés.
-function focusTodayEmbed(todayEvents,today){
+
+// Conditions d'observation liées aux prévisions Open-Meteo DÉJÀ recueillies pour le bulletin.
+// Même source que l'Agenda Astro et même score nocturne que le bloc météo Discord.
+// Les créneaux sont des moyennes sur 6 h, PAS une météo à l'instant exact du phénomène.
+const cleanWeatherPeriod=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+const clampWeather=n=>Math.max(0,Math.min(100,n));
+function requestedPeriods(e){
+  const period=cleanWeatherPeriod(e.period);
+  // Si la nuit affichée commence la veille de la date cataloguée, la météo de
+  // la date du phénomène ne correspond pas au créneau : ne pas donner de note.
+  if(/instant astronomique|heure non renseignee|selon l.heure/.test(period))return null;
+  const overnight=period.match(/nuits?\s+du\s+(\d{1,2})\s+au\s+(\d{1,2})/);
+  if(overnight && Number(overnight[1])!==Number(String(e.date||'').slice(-2)))return null;
+  if(/fin de nuit|seconde partie de nuit|deuxieme partie de nuit|avant l.aube|aube|avant le lever du soleil/.test(period))
+    return {keys:['nuit'],label:'fin de nuit (00–06 h)'};
+  if(/matin/.test(period))return {keys:['matin'],label:'matin (06–12 h)'};
+  if(/apres.midi|journee|en journee/.test(period))return {keys:['apresmidi'],label:'après-midi (12–18 h)'};
+  if(/soir|crepuscule|apres le coucher du soleil/.test(period) && !/nuit/.test(period))
+    return {keys:['soiree'],label:'soirée (18–00 h)'};
+  if(/nuit|nocturne|meteores/.test(period)||e.type==='meteores')
+    return {keys:['soiree','nuit'],label:'soirée et nuit suivante (18–06 h)'};
+  // « Instant astronomique », « selon l'heure » et horaires non renseignés :
+  // impossible de choisir les heures météo sans induire en erreur.
+  return null;
+}
+function classificationMeteo(score,clouds){
+  if(score>=85&&clouds<=20)return 'Excellentes';
+  if(score>=70&&clouds<=40)return 'Bonnes';
+  if(score>=50&&clouds<=65)return 'Moyennes';
+  return 'Défavorables';
+}
+export function conditionsEvenement(e,weather){
+  if(!e||e.type==='lune'||e.type==='saison')return null;
+  const selection=requestedPeriods(e);
+  if(!selection)return null;
+  const day=(weather?.days||[]).find(d=>d.date===e.date);
+  if(!day)return {available:false,text:'Prévisions indisponibles pour cette date. Vérifier sur l’agenda.'};
+  const periods=selection.keys.map(k=>(day.periods||[]).find(p=>p.key===k));
+  if(periods.some(p=>!p?.available||!['cloud_cover','wind_speed_10m','relative_humidity_2m'].every(k=>Number.isFinite(p[k]))))
+    return {available:false,text:'Prévisions incomplètes pour le créneau indiqué. Vérifier sur l’agenda.'};
+  const avg=k=>periods.reduce((sum,p)=>sum+p[k],0)/periods.length;
+  const clouds=avg('cloud_cover'),wind=avg('wind_speed_10m'),humidity=avg('relative_humidity_2m');
+  const night=selection.keys.includes('nuit')||selection.keys.includes('soiree');
+  // Le score nocturne historique du bulletin tient compte de la gêne lunaire
+  // approximative. Cette appréciation reste indicative, pas une garantie de voir l'astre.
+  const lunar=night?skyScore.moonFractionApprox(e.date):0;
+  if(!Number.isFinite(lunar))return {available:false,text:'Indice météo non calculable actuellement.'};
+  const score=Math.round(clampWeather(100-clouds*.76-lunar*14
+    -Math.min(1,wind/40)*6-Math.max(0,Math.min(1,(humidity-60)/40))*4));
+  const label=classificationMeteo(score,clouds);
+  const warning=e.visibility==='variable'||e.visibility==='difficile'?' · visibilité astronomique à confirmer':'';
+  const text=`**${label}** · indice indicatif ${score}/100 · nuages ≈ ${Math.round(clouds)} % · vent ≈ ${Math.round(wind)} km/h · ${selection.label}${warning}`;
+  return {available:true,label,score,clouds:Math.round(clouds),wind:Math.round(wind),text};
+}
+function tomorrowConditionsField(events,weather){
+  const lines=events.filter(e=>e.type!=='lune'&&e.type!=='saison').map(e=>{
+    const result=conditionsEvenement(e,weather);
+    return result?`• ${clean(e.title)} : ${result.text}`:null;
+  }).filter(Boolean);
+  if(!lines.length)return null;
+  let value='';
+  for(const line of lines){if((value?value.length+1:0)+line.length>1000)break;value+=(value?'\n':'')+line;}
+  if(!value)return null;
+  return {name:'🌤️ Conditions d’observation · demain (prévisions)',value,inline:false};
+}
+
+// Mise en valeur dans le panneau « Rendez-vous astronomiques » existant.
+// AUCUN nouvel embed : les deux encarts historiques et leurs champs sont conservés.
+function focusTodayField(todayEvents,today,weather){
   if(!todayEvents.length)return null;
-  // Priorité à un phénomène non lunaire : une phase de Lune ne doit pas masquer
-  // une pluie d'étoiles ou une occultation même si sa priorité est « majeur ».
-  const ranked=[...todayEvents].sort((a,b)=>{
-    const aMoon=a.type==='lune'?1:0,bMoon=b.type==='lune'?1:0;
-    return aMoon-bMoon||(priorityWeight[a.priority]??9)-(priorityWeight[b.priority]??9);
-  });
+  // Une phase lunaire ne masque pas un phénomène ponctuel important.
+  const ranked=[...todayEvents].sort((a,b)=>(a.type==='lune'?1:0)-(b.type==='lune'?1:0)
+    ||(priorityWeight[a.priority]??9)-(priorityWeight[b.priority]??9));
   const e=ranked[0];
-  const detail=[];
-  if(e.period)detail.push(`**Période indiquée :** ${cleanDetail(e.period,220)}`);
-  if(e.utc && e.precision!=='date' && Number.isFinite(Date.parse(e.utc))) {
-    detail.push(`**Instant du phénomène :** ${fmtTime.format(new Date(e.utc))} (heure française ; pas nécessairement l'heure d'observation)`);
+  const safe=(s,max)=>String(s??'').replace(/[`*_~<>@]/g,'').replace(/\s+/g,' ').trim().slice(0,max);
+  const lines=[`**${dayTitle(today)}**`];
+  if(e.period)lines.push(`**Période :** ${safe(e.period,160)}`);
+  const estimate=conditionsEvenement(e,weather);
+  // En dernier, pour garantir que l'horaire, la description et le conseil historique
+  // restent prioritaires si le champ Discord approche de sa limite de 1 024 caractères.
+  if(e.utc&&e.precision!=='date'&&Number.isFinite(Date.parse(e.utc)))
+    lines.push(`**Instant du phénomène :** ${fmtTime.format(new Date(e.utc))} (heure française ; pas nécessairement l’heure d’observation)`);
+  if(e.description)lines.push(safe(e.description,290));
+  if(e.advice)lines.push(`**Conseil :** ${safe(e.advice,220)}`);
+  if(e.visibility==='difficile')lines.push('**Visibilité :** difficile depuis Les Herbiers.');
+  if(e.visibility==='variable')lines.push('**Visibilité :** à confirmer depuis Les Herbiers.');
+  let value=lines.join('\n');
+  if(estimate){
+    const full=`**Météo d’observation (prévision) :** ${estimate.text}`;
+    const short=estimate.available?`**Météo d’observation (prévision) :** **${estimate.label}** · indice indicatif ${estimate.score}/100`:
+      '**Météo d’observation :** prévisions indisponibles.';
+    // Ajouter la version courte si la longue dépasse 1 024 caractères,
+    // sans jamais tronquer les autres informations de l'événement.
+    if(value.length+1+full.length<=1024)value+='\n'+full;
+    else if(value.length+1+short.length<=1024)value+='\n'+short;
   }
-  if(e.description)detail.push(cleanDetail(e.description,480));
-  if(e.advice)detail.push(`**Conseil :** ${cleanDetail(e.advice,300)}`);
-  if(e.visibility==='difficile')detail.push('**Visibilité locale :** observation difficile.');
-  if(e.visibility==='variable')detail.push('**Visibilité locale :** à confirmer avant l’observation.');
-  if(todayEvents.length>1)detail.push(`**${todayEvents.length-1} autre(s) événement(s) aujourd’hui** : voir la liste complète ci-dessous.`);
-  const badge=e.priority==='majeur'?'⭐ MAJEUR · ÉVÉNEMENT DU JOUR':'ÉVÉNEMENT DU JOUR';
   return {
-    title:`🟠 ${clean(e.title)}`,
-    url:AGENDA_URL,
-    description:`**${badge} · ${dayTitle(today)}**\n\n${detail.join('\n')}`,
-    color:0xf2a744,
-    footer:{text:'Événement du jour · Les Herbiers (85) · détails et autres événements ci-dessous'}
+    name:`🟠 À OBSERVER AUJOURD’HUI — ${clean(e.title)}`,
+    value:value.slice(0,1024),
+    inline:false
   };
 }
-function cleanDetail(text,max=300){
-  // Texte éditorial provenant du catalogue : aucun formatage ni mention Discord
-  // injectée depuis les données.
-  return String(text??'').replace(/[`*_~<>@]/g,'').replace(/\s+/g,' ').trim().slice(0,max);
-}
+
 export function makeMessage(events,now,weather=null){
   const {today,tomorrow,todayEvents,tomorrowEvents,laterEvents,majorEvents,laterMoonPhases}=selectEvents(events,now);
   const display=new Intl.DateTimeFormat('fr-FR',{dateStyle:'full',timeZone:tz}).format(now);
@@ -122,20 +189,21 @@ export function makeMessage(events,now,weather=null){
   if(laterEvents.length)eventFields.push(field('📆 Dans 2 à 3 jours',laterEvents,9));
   if(majorEvents.length)eventFields.push(field('⭐ Événements majeurs à J+4–J+7',majorEvents,5));
   if(laterMoonPhases.length)eventFields.push(field('🌙 Phases lunaires à J+4–J+7',laterMoonPhases,4));
+  // Le focus est placé en tête du même embed : aucune donnée historique n'est retirée.
+  const focus=focusTodayField(todayEvents,today,weather);
+  if(focus)eventFields.unshift(focus);
+  const demainConditions=tomorrowConditionsField(tomorrowEvents,weather);
+  if(demainConditions)eventFields.splice(focus?3:2,0,demainConditions);
   const alerts=[
     todayEvents.length?`🟠 **AUJOURD’HUI : ${todayEvents.length} événement${todayEvents.length>1?'s':''}**`:null,
     tomorrowEvents.length?`🔵 **DEMAIN : ${tomorrowEvents.length} événement${tomorrowEvents.length>1?'s':''}**`:null
   ].filter(Boolean).join(' · ');
 
-  const todayFocus=focusTodayEmbed(todayEvents,today);
   return {
     username:'Agenda Astro · Village du Ciel',
     // URL publique volontairement sur sa propre ligne, cliquable et visible sur mobile.
     content:`🔭 **BULLETIN ASTRONOMIQUE — ${display}**\n📍 Les Herbiers (85) · heures françaises${alerts?'\n'+alerts:''}\n\n📅 **AGENDA COMPLET — ÉVÉNEMENTS ET FICHES**\n${AGENDA_URL}`,
     embeds:[
-      // Un seul encart supplémentaire : toutes les informations initiales sont
-      // conservées dans les deux encarts historiques qui suivent.
-      ...(todayFocus?[todayFocus]:[]),
       {
         title:'🔭 Rendez-vous astronomiques · aujourd’hui et demain',
         url:AGENDA_URL,
