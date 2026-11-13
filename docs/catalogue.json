@@ -1,6 +1,6 @@
 {
   "version": "1.4",
-  "generatedAt": "2026-11-12T09:57:48.464Z",
+  "generatedAt": "2026-11-13T09:15:54.143Z",
   "location": {
     "name": "Les Herbiers (Vendée, France)",
     "latitude": 46.87,
@@ -8,8 +8,8 @@
     "timezone": "Europe/Paris"
   },
   "period": {
-    "start": "2026-11-12",
-    "end": "2027-05-14"
+    "start": "2026-11-13",
+    "end": "2027-05-15"
   },
   "automationActive": true,
   "engine": "astronomy-engine@2.1.19 + USNO",
@@ -22,25 +22,6 @@
   },
   "warnings": [],
   "events": [
-    {
-      "id": "auto-essaim-2026-11-12-tauridesdunord",
-      "date": "2026-11-12",
-      "utc": null,
-      "precision": "date",
-      "kind": "fenetre-essaim",
-      "title": "Période habituelle des Taurides du Nord",
-      "type": "meteores",
-      "priority": "interessant",
-      "visibility": "variable",
-      "period": "Fenêtre indicative autour de cette date ; maximum annuel à confirmer.",
-      "material": "Œil nu, ciel sombre",
-      "description": "L’essaim des Taurides du Nord connaît habituellement son activité maximale à cette période de l’année. Ceci N’EST PAS une prévision calculée du pic 2026.",
-      "advice": "Vérifier le calendrier IMO de l’année, le croissant/clair de Lune et l’heure de culmination du radiant.",
-      "source": {
-        "name": "International Meteor Organization — calendrier",
-        "url": "https://www.imo.net/calendar/"
-      }
-    },
     {
       "id": "auto-pair-Mars-Jupiter-202611160203",
       "date": "2026-11-16",
@@ -523,7 +504,7 @@
     {
       "id": "auto-elongation-Venus-202701031756",
       "date": "2027-01-03",
-      "utc": "2027-01-03T17:56:03.408Z",
+      "utc": "2027-01-03T17:56:03.411Z",
       "precision": "minute",
       "kind": "elongation-venus",
       "source": {
