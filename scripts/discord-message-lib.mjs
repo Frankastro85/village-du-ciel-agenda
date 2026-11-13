@@ -125,6 +125,34 @@ function focusCard(e,today,weather){
     :`${pictogramme(c.label)} **Météo : ${c.label}** · ${c.score}/100\n☁️ Nuages ${c.clouds} % · Vent ${c.wind} km/h · ${c.period}`;
   return CARD(color.ambre,TXT(title),TXT(details.join('\n')),SEP(),TXT(meteoText));
 }
+// Bloc systématique du matin : ce que la personne peut préparer pour
+// la soirée du jour et la nuit suivante, même sans événement catalogué.
+function tonightCard(selection,weather){
+  const {today,todayEvents}=selection;
+  const day=(weather?.days||[]).find(d=>d.date===today);
+  const evening=(day?.periods||[]).find(p=>p.key==='soiree');
+  const night=(day?.periods||[]).find(p=>p.key==='nuit');
+  const score=day?skyScore.scoreDay(day):null;
+  const tomorrow=addDays(today,1);
+  const lines=[`🌌 **CE SOIR ET CETTE NUIT · ${dateLabel(today).toUpperCase()}**`];
+  if(todayEvents.length){
+    lines.push(`📅 ${todayEvents.length} événement${todayEvents.length>1?'s':''} inscrit${todayEvents.length>1?'s':''} aujourd’hui dans le catalogue (détails ci-dessus ou dans l’agenda).`);
+  }else{
+    lines.push('📅 Aucun phénomène ponctuel signalé aujourd’hui. Les planètes et autres cibles restent à consulter dans l’agenda.');
+  }
+  const meteoLine=(p,label)=>p?.available
+    ?`${label} : ${meteo.weatherText(p)}`
+    :`${label} : ⚪ prévision indisponible`;
+  lines.push(meteoLine(evening,'🌆 **Soirée (18 h–00 h)**'));
+  lines.push(meteoLine(night,`🌙 **Nuit suivante (00 h–06 h, ${dateLabel(tomorrow)})**`));
+  if(score?.available){
+    const cls=scoreClass(score.score);
+    lines.push(`🔭 **Indice d’observation nocturne :** ${cls.dot} ${score.score}/100 · ${cls.name.toLowerCase()} (indicatif, turbulence non mesurée).`);
+  }else{
+    lines.push('🔭 **Indice nocturne :** non calculable sans les prévisions du soir et de la nuit.');
+  }
+  return CARD(color.ambre,TXT(lines.join('\n')));
+}
 function linesOf(events,limit,{showDate=true}={}){
   const shown=events.slice(0,limit);
   const lines=shown.map(e=>eventLine(e,{showDate}));
@@ -200,10 +228,10 @@ function textParts(components){
 function limitV2Text(components){
   const texts=textParts(components);
   const total=texts.reduce((n,c)=>n+c.content.length,0);
-  if(total<=3900)return;
+  if(total<=3850)return;
   // Réduction de la partie détaillée météo d'abord, sans effacer les titres,
-  // la synthèse 3 jours ni les phases lunaires.
-  let remaining=total-3900;
+  // le bloc essentiel de ce soir, la synthèse 3 jours ni les phases lunaires.
+  let remaining=total-3850;
   const candidates=[...texts].filter(c=>c.content.includes('**DÉTAIL DES PRÉVISIONS**'));
   for(const c of candidates){
     if(remaining<=0)break;
@@ -230,6 +258,7 @@ export function makeMessage(events,now,weather=null){
   const header=TXT(`🔭 **BULLETIN ASTRONOMIQUE — ${date}**\n📍 Les Herbiers (85) · heures françaises${count?` · ${count} événement${count>1?'s':''} aujourd’hui`:''}`);
   const components=[header];
   if(focus)components.push(focusCard(focus,today,weather));
+  components.push(tonightCard(selection,weather));
   components.push(nextEventsCard(selection,focus,weather));
   components.push(moonCard(events,today));
   components.push(weatherCard(weather));

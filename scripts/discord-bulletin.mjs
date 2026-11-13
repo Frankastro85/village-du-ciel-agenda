@@ -40,14 +40,56 @@ const usable=generatedIsUsable(computed,now);
 if(!usable)console.warn('ATTENTION : catalogue calculé absent ou périmé ; utiliser seulement les fiches éditoriales.');
 const events=collectEvents(local,usable?computed.events:[]);
 if(events.length===0)throw Error('Aucun événement valide, envoi annulé pour éviter un bulletin trompeur.');
-let weather=null;
-try{
-  const result=await fetch(meteo.forecastURL(),{signal:AbortSignal.timeout(18000),headers:{Accept:'application/json'}});
-  if(!result.ok)throw Error('HTTP '+result.status);
-  const json=await result.json();if(json.error)throw Error(json.reason||'API météo indisponible');
-  weather=meteo.summarize(json,today,3);
-  console.log(`Open-Meteo : météo sur ${weather.days.length} jours récupérée.`);
-}catch(err){console.warn(`Météo indisponible : ${err.message}. Aucun chiffre météo inventé.`);}
+// Plusieurs tentatives et requête météo allégée pour les indisponibilités
+// ponctuelles. Les données ne sont jamais inventées ou extrapolées.
+async function loadWeather(){
+  const sources=[
+    {label:'Open-Meteo standard',url:meteo.forecastURL()},
+    {label:'Open-Meteo allégée',url:meteo.forecastURL({compact:true})},
+    {label:'Open-Meteo / Météo-France',url:meteo.forecastURL({compact:true,endpoint:'meteofrance'})}
+  ];
+  const errors=[];
+  let bestPartial=null,bestNightCount=0;
+  for(const source of sources){
+    // Une indisponibilité HTTP 429/5xx et une erreur réseau justifient
+    // un second essai; les erreurs 400 de paramètres passent au repli.
+    for(let attempt=1;attempt<=2;attempt++){
+      try{
+        const response=await fetch(source.url,{signal:AbortSignal.timeout(16000),headers:{Accept:'application/json'}});
+        if(!response.ok){
+          let reason='';
+          try{reason=String((await response.json())?.reason||'').slice(0,110);}catch{}
+          const err=new Error(`HTTP ${response.status}${reason?' — '+reason:''}`);
+          err.retryable=response.status===429||response.status>=500;
+          throw err;
+        }
+        const raw=await response.json();
+        if(raw?.error)throw Error(String(raw.reason||'API météo indisponible').slice(0,160));
+        const summary=meteo.summarize(raw,today,3);
+        const nights=summary.days.filter(day=>['soiree','nuit'].every(key=>day.periods.find(p=>p.key===key)?.available)).length;
+        const available=summary.days.filter(day=>day.periods.some(p=>p.available)).length;
+        if(!available)throw Error('Aucune plage horaire exploitable pour les 3 jours');
+        console.log(`Météo : ${source.label}, ${nights}/3 nuits complètes et ${available}/3 jours disponibles.`);
+        if(nights>bestNightCount){bestPartial=summary;bestNightCount=nights;}
+        if(nights===3)return summary;
+        if(nights===0 && !bestPartial)bestPartial=summary;
+        // Une seconde source peut améliorer une prévision partielle.
+        break;
+      }catch(err){
+        errors.push(`${source.label} essai ${attempt}: ${err.message}`);
+        if(err.retryable===false)break;
+        if(attempt===1)await new Promise(resolve=>setTimeout(resolve,1200));
+      }
+    }
+  }
+  if(bestPartial){
+    console.warn(`Météo partielle : ${bestNightCount}/3 nuits exploitables après repli.`);
+    return bestPartial;
+  }
+  console.warn('ATTENTION : météo indisponible après les essais suivants :\n'+errors.join('\n'));
+  return null;
+}
+const weather=await loadWeather();
 const payload=makeMessage(events,now,weather);
 console.log(`Bulletin préparé (${today}, ${events.length} événements en catalogue).`);
 // Message de prévisualisation sans secret, utile avant activation.

@@ -12,7 +12,9 @@
   const TZ = 'Europe/Paris';
   // Coordonnées du centre des Herbiers fournies par la commune : 46°52'12" N, 1°00'36" O.
   const LAT = 46.87, LON = -1.01;
-  const vars = ['cloud_cover','temperature_2m','wind_speed_10m','relative_humidity_2m'];
+  const requiredVars = ['cloud_cover','temperature_2m','wind_speed_10m','relative_humidity_2m'];
+  const optionalVars = ['cloud_cover_low','cloud_cover_mid','cloud_cover_high'];
+  const vars = [...requiredVars,...optionalVars];
   const slots = [
     {key:'matin',label:'Matin',start:6,end:12,shift:0},
     {key:'apresmidi',label:'Après-midi',start:12,end:18,shift:0},
@@ -25,12 +27,18 @@
     return `${get('year')}-${get('month')}-${get('day')}`;
   }
   function dayPlus(day,n){let d=new Date(day+'T12:00:00Z');d.setUTCDate(d.getUTCDate()+n);return d.toISOString().slice(0,10);}
-  function forecastURL(){const p=new URLSearchParams({latitude:String(LAT),longitude:String(LON),hourly:vars.join(','),timezone:TZ,wind_speed_unit:'kmh',forecast_days:'6'});return 'https://api.open-meteo.com/v1/forecast?'+p.toString();}
+  function forecastURL({compact=false,endpoint='forecast'}={}){
+    const p=new URLSearchParams({latitude:String(LAT),longitude:String(LON),hourly:(compact?requiredVars:vars).join(','),timezone:TZ,wind_speed_unit:'kmh',forecast_days:endpoint==='meteofrance'?'4':'6'});
+    return 'https://api.open-meteo.com/v1/'+(endpoint==='meteofrance'?'meteofrance':'forecast')+'?'+p.toString();
+  }
   function avg(data){const valid=data.filter(x=>Number.isFinite(x));return valid.length?Math.round(valid.reduce((s,n)=>s+n,0)/valid.length):null;}
   function summarize(raw, fromDay=dayParis(), count=5){
     if(!raw||!raw.hourly||!Array.isArray(raw.hourly.time))throw Error('Prévisions horaires absentes.');
     const h=raw.hourly;
-    for(const name of vars)if(!Array.isArray(h[name])||h[name].length!==h.time.length)throw Error('Variable météo manquante : '+name);
+    for(const name of requiredVars)if(!Array.isArray(h[name])||h[name].length!==h.time.length)throw Error('Variable météo essentielle manquante : '+name);
+    // Les couches nuageuses détaillées sont informatives : ne jamais rendre
+    // une prévision entière indisponible lorsqu'elles sont absentes.
+    const optional=Object.fromEntries(optionalVars.map(name=>[name,Array.isArray(h[name])&&h[name].length===h.time.length?h[name]:Array(h.time.length).fill(null)]));
     const idx=new Map(h.time.map((s,i)=>[s,i]));
     const days=[];
     for(let d=0;d<count;d++){
@@ -41,8 +49,8 @@
           const i=idx.get(spanDate+'T'+String(hour).padStart(2,'0')+':00');
           if(i!==undefined)indexes.push(i);
         }
-        const values=Object.fromEntries(vars.map(k=>[k,avg(indexes.map(i=>h[k][i]))]));
-        parts.push({key:s.key,label:s.label,nightNext:s.shift===1,available:indexes.length===6 && vars.every(k=>values[k]!==null),...values});
+        const values=Object.fromEntries(vars.map(k=>[k,avg(indexes.map(i=>(h[k]||optional[k])[i]))]));
+        parts.push({key:s.key,label:s.label,nightNext:s.shift===1,available:indexes.length===6 && requiredVars.every(k=>values[k]!==null),...values});
       }
       days.push({date,periods:parts});
     }
