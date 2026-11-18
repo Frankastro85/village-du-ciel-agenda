@@ -1,6 +1,6 @@
 {
   "version": "1.4",
-  "generatedAt": "2026-11-17T10:52:07.148Z",
+  "generatedAt": "2026-11-18T10:22:40.090Z",
   "location": {
     "name": "Les Herbiers (Vendée, France)",
     "latitude": 46.87,
@@ -8,8 +8,8 @@
     "timezone": "Europe/Paris"
   },
   "period": {
-    "start": "2026-11-17",
-    "end": "2027-05-19"
+    "start": "2026-11-18",
+    "end": "2027-05-20"
   },
   "automationActive": true,
   "engine": "astronomy-engine@2.1.19 + USNO",
@@ -23,47 +23,9 @@
   "warnings": [],
   "events": [
     {
-      "id": "auto-essaim-2026-11-17-lonides",
-      "date": "2026-11-17",
-      "utc": null,
-      "precision": "date",
-      "kind": "fenetre-essaim",
-      "title": "Période habituelle des Léonides",
-      "type": "meteores",
-      "priority": "interessant",
-      "visibility": "variable",
-      "period": "Fenêtre indicative autour de cette date ; maximum annuel à confirmer.",
-      "material": "Œil nu, ciel sombre",
-      "description": "L’essaim des Léonides connaît habituellement son activité maximale à cette période de l’année. Ceci N’EST PAS une prévision calculée du pic 2026.",
-      "advice": "Vérifier le calendrier IMO de l’année, le croissant/clair de Lune et l’heure de culmination du radiant.",
-      "source": {
-        "name": "International Meteor Organization — calendrier",
-        "url": "https://www.imo.net/calendar/"
-      }
-    },
-    {
-      "id": "auto-moon-premier-202611171148",
-      "date": "2026-11-17",
-      "utc": "2026-11-17T11:48:00.000Z",
-      "precision": "minute",
-      "kind": "premier",
-      "title": "Premier quartier",
-      "type": "lune",
-      "priority": "interessant",
-      "visibility": "visible",
-      "period": "Instant exact de la phase, affiché en heure française.",
-      "material": "Œil nu / télescope selon objectif",
-      "description": "Phase principale du cycle lunaire ; visibilité à adapter à l’heure locale.",
-      "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
-      "source": {
-        "name": "US Naval Observatory — API officielle",
-        "url": "https://aa.usno.navy.mil/data/api"
-      }
-    },
-    {
       "id": "auto-elongation-Mercury-202611202335",
       "date": "2026-11-21",
-      "utc": "2026-11-20T23:35:39.725Z",
+      "utc": "2026-11-20T23:35:39.724Z",
       "precision": "minute",
       "kind": "elongation-mercury",
       "source": {
@@ -466,7 +428,7 @@
     {
       "id": "auto-elongation-Venus-202701031756",
       "date": "2027-01-03",
-      "utc": "2027-01-03T17:56:03.411Z",
+      "utc": "2027-01-03T17:56:03.408Z",
       "precision": "minute",
       "kind": "elongation-venus",
       "source": {
@@ -1628,6 +1590,25 @@
         "bestNightMinAlt": 43.1,
         "bestNightNextDay": false,
         "note": "Calcul géométrique à 46,87°N / 1,01°O. Le meilleur créneau maximise la hauteur minimale des objets (Soleil < −12°, objets > 10°), hors horizon réel, Lune, météo et turbulence."
+      }
+    },
+    {
+      "id": "auto-moon-pleine-202705201059",
+      "date": "2027-05-20",
+      "utc": "2027-05-20T10:59:00.000Z",
+      "precision": "minute",
+      "kind": "pleine",
+      "title": "Pleine Lune",
+      "type": "lune",
+      "priority": "majeur",
+      "visibility": "visible",
+      "period": "Instant exact de la phase, affiché en heure française.",
+      "material": "Œil nu / télescope selon objectif",
+      "description": "Pleine Lune : observation lunaire et photographie, ciel profond moins favorable.",
+      "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
+      "source": {
+        "name": "US Naval Observatory — API officielle",
+        "url": "https://aa.usno.navy.mil/data/api"
       }
     }
   ]
