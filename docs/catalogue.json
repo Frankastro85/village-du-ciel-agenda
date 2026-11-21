@@ -1,6 +1,6 @@
 {
   "version": "1.4",
-  "generatedAt": "2026-11-20T10:12:06.786Z",
+  "generatedAt": "2026-11-21T09:58:04.937Z",
   "location": {
     "name": "Les Herbiers (Vendée, France)",
     "latitude": 46.87,
@@ -8,8 +8,8 @@
     "timezone": "Europe/Paris"
   },
   "period": {
-    "start": "2026-11-20",
-    "end": "2027-05-22"
+    "start": "2026-11-21",
+    "end": "2027-05-23"
   },
   "automationActive": true,
   "engine": "astronomy-engine@2.1.19 + USNO",
@@ -22,39 +22,6 @@
   },
   "warnings": [],
   "events": [
-    {
-      "id": "auto-elongation-Mercury-202611202335",
-      "date": "2026-11-21",
-      "utc": "2026-11-20T23:35:39.724Z",
-      "precision": "minute",
-      "kind": "elongation-mercury",
-      "source": {
-        "name": "Astronomy Engine — calcul d’éphémérides",
-        "url": "https://github.com/cosinekitty/astronomy"
-      },
-      "title": "Plus grande élongation de Mercure",
-      "type": "planete",
-      "priority": "interessant",
-      "visibility": "variable",
-      "period": "Aube, horizon est dégagé.",
-      "material": "Œil nu / jumelles",
-      "description": "Écart maximal apparent de Mercure au Soleil : environ 19,6°. Visibilité variable selon l’inclinaison de l’écliptique.",
-      "advice": "Attention au Soleil : ne jamais viser sa direction aux jumelles ou au télescope.",
-      "observation": {
-        "atInstant": [
-          {
-            "label": "Mercure",
-            "altitude": -52.8,
-            "azimuth": 25.5
-          }
-        ],
-        "daylightAtInstant": false,
-        "bestNightUTC": null,
-        "bestNightMinAlt": null,
-        "bestNightNextDay": false,
-        "note": "Calcul géométrique à 46,87°N / 1,01°O. Le meilleur créneau maximise la hauteur minimale des objets (Soleil < −12°, objets > 10°), hors horizon réel, Lune, météo et turbulence."
-      }
-    },
     {
       "id": "auto-moon-pleine-202611241453",
       "date": "2026-11-24",
