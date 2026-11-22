@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "status": "ok",
+  "generatedAt": "2026-11-22T15:12:11.115Z",
+  "periodDays": 7,
+  "source": "CelesTrak",
+  "reference": {
+    "name": "Les Herbiers (85) · point de référence indicatif (mairie)",
+    "lat": 46.8691,
+    "lon": -1.0135,
+    "heightM": 0,
+    "radiusKm": 30
+  },
+  "events": [
+    {
+      "id": "iss-sun-2026-11-23T14-23-41-903Z",
+      "kind": "sun",
+      "timeUtc": "2026-11-23T14:23:41.039Z",
+      "centerTimeUtc": "2026-11-23T14:23:41.903Z",
+      "siteVisible": true,
+      "center": {
+        "lat": 46.831409,
+        "lon": -0.96467
+      },
+      "centerDistanceKm": 5.6,
+      "bandDistanceKm": 0,
+      "widthKm": 14.86,
+      "durationSec": 2.032,
+      "altitudeDeg": 14.4,
+      "orbitEpoch": "2026-11-22T04:07:11.627Z",
+      "orbitAgeHours": 34,
+      "confidence": "provisoire",
+      "status": "possible"
+    }
+  ]
+}
