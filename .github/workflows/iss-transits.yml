@@ -1,0 +1,42 @@
+name: ISS transits — catalogue optionnel
+on:
+  workflow_dispatch:
+  schedule:
+    # Recalcul chaque matin. Comprend une fenêtre glissante de 7 jours.
+    # UTC : 05:40 en hiver / 06:40 en été à Paris (avant le bulletin de 08:10).
+    - cron: '40 4 * * *'
+permissions:
+  contents: write
+concurrency:
+  group: iss-transits-catalogue
+  cancel-in-progress: false
+jobs:
+  transit-catalogue:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Récupérer le dépôt
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Préparer Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Installer les dépendances ISOLÉES dans iss-transits
+        run: npm install --prefix iss-transits --ignore-scripts --no-audit --no-fund
+      - name: Tests de l'extension (aucun accès Discord)
+        run: node --test iss-transits/tests/transits-addon.test.mjs
+      - name: Prévisions Soleil/Lune sur 7 jours
+        run: node iss-transits/generate-transits.mjs
+      - name: Publier seulement le JSON des transits
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/transits-iss.json
+          if git diff --cached --quiet; then
+            echo "Aucun changement à publier"
+          else
+            git commit -m "Mise à jour facultative des transits ISS"
+            git push
+          fi
