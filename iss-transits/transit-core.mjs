@@ -1,5 +1,5 @@
 /**
- * Village du Ciel — moteur de recherche des transits de l'ISS v1.1.
+ * Village du Ciel — moteur de recherche des transits de l'ISS v1.2.
  * SGP4 (satellite.js) + astrométrie (Astronomy Engine), géométrie WGS84.
  * MÊME FICHIER pour navigateur et Node.js, sans accès réseau dans le cœur.
  * Prévisions indicatives : effet des manœuvres ISS et imprécisions TLE,
@@ -147,10 +147,30 @@ export class TransitEngine{
   return {angularSeparationDeg:ang*DEG,radiusDeg:radiusRad*DEG,deltaRad:ang-radiusRad,
    altitudeDeg:angles.altitudeDeg,azimuthDeg:angles.azimuthDeg,rangeKm:norm(svec)};
  }
- corridorEdges(kind,point,iterations=22){
-  // Les bords suivent l'angle apparent Soleil/Lune vu du sol :
-  // à chaque position, chercher les deux contacts dans la direction
-  // perpendiculaire à la ligne centrale (et non deux rayons constants).
+ /**
+  * Séparation angulaire minimale pour UN observateur : son instant de transit
+  * varie avec ses coordonnées. C'est aussi le critère de visibilité locale.
+  */
+ closestApproach(kind,nominalMs,site,iterations=34){
+  const loc=validateLocation(site);
+  const f=t=>this.separation(kind,t,loc);
+  let lo=nominalMs-12000,hi=nominalMs+12000;
+  const phi=.6180339887498949;
+  let c=hi-(hi-lo)*phi,d=lo+(hi-lo)*phi;
+  let fc=f(c)?.angularSeparationDeg??Infinity,fd=f(d)?.angularSeparationDeg??Infinity;
+  for(let i=0;i<iterations;i++){
+   if(fc<fd){hi=d;d=c;fd=fc;c=hi-(hi-lo)*phi;fc=f(c)?.angularSeparationDeg??Infinity;}
+   else{lo=c;c=d;fc=fd;d=lo+(hi-lo)*phi;fd=f(d)?.angularSeparationDeg??Infinity;}
+  }
+  const mid=(lo+hi)/2,closest=f(mid);
+  return closest?{...closest,ms:mid}:null;
+ }
+ corridorEdges(kind,point,iterations=19){
+  // Chaque bord est la limite de la zone où une séparation MINIMALE
+  // dans le temps est inférieure au rayon du disque Soleil/Lune.
+  // Un test à l'instant central seulement sous-estime la bande et peut
+  // exclure une position ayant un véritable transit légèrement plus tard.
+
   const before=this.shadow(kind,point.ms-750,point.heightM);
   const after=this.shadow(kind,point.ms+750,point.heightM);
   if(!before||!after)return null;
@@ -164,7 +184,14 @@ export class TransitEngine{
     lon:((point.lon+dir*normalEast*km/(111.195*Math.max(.02,Math.cos(point.lat*RAD)))+540)%360)-180,
     heightM:point.heightM});
   const edge=dir=>{
-   const f=km=>this.separation(kind,point.ms,offset(km,dir))?.deltaRad??Infinity;
+   const cache=new Map();
+   const f=km=>{
+    if(cache.has(km))return cache.get(km);
+    const closest=this.closestApproach(kind,point.ms,offset(km,dir));
+    const gap=closest&&closest.altitudeDeg>=10?closest.deltaRad:Infinity;
+    cache.set(km,gap);
+    return gap;
+   };
    if(f(0)>=0)return null;
    let lo=0,hi=2;
    while(hi<150&&f(hi)<0){lo=hi;hi*=2;}
@@ -186,15 +213,9 @@ export class TransitEngine{
   // Minimum topocentrique : indispensable près du bord, où l'horodatage et la
   // durée diffèrent de ceux calculés sur la ligne centrale.
   const loc=validateLocation(site),f=t=>this.separation(kind,t,loc);
-  let lo=nominalMs-12000,hi=nominalMs+12000;
-  const phi=.6180339887498949;
-  let c=hi-(hi-lo)*phi,d=lo+(hi-lo)*phi;
-  let fc=f(c)?.angularSeparationDeg??Infinity,fd=f(d)?.angularSeparationDeg??Infinity;
-  for(let i=0;i<50;i++){
-   if(fc<fd){hi=d;d=c;fd=fc;c=hi-(hi-lo)*phi;fc=f(c)?.angularSeparationDeg??Infinity;}
-   else{lo=c;c=d;fc=fd;d=lo+(hi-lo)*phi;fd=f(d)?.angularSeparationDeg??Infinity;}
-  }
-  const mid=(lo+hi)/2,closest=f(mid);
+  const approach=this.closestApproach(kind,nominalMs,loc,50);
+  if(!approach)return null;
+  const mid=approach.ms,closest=approach;
   if(!closest||closest.deltaRad>=0||closest.altitudeDeg<10)return null;
   const solve=direction=>{
    let a=0,b=100;
@@ -283,11 +304,13 @@ export class TransitEngine{
     if(!best)continue;
     const central=best.point;
     const halfWidth=this.halfWidthKm(body,central);
-    const borderDist=Math.max(0,best.dist-halfWidth);
-    if(borderDist>radiusKm)continue;
-    const transit=this.duration(body,central);if(!transit)continue;
+    // Le critère précis au point GPS prévaut sur la bande cartographique
+    // interpolée : aucun transit réel ne doit être éliminé par l'approximation.
     const siteTransit=this.transitAt(body,central.ms,location);
     const siteVisible=Boolean(siteTransit);
+    const borderDist=siteVisible?0:Math.max(0,best.dist-halfWidth);
+    if(borderDist>radiusKm)continue;
+    const transit=this.duration(body,central);if(!transit)continue;
     const event={kind:body,timeUtc:siteTransit?.timeUtc||new Date(central.ms).toISOString(),
       centerTimeUtc:new Date(central.ms).toISOString(),
       startUtc:transit.startUtc,endUtc:transit.endUtc,durationMs:transit.durationMs,
@@ -300,7 +323,7 @@ export class TransitEngine{
       path:[],leftPath:[],rightPath:[]};
     // Ligne centrale et DEUX LIMITES réellement calculées sur WGS84.
     // Pas de bande artificiellement constante en largeur sur la carte.
-    for(let dt=-20000;dt<=20000;dt+=2000){
+    for(let dt=-20000;dt<=20000;dt+=4000){
      const p=this.shadow(body,central.ms+dt,location.heightM);
      if(!p||haversineKm(p,central)>=250)continue;
      const edges=this.corridorEdges(body,p,16);
