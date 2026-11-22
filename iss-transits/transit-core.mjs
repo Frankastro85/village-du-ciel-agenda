@@ -1,5 +1,5 @@
 /**
- * Village du Ciel — moteur de recherche des transits de l'ISS v1.2.
+ * Village du Ciel — moteur de recherche des transits de l'ISS v1.3.
  * SGP4 (satellite.js) + astrométrie (Astronomy Engine), géométrie WGS84.
  * MÊME FICHIER pour navigateur et Node.js, sans accès réseau dans le cœur.
  * Prévisions indicatives : effet des manœuvres ISS et imprécisions TLE,
@@ -247,7 +247,7 @@ export class TransitEngine{
   const kinds=kind==='both'?['sun','moon']:[kind];
   const startMs=options.startMs??Date.now(),endMs=startMs+days*DAY;
   const dataAgeHours=Math.min(...this.records.map(r=>Math.abs(startMs-r.epochMs)/3600000));
-  if(dataAgeHours>72)throw Error(`Données ISS périmées : ${Math.round(dataAgeHours)} h. Actualiser les TLE avant de calculer.`);
+  if(dataAgeHours>72)throw Error(`Éléments ISS trop éloignés de la date choisie : ${Math.round(dataAgeHours)} h (limite 72 h). Pour une date historique, importez des TLE archivés proches de l’événement.`);
   const stepMs=10000;const nSteps=Math.ceil((endMs-startMs)/stepMs);
   const list=[];const previous=new Map();const possible=[];
   // D'abord trajectoire de l'ombre géographique à pas de 10 s ;
@@ -319,7 +319,7 @@ export class TransitEngine{
       centerDistanceKm:Number(best.dist.toFixed(2)),bandDistanceKm:Number(borderDist.toFixed(2)),
       halfWidthKm:Number(halfWidth.toFixed(2)),altitudeDeg:Number(central.altitudeDeg.toFixed(1)),azimuthDeg:Number(central.azimuthDeg.toFixed(1)),
       orbitEpoch:central.epoch,orbitAgeHours:Math.round(central.epochAgeHours),source:central.source,
-      quality:central.epochAgeHours<=24?'rapprochée':central.epochAgeHours<=72?'provisoire':'veille',
+      quality:central.epochAgeHours<=24?'rapprochée':central.epochAgeHours<=72?'provisoire':'à confirmer',
       path:[],leftPath:[],rightPath:[]};
     // Ligne centrale et DEUX LIMITES réellement calculées sur WGS84.
     // Pas de bande artificiellement constante en largeur sur la carte.
