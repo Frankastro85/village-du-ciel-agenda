@@ -1,5 +1,4 @@
 
-#!/usr/bin/env node
 /** Bulletin quotidien Discord ; pour l'exécuter :
  *   npm run discord:preview  (sans envoi)
  *   npm run discord:send     (avec secret DISCORD_WEBHOOK_URL)
