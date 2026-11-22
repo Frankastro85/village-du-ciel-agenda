@@ -298,9 +298,7 @@ let payload=makeMessage(events,now,weather);
 
 try{
 
-  const {addTransitsToBulletin}=await import(
-    './discord-transits-addon.mjs'
-  );
+  const {addTransitsToBulletin}=await import('./discord-transits-addon.mjs');
 
   payload=await addTransitsToBulletin(payload,now);
 
