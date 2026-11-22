@@ -89,7 +89,14 @@ async function loadWeather(){
   console.warn('ATTENTION : météo indisponible après les essais suivants :\n'+errors.join('\n'));
   return null;
 }
-const weather=await loadWeather();
+let payload=makeMessage(events,now,weather);
+// Extension ISS indépendante et non bloquante : sans catalogue fiable, ne change rien.
+try {
+  const {addTransitsToBulletin}=await import('./discord-transits-addon.mjs');
+  payload=await addTransitsToBulletin(payload,now);
+} catch(error) {
+  console.warn('Extension des transits ISS ignorée : '+error.message);
+}
 const payload=makeMessage(events,now,weather);
 console.log(`Bulletin préparé (${today}, ${events.length} événements en catalogue).`);
 // Message de prévisualisation sans secret, utile avant activation.
