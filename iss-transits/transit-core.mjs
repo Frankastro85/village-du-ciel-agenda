@@ -1,5 +1,5 @@
 /**
- * Village du Ciel — moteur de recherche des transits de l'ISS v1.0.
+ * Village du Ciel — moteur de recherche des transits de l'ISS v1.1.
  * SGP4 (satellite.js) + astrométrie (Astronomy Engine), géométrie WGS84.
  * MÊME FICHIER pour navigateur et Node.js, sans accès réseau dans le cœur.
  * Prévisions indicatives : effet des manœuvres ISS et imprécisions TLE,
@@ -147,34 +147,75 @@ export class TransitEngine{
   return {angularSeparationDeg:ang*DEG,radiusDeg:radiusRad*DEG,deltaRad:ang-radiusRad,
    altitudeDeg:angles.altitudeDeg,azimuthDeg:angles.azimuthDeg,rangeKm:norm(svec)};
  }
- halfWidthKm(kind,point){
-  const center={lat:point.lat,lon:point.lon,heightM:point.heightM};
-  const angular=this.separation(kind,point.ms,center);if(!angular)return 0;
-  // Gradient topocentrique local de l'écart angulaire (décalage 1 km N/E).
-  const alongNorth={...center,lat:clamp(center.lat+1/111.2,-89.999,89.999)};
-  const alongEast={...center,lon:((center.lon+1/(111.2*Math.max(.02,Math.cos(center.lat*RAD)))+540)%360)-180};
-  const n=this.separation(kind,point.ms,alongNorth);
-  const e=this.separation(kind,point.ms,alongEast);
-  if(!n||!e)return 0;
-  const grad=Math.hypot(n.angularSeparationDeg,e.angularSeparationDeg);
-  // Au centre l'écart est 0 : ces dérivées sont des normes, pas des dérivées signées.
-  return grad>1e-8?clamp(angular.radiusDeg/grad,0,75):0;
- }
- duration(kind,point){
-  const loc={lat:point.lat,lon:point.lon,heightM:point.heightM};
-  const center=this.separation(kind,point.ms,loc);
-  if(!center||center.deltaRad>=0)return null;
-  const solve=direction=>{
-   let lo=0,hi=100; // 100 millisecondes pour un premier test
-   const f=s=>this.separation(kind,point.ms+direction*s,loc)?.deltaRad??1;
-   while(hi<20000 && f(hi)<0){lo=hi;hi*=2;}
+ corridorEdges(kind,point,iterations=22){
+  // Les bords suivent l'angle apparent Soleil/Lune vu du sol :
+  // à chaque position, chercher les deux contacts dans la direction
+  // perpendiculaire à la ligne centrale (et non deux rayons constants).
+  const before=this.shadow(kind,point.ms-750,point.heightM);
+  const after=this.shadow(kind,point.ms+750,point.heightM);
+  if(!before||!after)return null;
+  const wrap=d=>((d+540)%360)-180;
+  const east=wrap(after.lon-before.lon)*111.195*Math.cos(point.lat*RAD);
+  const north=(after.lat-before.lat)*111.195;
+  const speed=Math.hypot(east,north);
+  if(speed<.001)return null;
+  const normalEast=-north/speed,normalNorth=east/speed;
+  const offset=(km,dir)=>({lat:point.lat+dir*normalNorth*km/111.195,
+    lon:((point.lon+dir*normalEast*km/(111.195*Math.max(.02,Math.cos(point.lat*RAD)))+540)%360)-180,
+    heightM:point.heightM});
+  const edge=dir=>{
+   const f=km=>this.separation(kind,point.ms,offset(km,dir))?.deltaRad??Infinity;
+   if(f(0)>=0)return null;
+   let lo=0,hi=2;
+   while(hi<150&&f(hi)<0){lo=hi;hi*=2;}
    if(f(hi)<0)return null;
-   for(let k=0;k<20;k++){const mid=(lo+hi)/2;if(f(mid)<0)lo=mid;else hi=mid;}
-   return point.ms+direction*(lo+hi)/2;
+   for(let i=0;i<iterations;i++){
+    const mid=(lo+hi)/2;
+    if(f(mid)<0)lo=mid;else hi=mid;
+   }
+   const distance=(lo+hi)/2;
+   return {distance,loc:offset(distance,dir)};
+  };
+  const left=edge(-1),right=edge(1);
+  if(!left||!right)return null;
+  return {left:left.loc,right:right.loc,widthKm:left.distance+right.distance,
+   halfWidthKm:(left.distance+right.distance)/2};
+ }
+ halfWidthKm(kind,point){return this.corridorEdges(kind,point)?.halfWidthKm??0;}
+ transitAt(kind,nominalMs,site){
+  // Minimum topocentrique : indispensable près du bord, où l'horodatage et la
+  // durée diffèrent de ceux calculés sur la ligne centrale.
+  const loc=validateLocation(site),f=t=>this.separation(kind,t,loc);
+  let lo=nominalMs-12000,hi=nominalMs+12000;
+  const phi=.6180339887498949;
+  let c=hi-(hi-lo)*phi,d=lo+(hi-lo)*phi;
+  let fc=f(c)?.angularSeparationDeg??Infinity,fd=f(d)?.angularSeparationDeg??Infinity;
+  for(let i=0;i<50;i++){
+   if(fc<fd){hi=d;d=c;fd=fc;c=hi-(hi-lo)*phi;fc=f(c)?.angularSeparationDeg??Infinity;}
+   else{lo=c;c=d;fc=fd;d=lo+(hi-lo)*phi;fd=f(d)?.angularSeparationDeg??Infinity;}
+  }
+  const mid=(lo+hi)/2,closest=f(mid);
+  if(!closest||closest.deltaRad>=0||closest.altitudeDeg<10)return null;
+  const solve=direction=>{
+   let a=0,b=100;
+   const delta=dt=>f(mid+direction*dt)?.deltaRad??Infinity;
+   while(b<30000 && delta(b)<0){a=b;b*=2;}
+   if(delta(b)<0)return null;
+   for(let i=0;i<25;i++){
+    const m=(a+b)/2;
+    if(delta(m)<0)a=m;else b=m;
+   }
+   return mid+direction*(a+b)/2;
   };
   const start=solve(-1),end=solve(1);
   if(start==null||end==null||end<=start)return null;
-  return {startUtc:new Date(start).toISOString(),endUtc:new Date(end).toISOString(),durationMs:Math.round(end-start)};
+  const chordArcmin=120*Math.sqrt(Math.max(0,closest.radiusDeg**2-closest.angularSeparationDeg**2));
+  return {timeUtc:new Date(mid).toISOString(),startUtc:new Date(start).toISOString(),endUtc:new Date(end).toISOString(),
+   durationMs:Math.round(end-start),chordArcmin:Number(chordArcmin.toFixed(2)),
+   angularSeparationArcmin:Number((closest.angularSeparationDeg*60).toFixed(2))};
+ }
+ duration(kind,point){
+  return this.transitAt(kind,point.ms,{lat:point.lat,lon:point.lon,heightM:point.heightM});
  }
  async search(options={},progress=()=>{}){
   const location=validateLocation(options.location||REAUMUR);
@@ -245,21 +286,29 @@ export class TransitEngine{
     const borderDist=Math.max(0,best.dist-halfWidth);
     if(borderDist>radiusKm)continue;
     const transit=this.duration(body,central);if(!transit)continue;
-    const observed=this.separation(body,central.ms,location);
-    const visibleAtSite=observed&&observed.deltaRad<=0&&observed.altitudeDeg>=10;
-    const event={kind:body,timeUtc:new Date(central.ms).toISOString(),
+    const siteTransit=this.transitAt(body,central.ms,location);
+    const siteVisible=Boolean(siteTransit);
+    const event={kind:body,timeUtc:siteTransit?.timeUtc||new Date(central.ms).toISOString(),
+      centerTimeUtc:new Date(central.ms).toISOString(),
       startUtc:transit.startUtc,endUtc:transit.endUtc,durationMs:transit.durationMs,
-      siteVisible:Boolean(visibleAtSite),center:{lat:Number(central.lat.toFixed(6)),lon:Number(central.lon.toFixed(6))},
+      siteTransit,siteVisible,center:{lat:Number(central.lat.toFixed(6)),lon:Number(central.lon.toFixed(6))},
       observer:{lat:location.lat,lon:location.lon,heightM:location.heightM},
       centerDistanceKm:Number(best.dist.toFixed(2)),bandDistanceKm:Number(borderDist.toFixed(2)),
       halfWidthKm:Number(halfWidth.toFixed(2)),altitudeDeg:Number(central.altitudeDeg.toFixed(1)),azimuthDeg:Number(central.azimuthDeg.toFixed(1)),
       orbitEpoch:central.epoch,orbitAgeHours:Math.round(central.epochAgeHours),source:central.source,
       quality:central.epochAgeHours<=24?'rapprochée':central.epochAgeHours<=72?'provisoire':'veille',
-      path:[]};
-    // Tracé géographique local autour du point de transit (aucune fausse bande sur carte).
-    for(let dt=-20000;dt<=20000;dt+=1000){
+      path:[],leftPath:[],rightPath:[]};
+    // Ligne centrale et DEUX LIMITES réellement calculées sur WGS84.
+    // Pas de bande artificiellement constante en largeur sur la carte.
+    for(let dt=-20000;dt<=20000;dt+=2000){
      const p=this.shadow(body,central.ms+dt,location.heightM);
-     if(p&&haversineKm(p,central)<250)event.path.push([Number(p.lat.toFixed(5)),Number(p.lon.toFixed(5))]);
+     if(!p||haversineKm(p,central)>=250)continue;
+     const edges=this.corridorEdges(body,p,16);
+     if(!edges)continue;
+     const coord=v=>[Number(v.lat.toFixed(5)),Number(v.lon.toFixed(5))];
+     event.path.push(coord(p));
+     event.leftPath.push(coord(edges.left));
+     event.rightPath.push(coord(edges.right));
     }
     if(!list.some(x=>x.kind===event.kind&&Math.abs(Date.parse(x.timeUtc)-central.ms)<90000))list.push(event);
    }
