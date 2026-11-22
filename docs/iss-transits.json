@@ -1,0 +1,209 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-11-22T13:23:58.032Z",
+  "source": "CelesTrak SupGP ISS",
+  "location": {
+    "lat": 46.71815,
+    "lon": -0.80121,
+    "heightM": 0,
+    "name": "Réaumur (85)"
+  },
+  "radiusKm": 30,
+  "days": 5,
+  "events": [
+    {
+      "kind": "sun",
+      "timeUtc": "2026-11-23T14:23:41.721Z",
+      "startUtc": "2026-11-23T14:23:40.181Z",
+      "endUtc": "2026-11-23T14:23:43.242Z",
+      "durationMs": 3061,
+      "siteVisible": false,
+      "center": {
+        "lat": 46.834665,
+        "lon": -0.951958
+      },
+      "observer": {
+        "lat": 46.71815,
+        "lon": -0.80121,
+        "heightM": 0
+      },
+      "centerDistanceKm": 17.31,
+      "bandDistanceKm": 11.64,
+      "halfWidthKm": 5.67,
+      "altitudeDeg": 14.4,
+      "azimuthDeg": 216.9,
+      "orbitEpoch": "2026-11-23T12:04:00.000Z",
+      "orbitAgeHours": 2,
+      "source": "CelesTrak SupGP ISS",
+      "quality": "rapprochée",
+      "path": [
+        [
+          45.44337,
+          -3.18839
+        ],
+        [
+          45.51074,
+          -3.08264
+        ],
+        [
+          45.57831,
+          -2.97631
+        ],
+        [
+          45.64608,
+          -2.86941
+        ],
+        [
+          45.71407,
+          -2.7619
+        ],
+        [
+          45.78227,
+          -2.6538
+        ],
+        [
+          45.85069,
+          -2.54508
+        ],
+        [
+          45.91933,
+          -2.43574
+        ],
+        [
+          45.98821,
+          -2.32577
+        ],
+        [
+          46.05732,
+          -2.21515
+        ],
+        [
+          46.12667,
+          -2.10387
+        ],
+        [
+          46.19627,
+          -1.99191
+        ],
+        [
+          46.26611,
+          -1.87928
+        ],
+        [
+          46.33622,
+          -1.76595
+        ],
+        [
+          46.40658,
+          -1.65191
+        ],
+        [
+          46.47722,
+          -1.53714
+        ],
+        [
+          46.54813,
+          -1.42164
+        ],
+        [
+          46.61932,
+          -1.30539
+        ],
+        [
+          46.6908,
+          -1.18836
+        ],
+        [
+          46.76258,
+          -1.07056
+        ],
+        [
+          46.83466,
+          -0.95196
+        ],
+        [
+          46.90706,
+          -0.83254
+        ],
+        [
+          46.97977,
+          -0.71229
+        ],
+        [
+          47.05281,
+          -0.59118
+        ],
+        [
+          47.12618,
+          -0.4692
+        ],
+        [
+          47.1999,
+          -0.34634
+        ],
+        [
+          47.27398,
+          -0.22256
+        ],
+        [
+          47.34841,
+          -0.09785
+        ],
+        [
+          47.42322,
+          0.02782
+        ],
+        [
+          47.49841,
+          0.15445
+        ],
+        [
+          47.574,
+          0.28209
+        ],
+        [
+          47.64999,
+          0.41075
+        ],
+        [
+          47.72639,
+          0.54047
+        ],
+        [
+          47.80323,
+          0.67126
+        ],
+        [
+          47.88051,
+          0.80316
+        ],
+        [
+          47.95824,
+          0.93618
+        ],
+        [
+          48.03644,
+          1.07037
+        ],
+        [
+          48.11513,
+          1.20576
+        ],
+        [
+          48.19431,
+          1.34238
+        ],
+        [
+          48.274,
+          1.48026
+        ]
+      ]
+    }
+  ],
+  "disclaimers": [
+    "Les horaires et bandes géographiques sont prévisionnels et doivent être confirmés 24 h avant.",
+    "Éléments SGP4 non assimilés aux éphémérides opérationnelles en temps réel ; déplacements possibles après manœuvre.",
+    "Durées estimées sur la ligne centrale, et non nécessairement à la position GPS initiale.",
+    "Soleil : observation uniquement avec filtre solaire certifié adapté."
+  ]
+}
