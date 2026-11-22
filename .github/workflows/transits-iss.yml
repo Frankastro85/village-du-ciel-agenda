@@ -1,0 +1,48 @@
+name: ISS — Transits Soleil et Lune (Réaumur)
+on:
+  workflow_dispatch:
+  schedule:
+    # 04:15 UTC = 05:15 hiver / 06:15 été à Réaumur, avant le bulletin du matin.
+    - cron: '15 4 * * *'
+permissions:
+  contents: write
+concurrency:
+  group: transits-iss-generated
+  cancel-in-progress: false
+jobs:
+  transits:
+    name: Recalculer les transits de Réaumur
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Récupérer le dépôt
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+      - name: Préparer Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Installer les dépendances ISS indépendantes
+        run: npm install --prefix iss-transits --no-audit --no-fund
+      - name: Calculer les transits ISS autour de Réaumur
+        env:
+          ISS_DAYS: '5'
+          ISS_RADIUS_KM: '30'
+        run: node iss-transits/scripts/update-transits.mjs
+      - name: Archiver les résultats ISS du jour
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add docs/iss-orbit.json docs/iss-transits.json
+          if ! git diff --cached --quiet; then
+            git commit -m "ISS transits — $(date -u +%F)"
+            git fetch origin main
+            git rebase origin/main
+            git push origin HEAD:main
+          else
+            echo "Aucun changement du catalogue ISS."
+          fi
