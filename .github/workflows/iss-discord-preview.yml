@@ -14,18 +14,28 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Vérifier les fichiers et le correctif
+      - name: Vérifier les fichiers existants
         run: |
           test -f docs/transits-iss.json
           test -f scripts/discord-transits-addon.mjs
           test -f iss-transits/transits-feed-lib.mjs
           test -f scripts/discord-bulletin.mjs
-          python3 iss-transits/installer-discord-iss.py scripts/discord-bulletin.mjs
+          test -f iss-transits/installer-discord-iss.py
+      - name: Vérifier que le bulletin original est valide
+        run: |
+          if ! node --check scripts/discord-bulletin.mjs; then
+            echo '::error::Le fichier GitHub scripts/discord-bulletin.mjs contient déjà une erreur de syntaxe.'
+            echo '::error::Si const payload=makeMessage(...) et let payload=makeMessage(...) coexistent, supprimer uniquement la ligne const payload.'
+            echo '::error::Ne pas activer le vrai workflow Discord tant que cette erreur subsiste.'
+            exit 1
+          fi
+      - name: Vérifier le correctif en simulation
+        run: python3 iss-transits/installer-discord-iss.py scripts/discord-bulletin.mjs
       - name: Installer les dépendances du bulletin (pas de publication)
         run: npm install --ignore-scripts --no-audit --no-fund
       - name: Tests unitaires du complément ISS
         run: node --test iss-transits/tests/transits-addon.test.mjs
-      - name: Activer l'extension UNIQUEMENT dans le runner de test
+      - name: Préparer la version test uniquement
         run: |
           python3 iss-transits/installer-discord-iss.py scripts/discord-bulletin.mjs --apply
           node --check scripts/discord-bulletin.mjs
@@ -34,7 +44,7 @@ jobs:
         env:
           VDC_TRANSITS_DISCORD: '0'
         run: npm run discord:preview
-      - name: Aperçu du bulletin avec ISS (toujours SANS envoi)
+      - name: Aperçu avec ISS (toujours SANS envoi)
         env:
           VDC_TRANSITS_DISCORD: '1'
         run: npm run discord:preview
