@@ -1,6 +1,6 @@
 {
   "version": "1.4",
-  "generatedAt": "2026-11-21T15:17:30.680Z",
+  "generatedAt": "2026-11-22T09:56:45.103Z",
   "location": {
     "name": "Les Herbiers (Vendée, France)",
     "latitude": 46.87,
@@ -8,8 +8,8 @@
     "timezone": "Europe/Paris"
   },
   "period": {
-    "start": "2026-11-21",
-    "end": "2027-05-23"
+    "start": "2026-11-22",
+    "end": "2027-05-24"
   },
   "automationActive": true,
   "engine": "astronomy-engine@2.1.19 + USNO",
