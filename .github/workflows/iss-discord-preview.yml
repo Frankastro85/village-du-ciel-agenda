@@ -1,0 +1,40 @@
+name: ISS — aperçu Discord SANS envoi
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  bulletin-preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Récupérer le dépôt (lecture seule)
+        uses: actions/checkout@v4
+      - name: Préparer Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Vérifier les fichiers et le correctif
+        run: |
+          test -f docs/transits-iss.json
+          test -f scripts/discord-transits-addon.mjs
+          test -f iss-transits/transits-feed-lib.mjs
+          test -f scripts/discord-bulletin.mjs
+          python3 iss-transits/installer-discord-iss.py scripts/discord-bulletin.mjs
+      - name: Installer les dépendances du bulletin (pas de publication)
+        run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Tests unitaires du complément ISS
+        run: node --test iss-transits/tests/transits-addon.test.mjs
+      - name: Activer l'extension UNIQUEMENT dans le runner de test
+        run: |
+          python3 iss-transits/installer-discord-iss.py scripts/discord-bulletin.mjs --apply
+          node --check scripts/discord-bulletin.mjs
+          node --check scripts/discord-transits-addon.mjs
+      - name: Contrôle du bulletin original (ISS désactivée)
+        env:
+          VDC_TRANSITS_DISCORD: '0'
+        run: npm run discord:preview
+      - name: Aperçu du bulletin avec ISS (toujours SANS envoi)
+        env:
+          VDC_TRANSITS_DISCORD: '1'
+        run: npm run discord:preview
