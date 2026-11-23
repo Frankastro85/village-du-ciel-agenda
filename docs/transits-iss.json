@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "status": "ok",
-  "generatedAt": "2026-11-22T15:12:11.115Z",
+  "generatedAt": "2026-11-23T15:17:22.375Z",
   "periodDays": 7,
   "source": "CelesTrak",
   "reference": {
@@ -13,23 +13,23 @@
   },
   "events": [
     {
-      "id": "iss-sun-2026-11-23T14-23-41-903Z",
+      "id": "iss-sun-2026-11-28T12-01-49-100Z",
       "kind": "sun",
-      "timeUtc": "2026-11-23T14:23:41.039Z",
-      "centerTimeUtc": "2026-11-23T14:23:41.903Z",
-      "siteVisible": true,
+      "timeUtc": "2026-11-28T12:01:49.100Z",
+      "centerTimeUtc": "2026-11-28T12:01:49.100Z",
+      "siteVisible": false,
       "center": {
-        "lat": 46.831409,
-        "lon": -0.96467
+        "lat": 46.633949,
+        "lon": -0.653758
       },
-      "centerDistanceKm": 5.6,
-      "bandDistanceKm": 0,
-      "widthKm": 14.86,
-      "durationSec": 2.032,
-      "altitudeDeg": 14.4,
-      "orbitEpoch": "2026-11-22T04:07:11.627Z",
-      "orbitAgeHours": 34,
-      "confidence": "provisoire",
+      "centerDistanceKm": 37.88,
+      "bandDistanceKm": 29.27,
+      "widthKm": 17.22,
+      "durationSec": 1.482,
+      "altitudeDeg": 22,
+      "orbitEpoch": "2026-11-23T04:53:05.579Z",
+      "orbitAgeHours": 127,
+      "confidence": "a-reverifier",
       "status": "possible"
     }
   ]
