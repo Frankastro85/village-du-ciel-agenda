@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-17T17:51:10.251Z",
+  "generatedAt": "2026-11-24T19:41:02.043Z",
   "location": {
     "name": "Les Herbiers (Vendée)",
     "lat": 46.87,
@@ -15,10 +15,10 @@
     "sourceMethods": "paramètres photométriques COBS basés sur observations récentes"
   },
   "sampledDates": [
-    "2026-11-17",
     "2026-11-24",
     "2026-12-01",
-    "2026-12-08"
+    "2026-12-08",
+    "2026-12-15"
   ],
   "sourceStatus": "COBS observatoire local",
   "notice": "Dates échantillonnées : ce ne sont PAS les dates de début/fin de visibilité. Magnitudes prévisionnelles et météo non garanties.",
