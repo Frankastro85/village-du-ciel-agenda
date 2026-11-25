@@ -1,7 +1,9 @@
+
 name: Agenda Astro — actualisation quotidienne
+
 on:
   schedule:
-    - cron: '23 3 * * *'    # Chaque jour, 03:23 heure française
+    - cron: '23 3 * * *'  # 03 h 23, heure de Paris
       timezone: 'Europe/Paris'
   workflow_dispatch:
   push:
@@ -9,43 +11,75 @@ on:
       - 'scripts/**'
       - 'package.json'
       - '.github/workflows/agenda-astronomique.yml'
-permissions:
-  contents: write
-  pages: write
-  id-token: write
+
 concurrency:
   group: agenda-astro
   cancel-in-progress: false
+
 jobs:
   agenda:
+    name: Calculer et préparer le catalogue
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      contents: write
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Récupérer le dépôt
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Préparer Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: '22'
+
       - name: Installer le calcul d'éphémérides
         run: npm install --no-audit --no-fund
+
       - name: Calculer les 183 prochains jours
         run: npm run generate
+
+      - name: Vérifier le catalogue généré
+        run: test -s docs/catalogue.json
+
       - name: Archiver la version du jour
+        shell: bash
         run: |
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config user.name "github-actions[bot]"
+          set -euo pipefail
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git config user.name 'github-actions[bot]'
           git add docs/catalogue.json
-          if ! git diff --cached --quiet; then
+          if git diff --cached --quiet; then
+            echo 'Catalogue inchangé.'
+          else
             git commit -m "Agenda Astro automatique $(date -u +%F)"
             git fetch origin main
             git rebase origin/main
             git push origin HEAD:main
           fi
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+
+      - name: Configurer GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Déposer l'archive GitHub Pages
+        uses: actions/upload-pages-artifact@v4
         with:
           path: docs
+
+  deploy:
+    name: Publier le catalogue public
+    needs: agenda
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
       - name: Publier le catalogue public
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          artifact_name: github-pages
