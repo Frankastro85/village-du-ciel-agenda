@@ -1,6 +1,6 @@
 {
   "version": "1.4",
-  "generatedAt": "2026-11-24T12:40:24.002Z",
+  "generatedAt": "2026-11-25T11:28:47.072Z",
   "location": {
     "name": "Les Herbiers (Vendée, France)",
     "latitude": 46.87,
@@ -8,39 +8,25 @@
     "timezone": "Europe/Paris"
   },
   "period": {
-    "start": "2026-11-24",
-    "end": "2027-05-26"
+    "start": "2026-11-25",
+    "end": "2027-05-27"
   },
   "automationActive": true,
   "engine": "astronomy-engine@2.1.19 + USNO",
   "notice": "Éphémérides calculées et phases/saisons vérifiées par API USNO. Visibilité et rapprochements indicatifs depuis Les Herbiers. Essaims : périodes habituelles uniquement, pics non recalculés. Occultations d’astéroïdes, comètes et transitoires non couverts automatiquement. Les données rédigées à la main du site sont fusionnées côté navigateur.",
   "sources": {
-    "phases": "USNO",
-    "saisons": "USNO",
+    "phases": "USNO + Astronomy Engine (secours)",
+    "saisons": "USNO + Astronomy Engine (secours)",
     "planetaires": "Astronomy Engine",
     "meteores": "Périodes usuelles à confirmer IMO"
   },
-  "warnings": [],
+  "warnings": [
+    "USNO phases 2026: fetch failed",
+    "USNO saisons 2026: fetch failed",
+    "USNO phases 2027: fetch failed",
+    "USNO saisons 2027: fetch failed"
+  ],
   "events": [
-    {
-      "id": "auto-moon-pleine-202611241453",
-      "date": "2026-11-24",
-      "utc": "2026-11-24T14:53:00.000Z",
-      "precision": "minute",
-      "kind": "pleine",
-      "title": "Pleine Lune",
-      "type": "lune",
-      "priority": "majeur",
-      "visibility": "visible",
-      "period": "Instant exact de la phase, affiché en heure française.",
-      "material": "Œil nu / télescope selon objectif",
-      "description": "Pleine Lune : observation lunaire et photographie, ciel profond moins favorable.",
-      "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
-      "source": {
-        "name": "US Naval Observatory — API officielle",
-        "url": "https://aa.usno.navy.mil/data/api"
-      }
-    },
     {
       "id": "auto-opposition-Uranus-202611252227",
       "date": "2026-11-25",
@@ -184,9 +170,9 @@
       }
     },
     {
-      "id": "auto-moon-dernier-202612010608",
+      "id": "auto-moon-dernier-202612010609",
       "date": "2026-12-01",
-      "utc": "2026-12-01T06:08:00.000Z",
+      "utc": "2026-12-01T06:09:00.000Z",
       "precision": "minute",
       "kind": "dernier",
       "title": "Dernier quartier",
@@ -198,8 +184,8 @@
       "description": "Phase principale du cycle lunaire ; visibilité à adapter à l’heure locale.",
       "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
       "source": {
-        "name": "US Naval Observatory — API officielle",
-        "url": "https://aa.usno.navy.mil/data/api"
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
       }
     },
     {
@@ -217,8 +203,8 @@
       "description": "Absence de clair de Lune : période favorable aux objets faibles du ciel profond.",
       "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
       "source": {
-        "name": "US Naval Observatory — API officielle",
-        "url": "https://aa.usno.navy.mil/data/api"
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
       }
     },
     {
@@ -241,9 +227,9 @@
       }
     },
     {
-      "id": "auto-moon-premier-202612170542",
+      "id": "auto-moon-premier-202612170543",
       "date": "2026-12-17",
-      "utc": "2026-12-17T05:42:00.000Z",
+      "utc": "2026-12-17T05:43:00.000Z",
       "precision": "minute",
       "kind": "premier",
       "title": "Premier quartier",
@@ -255,8 +241,8 @@
       "description": "Phase principale du cycle lunaire ; visibilité à adapter à l’heure locale.",
       "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
       "source": {
-        "name": "US Naval Observatory — API officielle",
-        "url": "https://aa.usno.navy.mil/data/api"
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
       }
     },
     {
@@ -274,8 +260,8 @@
       "description": "Repère saisonnier précis : changement astronomique de saison dans l’hémisphère Nord.",
       "advice": "Observer l’évolution des heures de lever et de coucher du Soleil.",
       "source": {
-        "name": "US Naval Observatory — API officielle",
-        "url": "https://aa.usno.navy.mil/data/api"
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
       }
     },
     {
@@ -312,8 +298,8 @@
       "description": "Pleine Lune : observation lunaire et photographie, ciel profond moins favorable.",
       "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
       "source": {
-        "name": "US Naval Observatory — API officielle",
-        "url": "https://aa.usno.navy.mil/data/api"
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
       }
     },
     {
@@ -355,9 +341,9 @@
       }
     },
     {
-      "id": "auto-moon-dernier-202612301859",
+      "id": "auto-moon-dernier-202612301900",
       "date": "2026-12-30",
-      "utc": "2026-12-30T18:59:00.000Z",
+      "utc": "2026-12-30T19:00:00.000Z",
       "precision": "minute",
       "kind": "dernier",
       "title": "Dernier quartier",
@@ -369,8 +355,8 @@
       "description": "Phase principale du cycle lunaire ; visibilité à adapter à l’heure locale.",
       "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
       "source": {
-        "name": "US Naval Observatory — API officielle",
-        "url": "https://aa.usno.navy.mil/data/api"
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
       }
     },
     {
@@ -426,9 +412,9 @@
       }
     },
     {
-      "id": "auto-moon-nouvelle-202701072024",
+      "id": "auto-moon-nouvelle-202701072025",
       "date": "2027-01-07",
-      "utc": "2027-01-07T20:24:00.000Z",
+      "utc": "2027-01-07T20:25:00.000Z",
       "precision": "minute",
       "kind": "nouvelle",
       "title": "Nouvelle Lune",
@@ -440,8 +426,8 @@
       "description": "Absence de clair de Lune : période favorable aux objets faibles du ciel profond.",
       "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
       "source": {
-        "name": "US Naval Observatory — API officielle",
-        "url": "https://aa.usno.navy.mil/data/api"
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
       }
     },
     {
@@ -483,9 +469,9 @@
       }
     },
     {
-      "id": "auto-moon-premier-202701152034",
+      "id": "auto-moon-premier-202701152035",
       "date": "2027-01-15",
-      "utc": "2027-01-15T20:34:00.000Z",
+      "utc": "2027-01-15T20:35:00.000Z",
       "precision": "minute",
       "kind": "premier",
       "title": "Premier quartier",
@@ -497,8 +483,8 @@
       "description": "Phase principale du cycle lunaire ; visibilité à adapter à l’heure locale.",
       "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
       "source": {
-        "name": "US Naval Observatory — API officielle",
-        "url": "https://aa.usno.navy.mil/data/api"
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
       }
     },
     {
@@ -516,8 +502,8 @@
       "description": "Pleine Lune : observation lunaire et photographie, ciel profond moins favorable.",
       "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
       "source": {
-        "name": "US Naval Observatory — API officielle",
-        "url": "https://aa.usno.navy.mil/data/api"
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
       }
     },
     {
@@ -559,9 +545,9 @@
       }
     },
     {
-      "id": "auto-moon-dernier-202701291055",
+      "id": "auto-moon-dernier-202701291056",
       "date": "2027-01-29",
-      "utc": "2027-01-29T10:55:00.000Z",
+      "utc": "2027-01-29T10:56:00.000Z",
       "precision": "minute",
       "kind": "dernier",
       "title": "Dernier quartier",
@@ -573,8 +559,8 @@
       "description": "Phase principale du cycle lunaire ; visibilité à adapter à l’heure locale.",
       "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
       "source": {
-        "name": "US Naval Observatory — API officielle",
-        "url": "https://aa.usno.navy.mil/data/api"
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
       }
     },
     {
@@ -625,8 +611,8 @@
       "description": "Absence de clair de Lune : période favorable aux objets faibles du ciel profond.",
       "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
       "source": {
-        "name": "US Naval Observatory — API officielle",
-        "url": "https://aa.usno.navy.mil/data/api"
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
       }
     },
     {
@@ -701,9 +687,9 @@
       }
     },
     {
-      "id": "auto-moon-premier-202702140758",
+      "id": "auto-moon-premier-202702140759",
       "date": "2027-02-14",
-      "utc": "2027-02-14T07:58:00.000Z",
+      "utc": "2027-02-14T07:59:00.000Z",
       "precision": "minute",
       "kind": "premier",
       "title": "Premier quartier",
@@ -715,8 +701,8 @@
       "description": "Phase principale du cycle lunaire ; visibilité à adapter à l’heure locale.",
       "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
       "source": {
-        "name": "US Naval Observatory — API officielle",
-        "url": "https://aa.usno.navy.mil/data/api"
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
       }
     },
     {
@@ -824,9 +810,9 @@
       }
     },
     {
-      "id": "auto-moon-pleine-202702202323",
+      "id": "auto-moon-pleine-202702202324",
       "date": "2027-02-21",
-      "utc": "2027-02-20T23:23:00.000Z",
+      "utc": "2027-02-20T23:24:00.000Z",
       "precision": "minute",
       "kind": "pleine",
       "title": "Pleine Lune",
@@ -838,14 +824,14 @@
       "description": "Pleine Lune : observation lunaire et photographie, ciel profond moins favorable.",
       "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
       "source": {
-        "name": "US Naval Observatory — API officielle",
-        "url": "https://aa.usno.navy.mil/data/api"
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
       }
     },
     {
-      "id": "auto-moon-dernier-202702280516",
+      "id": "auto-moon-dernier-202702280517",
       "date": "2027-02-28",
-      "utc": "2027-02-28T05:16:00.000Z",
+      "utc": "2027-02-28T05:17:00.000Z",
       "precision": "minute",
       "kind": "dernier",
       "title": "Dernier quartier",
@@ -857,8 +843,8 @@
       "description": "Phase principale du cycle lunaire ; visibilité à adapter à l’heure locale.",
       "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
       "source": {
-        "name": "US Naval Observatory — API officielle",
-        "url": "https://aa.usno.navy.mil/data/api"
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
       }
     },
     {
@@ -938,9 +924,9 @@
       }
     },
     {
-      "id": "auto-moon-nouvelle-202703080929",
+      "id": "auto-moon-nouvelle-202703080930",
       "date": "2027-03-08",
-      "utc": "2027-03-08T09:29:00.000Z",
+      "utc": "2027-03-08T09:30:00.000Z",
       "precision": "minute",
       "kind": "nouvelle",
       "title": "Nouvelle Lune",
@@ -952,8 +938,8 @@
       "description": "Absence de clair de Lune : période favorable aux objets faibles du ciel profond.",
       "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
       "source": {
-        "name": "US Naval Observatory — API officielle",
-        "url": "https://aa.usno.navy.mil/data/api"
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
       }
     },
     {
@@ -971,8 +957,8 @@
       "description": "Phase principale du cycle lunaire ; visibilité à adapter à l’heure locale.",
       "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
       "source": {
-        "name": "US Naval Observatory — API officielle",
-        "url": "https://aa.usno.navy.mil/data/api"
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
       }
     },
     {
@@ -1085,9 +1071,9 @@
       }
     },
     {
-      "id": "auto-season-equinoxe-printemps-202703202025",
+      "id": "auto-season-equinoxe-printemps-202703202024",
       "date": "2027-03-20",
-      "utc": "2027-03-20T20:25:00.000Z",
+      "utc": "2027-03-20T20:24:00.000Z",
       "precision": "minute",
       "kind": "equinoxe-printemps",
       "title": "Équinoxe de printemps",
@@ -1099,8 +1085,8 @@
       "description": "Repère saisonnier précis : changement astronomique de saison dans l’hémisphère Nord.",
       "advice": "Observer l’évolution des heures de lever et de coucher du Soleil.",
       "source": {
-        "name": "US Naval Observatory — API officielle",
-        "url": "https://aa.usno.navy.mil/data/api"
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
       }
     },
     {
@@ -1118,8 +1104,8 @@
       "description": "Pleine Lune : observation lunaire et photographie, ciel profond moins favorable.",
       "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
       "source": {
-        "name": "US Naval Observatory — API officielle",
-        "url": "https://aa.usno.navy.mil/data/api"
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
       }
     },
     {
@@ -1137,8 +1123,8 @@
       "description": "Phase principale du cycle lunaire ; visibilité à adapter à l’heure locale.",
       "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
       "source": {
-        "name": "US Naval Observatory — API officielle",
-        "url": "https://aa.usno.navy.mil/data/api"
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
       }
     },
     {
@@ -1194,14 +1180,14 @@
       "description": "Absence de clair de Lune : période favorable aux objets faibles du ciel profond.",
       "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
       "source": {
-        "name": "US Naval Observatory — API officielle",
-        "url": "https://aa.usno.navy.mil/data/api"
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
       }
     },
     {
-      "id": "auto-moon-premier-202704132256",
+      "id": "auto-moon-premier-202704132257",
       "date": "2027-04-14",
-      "utc": "2027-04-13T22:56:00.000Z",
+      "utc": "2027-04-13T22:57:00.000Z",
       "precision": "minute",
       "kind": "premier",
       "title": "Premier quartier",
@@ -1213,8 +1199,8 @@
       "description": "Phase principale du cycle lunaire ; visibilité à adapter à l’heure locale.",
       "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
       "source": {
-        "name": "US Naval Observatory — API officielle",
-        "url": "https://aa.usno.navy.mil/data/api"
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
       }
     },
     {
@@ -1346,8 +1332,8 @@
       "description": "Pleine Lune : observation lunaire et photographie, ciel profond moins favorable.",
       "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
       "source": {
-        "name": "US Naval Observatory — API officielle",
-        "url": "https://aa.usno.navy.mil/data/api"
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
       }
     },
     {
@@ -1384,8 +1370,8 @@
       "description": "Phase principale du cycle lunaire ; visibilité à adapter à l’heure locale.",
       "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
       "source": {
-        "name": "US Naval Observatory — API officielle",
-        "url": "https://aa.usno.navy.mil/data/api"
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
       }
     },
     {
@@ -1408,9 +1394,9 @@
       }
     },
     {
-      "id": "auto-moon-nouvelle-202705061058",
+      "id": "auto-moon-nouvelle-202705061059",
       "date": "2027-05-06",
-      "utc": "2027-05-06T10:58:00.000Z",
+      "utc": "2027-05-06T10:59:00.000Z",
       "precision": "minute",
       "kind": "nouvelle",
       "title": "Nouvelle Lune",
@@ -1422,8 +1408,8 @@
       "description": "Absence de clair de Lune : période favorable aux objets faibles du ciel profond.",
       "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
       "source": {
-        "name": "US Naval Observatory — API officielle",
-        "url": "https://aa.usno.navy.mil/data/api"
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
       }
     },
     {
@@ -1517,8 +1503,8 @@
       "description": "Phase principale du cycle lunaire ; visibilité à adapter à l’heure locale.",
       "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
       "source": {
-        "name": "US Naval Observatory — API officielle",
-        "url": "https://aa.usno.navy.mil/data/api"
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
       }
     },
     {
@@ -1574,8 +1560,8 @@
       "description": "Pleine Lune : observation lunaire et photographie, ciel profond moins favorable.",
       "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
       "source": {
-        "name": "US Naval Observatory — API officielle",
-        "url": "https://aa.usno.navy.mil/data/api"
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
       }
     }
   ]
