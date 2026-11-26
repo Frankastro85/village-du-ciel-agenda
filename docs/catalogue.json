@@ -1,6 +1,6 @@
 {
   "version": "1.4",
-  "generatedAt": "2026-11-25T18:54:15.294Z",
+  "generatedAt": "2026-11-26T11:08:02.281Z",
   "location": {
     "name": "Les Herbiers (Vendée, France)",
     "latitude": 46.87,
@@ -8,8 +8,8 @@
     "timezone": "Europe/Paris"
   },
   "period": {
-    "start": "2026-11-25",
-    "end": "2027-05-27"
+    "start": "2026-11-26",
+    "end": "2027-05-28"
   },
   "automationActive": true,
   "engine": "astronomy-engine@2.1.19 + USNO",
@@ -27,39 +27,6 @@
     "USNO saisons 2027: fetch failed"
   ],
   "events": [
-    {
-      "id": "auto-opposition-Uranus-202611252227",
-      "date": "2026-11-25",
-      "utc": "2026-11-25T22:27:02.536Z",
-      "precision": "minute",
-      "kind": "opposition-uranus",
-      "source": {
-        "name": "Astronomy Engine — calcul d’éphémérides",
-        "url": "https://github.com/cosinekitty/astronomy"
-      },
-      "title": "Opposition de Uranus",
-      "type": "planete",
-      "priority": "interessant",
-      "visibility": "visible",
-      "period": "Planète généralement favorable autour de l’opposition, sur plusieurs nuits.",
-      "material": "Télescope / carte de pointage",
-      "description": "La Terre et Uranus sont sensiblement du même côté du Soleil. La période est favorable à l’observation de la planète.",
-      "advice": "Observer près du passage au méridien et vérifier la hauteur depuis Les Herbiers.",
-      "observation": {
-        "atInstant": [
-          {
-            "label": "Uranus",
-            "altitude": 58.8,
-            "azimuth": 139.6
-          }
-        ],
-        "daylightAtInstant": false,
-        "bestNightUTC": "2026-11-26T00:00:00.000Z",
-        "bestNightMinAlt": 63.8,
-        "bestNightNextDay": true,
-        "note": "Calcul géométrique à 46,87°N / 1,01°O. Le meilleur créneau maximise la hauteur minimale des objets (Soleil < −12°, objets > 10°), hors horizon réel, Lune, météo et turbulence."
-      }
-    },
     {
       "id": "auto-venus-mag-202611270147",
       "date": "2026-11-27",
@@ -381,7 +348,7 @@
     {
       "id": "auto-elongation-Venus-202701031756",
       "date": "2027-01-03",
-      "utc": "2027-01-03T17:56:03.411Z",
+      "utc": "2027-01-03T17:56:03.410Z",
       "precision": "minute",
       "kind": "elongation-venus",
       "source": {
@@ -1558,6 +1525,58 @@
       "period": "Instant exact de la phase, affiché en heure française.",
       "material": "Œil nu / télescope selon objectif",
       "description": "Pleine Lune : observation lunaire et photographie, ciel profond moins favorable.",
+      "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
+      "source": {
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
+      }
+    },
+    {
+      "id": "auto-elongation-Mercury-202705281001",
+      "date": "2027-05-28",
+      "utc": "2027-05-28T10:01:57.904Z",
+      "precision": "minute",
+      "kind": "elongation-mercury",
+      "source": {
+        "name": "Astronomy Engine — calcul d’éphémérides",
+        "url": "https://github.com/cosinekitty/astronomy"
+      },
+      "title": "Plus grande élongation de Mercure",
+      "type": "planete",
+      "priority": "interessant",
+      "visibility": "variable",
+      "period": "Crépuscule, horizon ouest dégagé.",
+      "material": "Œil nu / jumelles",
+      "description": "Écart maximal apparent de Mercure au Soleil : environ 22,9°. Visibilité variable selon l’inclinaison de l’écliptique.",
+      "advice": "Attention au Soleil : ne jamais viser sa direction aux jumelles ou au télescope.",
+      "observation": {
+        "atInstant": [
+          {
+            "label": "Mercure",
+            "altitude": 42.2,
+            "azimuth": 97
+          }
+        ],
+        "daylightAtInstant": true,
+        "bestNightUTC": null,
+        "bestNightMinAlt": null,
+        "bestNightNextDay": false,
+        "note": "Calcul géométrique à 46,87°N / 1,01°O. Le meilleur créneau maximise la hauteur minimale des objets (Soleil < −12°, objets > 10°), hors horizon réel, Lune, météo et turbulence."
+      }
+    },
+    {
+      "id": "auto-moon-dernier-202705281358",
+      "date": "2027-05-28",
+      "utc": "2027-05-28T13:58:00.000Z",
+      "precision": "minute",
+      "kind": "dernier",
+      "title": "Dernier quartier",
+      "type": "lune",
+      "priority": "interessant",
+      "visibility": "visible",
+      "period": "Instant exact de la phase, affiché en heure française.",
+      "material": "Œil nu / télescope selon objectif",
+      "description": "Phase principale du cycle lunaire ; visibilité à adapter à l’heure locale.",
       "advice": "Adapter l’observation à la météo, à la hauteur de la Lune et au relief.",
       "source": {
         "name": "Astronomy Engine — calcul d’éphémérides",
