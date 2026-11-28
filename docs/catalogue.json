@@ -1,6 +1,6 @@
 {
   "version": "1.4",
-  "generatedAt": "2026-11-27T11:01:38.086Z",
+  "generatedAt": "2026-11-28T10:38:21.352Z",
   "location": {
     "name": "Les Herbiers (Vendée, France)",
     "latitude": 46.87,
@@ -8,8 +8,8 @@
     "timezone": "Europe/Paris"
   },
   "period": {
-    "start": "2026-11-27",
-    "end": "2027-05-29"
+    "start": "2026-11-28",
+    "end": "2027-05-30"
   },
   "automationActive": true,
   "engine": "astronomy-engine@2.1.19 + USNO",
@@ -27,39 +27,6 @@
     "USNO saisons 2027: fetch failed"
   ],
   "events": [
-    {
-      "id": "auto-venus-mag-202611270147",
-      "date": "2026-11-27",
-      "utc": "2026-11-27T01:47:33.356Z",
-      "precision": "minute",
-      "kind": "venus-mag",
-      "source": {
-        "name": "Astronomy Engine — calcul d’éphémérides",
-        "url": "https://github.com/cosinekitty/astronomy"
-      },
-      "title": "Éclat maximal de Vénus",
-      "type": "planete",
-      "priority": "interessant",
-      "visibility": "variable",
-      "period": "Aube ou crépuscule selon la période.",
-      "material": "Œil nu",
-      "description": "Vénus atteint une luminosité apparente très élevée, facilement remarquable quand elle est suffisamment éloignée du Soleil.",
-      "advice": "Vérifier si Vénus est visible le matin ou le soir.",
-      "observation": {
-        "atInstant": [
-          {
-            "label": "Vénus",
-            "altitude": -21.6,
-            "azimuth": 79.6
-          }
-        ],
-        "daylightAtInstant": false,
-        "bestNightUTC": "2026-11-28T06:00:00.000Z",
-        "bestNightMinAlt": 19.1,
-        "bestNightNextDay": true,
-        "note": "Calcul géométrique à 46,87°N / 1,01°O. Le meilleur créneau maximise la hauteur minimale des objets (Soleil < −12°, objets > 10°), hors horizon réel, Lune, météo et turbulence."
-      }
-    },
     {
       "id": "auto-moon-Jupiter-202611300824",
       "date": "2026-11-30",
@@ -348,7 +315,7 @@
     {
       "id": "auto-elongation-Venus-202701031756",
       "date": "2027-01-03",
-      "utc": "2027-01-03T17:56:03.407Z",
+      "utc": "2027-01-03T17:56:03.411Z",
       "precision": "minute",
       "kind": "elongation-venus",
       "source": {
